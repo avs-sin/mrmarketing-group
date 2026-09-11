@@ -1,0 +1,223 @@
+// React Imports
+import type { ComponentType, SVGProps } from 'react'
+
+// Next Imports
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
+
+// Third-party Imports
+import { IconArrowUpRight, IconEye, IconPhoneCall } from '@tabler/icons-react'
+
+// Component Imports
+import MDXContent from '@/components/mdx-content'
+import RelatedProjectSection from '@/components/projects/related-project-section/related-project-section'
+import ContentLayout from '@/components/layout/content-layout'
+import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import CTASection from '@/components/blocks/cta-section'
+import { SectionHeader } from '@/components/ui/section-header'
+import TestimonialsComponent from '@/components/blocks/testimonials'
+import Faq from '@/components/blocks/faq'
+import BeamRays from '@/components/ui/beam-rays'
+
+// Util Imports
+import { getProjectBySlug, getProjects } from '@/lib/projects'
+import {
+  generateMetadata as generateSEOMetadata,
+  combineSchemas,
+  generateWebsiteSchema,
+  generateWebPageSchema,
+  generateBreadcrumbSchema
+} from '@/lib/seo'
+
+// Data Imports
+import FigmaIcon from '@/assets/svg/figma-icon'
+import FrammerIcon from '@/assets/svg/frammer-icon'
+import GithubIcon from '@/assets/svg/github-icon'
+import NotionIcon from '@/assets/svg/notion-icon'
+import MiroIcon from '@/assets/svg/miro-icon'
+import { testimonials } from '@/assets/data/testimonial'
+import { faqItems } from '@/assets/data/faq'
+
+const toolIcons: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
+  Figma: FigmaIcon,
+  Framer: FrammerIcon,
+  GitHub: GithubIcon,
+  Notion: NotionIcon,
+  Miro: MiroIcon
+}
+
+export async function generateStaticParams() {
+  const projects = await getProjects()
+
+  return projects.map(project => ({ slug: project.slug }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+
+  const project = await getProjectBySlug(slug)
+
+  if (!project) {
+    return {}
+  }
+
+  const { metadata } = project
+
+  return generateSEOMetadata({
+    title: metadata.title,
+    description: metadata.description,
+    url: `/projects/${metadata.slug}`,
+    keywords: metadata.keywords,
+    type: 'article',
+    image: metadata.image
+  })
+}
+
+export const dynamicParams = false
+
+const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params
+  const projects = await getProjects()
+
+  const project = await getProjectBySlug(slug)
+
+  if (!project) {
+    notFound()
+  }
+
+  const { metadata, content } = project
+
+  const relatedProjects = projects.filter(project => project.slug !== slug).slice(0, 2)
+
+  const jsonLd = combineSchemas(
+    generateWebsiteSchema(),
+    generateWebPageSchema({
+      name: metadata.title ?? '',
+      description: metadata.description ?? '',
+      url: `/projects/${metadata.slug}`
+    }),
+    generateBreadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Projects', url: '/projects' },
+      { name: metadata.title ?? '', url: `/projects/${metadata.slug}` }
+    ])
+  )
+
+  return (
+    <>
+      <section className='bg-card grid w-full grid-cols-1 gap-8 pt-36 pb-8 sm:pt-44 sm:pb-16 lg:pt-52 lg:pb-24'>
+        <ContentLayout className='space-y-10'>
+          <div className='relative mb-8 space-y-4 text-center sm:mb-16 md:mb-24'>
+            <BeamRays
+              className='absolute inset-x-0 -top-20 max-sm:hidden'
+              beamCount={3}
+              beamColor='var(--primary)'
+              beamRaysColor='var(--primary)'
+              beamRayStroke={3}
+              opacity={0.18}
+              duration={3}
+            />
+            <SectionHeader
+              badge={metadata.slug}
+              title={metadata.title}
+              description={metadata.description}
+              badgeClassName='bg-card z-1'
+            />
+            <div className='space-x-4'>
+              {metadata.liveWebsite && (
+                <Button size='lg' render={<Link target='_blank' href={metadata.liveWebsite} />} nativeButton={false}>
+                  Preview <IconEye />
+                </Button>
+              )}
+              <Button size='lg' variant='secondary' render={<Link href='/contact-us' />} nativeButton={false}>
+                Start a Project <IconPhoneCall />
+              </Button>
+            </div>
+          </div>
+          <Card className='bg-background border shadow-none'>
+            <CardContent className='grid grid-cols-2 justify-items-center gap-4 sm:grid-cols-3 lg:grid-cols-5'>
+              <div className='flex flex-col items-center'>
+                <div className='text-base font-medium'>Industry</div>
+                <div className='text-muted-foreground text-sm'>{metadata.industry}</div>
+              </div>
+              <div className='flex flex-col items-center'>
+                <div className='text-base font-medium'>Category</div>
+                <div className='text-muted-foreground text-sm'>{metadata.category}</div>
+              </div>
+              <div className='flex flex-col items-center'>
+                <div className='text-base font-medium'>Timeline</div>
+                <div className='text-muted-foreground text-sm'>{metadata.timeline}</div>
+              </div>
+              <div className='flex flex-col items-center'>
+                <span className='text-base font-medium'>Live Website</span>
+                {metadata.liveWebsite ? (
+                  <Button
+                    variant='link'
+                    className='text-muted-foreground h-auto justify-start p-0 text-sm underline'
+                    render={<Link href={metadata.liveWebsite} target='_blank' rel='noopener noreferrer' />}
+                    nativeButton={false}
+                  >
+                    Visit Website <IconArrowUpRight className='size-4' />
+                  </Button>
+                ) : (
+                  <span className='text-muted-foreground text-base'>—</span>
+                )}
+              </div>
+              <div className='flex flex-col items-center max-sm:col-span-2'>
+                <div className='text-base font-medium'>Release Date</div>
+                <div className='text-muted-foreground text-sm'>
+                  {new Date(metadata.releaseDate ?? '').toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: '2-digit'
+                  })}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className='bg-background rounded-xl p-4 sm:p-6 md:p-10'>
+            <img src={metadata.image} alt={metadata.title} className='mx-auto w-full rounded-xl object-cover' />
+          </div>
+
+          {metadata.tools && metadata.tools.length > 0 && (
+            <Card className='bg-background border shadow-none ring-0'>
+              <CardContent className='flex flex-wrap items-center gap-6'>
+                <span className='text-base font-semibold'>Tools:</span>
+                {metadata.tools.map(tool => {
+                  const Icon = toolIcons[tool]
+
+                  return (
+                    <span key={tool} className='flex items-center gap-1.5 text-sm font-medium'>
+                      {Icon && <Icon className='size-6' />} {tool}
+                    </span>
+                  )
+                })}
+              </CardContent>
+            </Card>
+          )}
+
+          <div>
+            <MDXContent source={content} />
+          </div>
+        </ContentLayout>
+      </section>
+      <RelatedProjectSection projects={relatedProjects} />
+      <TestimonialsComponent testimonials={testimonials} />
+      <Faq faqItems={faqItems} background='bg-card' />
+      <CTASection />
+
+      {/* Add JSON-LD to your page */}
+      <script
+        type='application/ld+json'
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c')
+        }}
+      />
+    </>
+  )
+}
+
+export default ProjectDetailsPage
