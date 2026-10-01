@@ -20,8 +20,8 @@ const Footer = () => {
       <div className='bg-background rounded-4xl py-8 sm:py-16'>
         <ContentLayout className='flex flex-col gap-16'>
           <div>
-            <div className='max-md:hidden'>
-              <p className='text-foreground/5 mb-8 text-[10rem] leading-none font-bold tracking-tight select-none'>
+            <div aria-hidden className='overflow-hidden max-md:hidden'>
+              <p className='text-foreground/5 mb-8 text-[clamp(5rem,12.5vw,10rem)] leading-none font-bold tracking-tight whitespace-nowrap select-none'>
                 MR MARKETING
               </p>
             </div>

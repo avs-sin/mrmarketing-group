@@ -1,42 +1,50 @@
 import Link from 'next/link'
-import { IconArrowUpRight } from '@tabler/icons-react'
+import { IconArrowDown, IconArrowUpRight } from '@tabler/icons-react'
 
 import { Button } from '@/components/ui/button'
 import ContentLayout from '@/components/layout/content-layout'
+import { Eyebrow } from './eyebrow'
 
 const HomeHero = () => (
-  <section id='home' className='overflow-hidden pt-32 pb-14 sm:pt-40 sm:pb-20'>
-    <ContentLayout className='grid items-center gap-12 lg:grid-cols-[1.25fr_1fr] lg:gap-16'>
+  <section id='home' className='relative overflow-hidden pt-28 pb-12 sm:pt-36 sm:pb-16 lg:pt-36 lg:pb-20'>
+    {/* Soft red glow behind the headline; decorative only */}
+    <div
+      aria-hidden
+      className='bg-primary/15 pointer-events-none absolute -top-40 -left-40 size-[36rem] rounded-full blur-3xl'
+    />
+    <ContentLayout className='relative grid items-center gap-10 md:gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-16'>
       <div>
-        <p className='text-primary mb-7 text-sm font-medium tracking-widest uppercase'>
-          Las Vegas creative marketing agency
-        </p>
-        <h1 className='type-display text-[3.9rem] leading-[0.98] tracking-tight sm:text-[6rem] xl:text-[7rem]'>
+        <Eyebrow>Las Vegas creative marketing agency</Eyebrow>
+        <h1 className='type-display text-[clamp(3.5rem,15vw,4.5rem)] leading-[0.95] tracking-tight text-balance sm:text-[6rem] xl:text-[7rem]'>
           Distinctive brands.
           <br />
           <span className='text-primary'>Meaningful connections.</span>
         </h1>
-        <p className='text-muted-foreground mt-8 max-w-lg text-lg leading-relaxed sm:text-xl'>
+        <p className='text-muted-foreground mt-6 max-w-lg text-lg leading-relaxed text-pretty sm:mt-8 sm:text-xl'>
           Strategy, cinematic content, social media, creators, and experiences — tailored to your brand.
         </p>
-        <div className='mt-9 flex flex-wrap items-center gap-4'>
+        <div className='mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-6'>
           <Button
             size='lg'
+            className='h-12 px-6 text-base'
             render={<Link href='/contact-us' data-track='cta_book_call' data-track-location='home_hero' />}
             nativeButton={false}
           >
-            Start a project <IconArrowUpRight aria-hidden />
+            Start a project <IconArrowUpRight aria-hidden className='size-5' />
           </Button>
           <Link
             href='/#work'
-            className='focus-visible:outline-primary rounded-md px-2 py-3 font-medium underline underline-offset-8 focus-visible:outline-2'
+            className='group hover:text-primary focus-visible:outline-primary max-sm:border-border inline-flex h-12 items-center justify-center gap-2 rounded-full font-medium transition-colors focus-visible:outline-2 max-sm:border sm:justify-start'
           >
             Explore our work
+            <IconArrowDown aria-hidden className='size-4 transition-transform group-hover:translate-y-0.5' />
           </Link>
         </div>
-        <p className='text-muted-foreground mt-10 text-sm'>Founder-led. Strategy-driven. Connected to culture.</p>
+        <p className='text-muted-foreground mt-8 text-sm sm:mt-10'>
+          Founder-led. Strategy-driven. Connected to culture.
+        </p>
       </div>
-      <figure className='relative mx-auto w-full max-w-md lg:max-w-none'>
+      <figure className='relative mx-auto w-full max-w-md md:max-w-lg lg:mx-0 lg:w-auto lg:max-w-none lg:justify-self-end'>
         <img
           src='/images/mrmg/refined/founder-960.webp'
           srcSet='/images/mrmg/refined/founder-640.webp 640w, /images/mrmg/refined/founder-960.webp 960w, /images/mrmg/refined/founder-1440.webp 1440w'
@@ -45,14 +53,19 @@ const HomeHero = () => (
           width={960}
           height={1440}
           fetchPriority='high'
-          className='aspect-2/3 w-full rounded-2xl object-contain'
+          className='ring-border aspect-4/5 w-full rounded-2xl object-cover object-[50%_25%] ring-1 lg:aspect-2/3 lg:h-[min(calc(100svh-12rem),44rem)] lg:min-h-[32rem] lg:w-auto'
         />
-        <figcaption className='absolute inset-x-4 bottom-4 flex items-end justify-between gap-4 rounded-xl border border-white/20 bg-black/70 px-5 py-4 text-white backdrop-blur-md'>
-          <div>
-            <p className='text-lg font-medium'>Maria Romano</p>
-            <p className='mt-1 text-xs text-white/75'>Founder, Mr. Marketing Group</p>
-          </div>
-          <span className='text-xs tracking-widest'>LAS VEGAS</span>
+        <figcaption className='absolute bottom-4 left-4 flex items-center gap-3 rounded-full border border-white/15 bg-black/65 py-2 pr-5 pl-2 text-white backdrop-blur-md'>
+          <span
+            aria-hidden
+            className='bg-primary flex size-9 items-center justify-center rounded-full text-xs font-semibold'
+          >
+            MR
+          </span>
+          <span>
+            <span className='block text-sm font-medium'>Maria Romano</span>
+            <span className='block text-xs text-white/70'>Founder · Las Vegas</span>
+          </span>
         </figcaption>
       </figure>
     </ContentLayout>

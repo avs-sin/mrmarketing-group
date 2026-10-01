@@ -50,10 +50,13 @@ export const MediaCard = ({ asset }: { asset: MediaAsset }) => {
                 disabled={!ready}
                 aria-label={`Play ${asset.label}`}
                 onClick={() => setPlaying(true)}
-                className='group focus-visible:outline-primary absolute inset-0 flex items-center justify-center bg-black/10 transition-colors hover:bg-black/25 focus-visible:outline-4 focus-visible:outline-offset-[-4px]'
+                className='group focus-visible:outline-primary absolute inset-0 flex items-end justify-start bg-gradient-to-t from-black/55 via-transparent to-transparent p-4 transition-colors hover:bg-black/20 focus-visible:outline-4 focus-visible:outline-offset-[-4px]'
               >
-                <span className='flex size-16 items-center justify-center rounded-full border border-white/50 bg-black/50 text-white backdrop-blur-sm'>
-                  <IconPlayerPlay aria-hidden className='size-7' />
+                <span className='flex items-center gap-2 rounded-full border border-white/30 bg-black/55 py-2 pr-4 pl-2 text-sm font-medium text-white backdrop-blur-sm transition-transform duration-300 group-hover:scale-105'>
+                  <span className='bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-full'>
+                    <IconPlayerPlay aria-hidden className='size-4 fill-current' />
+                  </span>
+                  Play film
                 </span>
               </button>
             )}
@@ -87,7 +90,7 @@ export const MediaCard = ({ asset }: { asset: MediaAsset }) => {
           </div>
         )}
       </div>
-      <h3 className='mt-5 text-lg font-medium'>{asset.label}</h3>
+      <h3 className='mt-4 font-sans text-base font-medium'>{asset.label}</h3>
     </article>
   )
 }
