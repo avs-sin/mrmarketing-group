@@ -44,7 +44,7 @@ const Header = ({ navigationData }: HeaderProps) => {
     <header className='fixed inset-x-0 top-6 z-50 flex justify-center px-4 sm:px-6 lg:px-8'>
       <div
         className={cn(
-          'bg-primary mx-auto w-full max-w-7xl rounded-full px-4 transition-all duration-700',
+          'bg-primary mx-auto w-full max-w-7xl rounded-full px-4 transition-[max-width] duration-700 ease-out',
           isScrolled && 'max-w-4xl'
         )}
       >
@@ -72,7 +72,7 @@ const Header = ({ navigationData }: HeaderProps) => {
               size='icon'
               aria-label='Contact us'
             >
-              <IconArrowUpRight />
+              <IconArrowUpRight data-icon='inline-end' />
             </Button>
             <HeaderNavigationSmallScreen navigationData={navigationData} />
           </div>

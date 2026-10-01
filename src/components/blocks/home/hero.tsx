@@ -26,7 +26,7 @@ const HomeHero = () => (
         <div className='mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-6'>
           <Button
             size='lg'
-            className='h-12 px-6 text-base'
+            className='h-12 ps-6 pe-5.5 text-base'
             render={<Link href='/contact-us' data-track='cta_book_call' data-track-location='home_hero' />}
             nativeButton={false}
           >
@@ -34,10 +34,13 @@ const HomeHero = () => (
           </Button>
           <Link
             href='/#work'
-            className='group hover:text-primary focus-visible:outline-primary max-sm:border-border inline-flex h-12 items-center justify-center gap-2 rounded-full font-medium transition-colors focus-visible:outline-2 max-sm:border sm:justify-start'
+            className='group hover:text-primary focus-visible:outline-primary max-sm:shadow-surface inline-flex h-12 items-center justify-center gap-2 rounded-full font-medium transition-[color,scale] duration-150 ease-out focus-visible:outline-2 active:scale-[0.96] sm:justify-start'
           >
             Explore our work
-            <IconArrowDown aria-hidden className='size-4 transition-transform group-hover:translate-y-0.5' />
+            <IconArrowDown
+              aria-hidden
+              className='size-4 transition-[translate] duration-150 ease-out group-hover:translate-y-0.5'
+            />
           </Link>
         </div>
         <p className='text-muted-foreground mt-8 text-sm sm:mt-10'>
@@ -53,9 +56,9 @@ const HomeHero = () => (
           width={960}
           height={1440}
           fetchPriority='high'
-          className='ring-border aspect-4/5 w-full rounded-2xl object-cover object-[50%_25%] ring-1 lg:aspect-2/3 lg:h-[min(calc(100svh-12rem),44rem)] lg:min-h-[32rem] lg:w-auto'
+          className='img-outline aspect-4/5 w-full rounded-2xl object-cover object-[50%_25%] lg:aspect-2/3 lg:h-[min(calc(100svh-12rem),44rem)] lg:min-h-[32rem] lg:w-auto'
         />
-        <figcaption className='absolute bottom-4 left-4 flex items-center gap-3 rounded-full border border-white/15 bg-black/65 py-2 pr-5 pl-2 text-white backdrop-blur-md'>
+        <figcaption className='absolute bottom-4 left-4 flex items-center gap-3 rounded-full bg-black/65 py-2 pr-5 pl-2 text-white shadow-[0_0_0_1px_oklch(1_0_0/0.15)] backdrop-blur-md'>
           <span
             aria-hidden
             className='bg-primary flex size-9 items-center justify-center rounded-full text-xs font-semibold'

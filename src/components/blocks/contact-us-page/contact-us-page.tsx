@@ -37,7 +37,7 @@ const ContactUs = ({ contactCards }: { contactCards: ContactCard }) => {
           </CardContent>
         </Card>
 
-        <Card className='border shadow-none ring-0'>
+        <Card className='shadow-surface ring-0'>
           <CardContent className='grid gap-9 md:grid-cols-2'>
             <ContactForm />
 
@@ -48,7 +48,7 @@ const ContactUs = ({ contactCards }: { contactCards: ContactCard }) => {
                 width={960}
                 height={1440}
                 loading='lazy'
-                className='w-full rounded-xl'
+                className='img-outline w-full rounded-xl'
               />
               <figcaption className='text-muted-foreground mt-4 text-sm'>
                 Maria Romano · Founder, Mr. Marketing Group

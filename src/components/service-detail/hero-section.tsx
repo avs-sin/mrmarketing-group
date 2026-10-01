@@ -57,7 +57,7 @@ const HeroSection = async ({ badge, title, description, image, slug }: HeroSecti
           />
           <div className='space-x-4'>
             <Button size='lg' render={<Link href='/contact-us' />} nativeButton={false}>
-              Start a Project <IconPhoneCall />
+              Start a Project <IconPhoneCall data-icon='inline-end' />
             </Button>
             <Button
               size='lg'
@@ -67,16 +67,19 @@ const HeroSection = async ({ badge, title, description, image, slug }: HeroSecti
               nativeButton={false}
             >
               Discuss your project{' '}
-              <IconArrowRight className='transition-transform duration-200 group-hover:translate-x-0.5' />
+              <IconArrowRight
+                data-icon='inline-end'
+                className='transition-[translate] duration-150 ease-out group-hover:translate-x-0.5'
+              />
             </Button>
           </div>
         </div>
-        <Card className='bg-background shadow-none ring-0'>
+        <Card className='bg-background rounded-[calc(var(--radius)*1.8+1.5rem)] shadow-none ring-0'>
           <CardContent>
             <img
               src={image}
               alt={manifest.find(asset => asset.src === image || asset.poster === image)?.alt ?? title}
-              className='max-h-120 w-full rounded-2xl border bg-black object-contain'
+              className='img-outline max-h-120 w-full rounded-2xl bg-black object-contain'
             />
           </CardContent>
         </Card>

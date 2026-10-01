@@ -10,7 +10,7 @@ const WhatWeDo = ({ badge, title, description, items = [] }: WhatWeDoProps) => (
       <SectionHeader badge={badge} title={title} description={description} />
       <div className='mt-12 grid gap-5 md:grid-cols-3'>
         {items.map((item, index) => (
-          <article key={item.title} className='border-border bg-background rounded-2xl border p-7'>
+          <article key={item.title} className='bg-background shadow-surface rounded-2xl p-7'>
             <p className='text-primary text-sm'>0{index + 1}</p>
             <h3 className='mt-5 text-xl font-medium'>{item.title}</h3>
             <p className='text-muted-foreground mt-4 leading-relaxed'>{item.description}</p>

@@ -14,7 +14,7 @@ const Teams = ({ teamMembers }: { teamMembers: TeamProps[] }) => (
             width={960}
             height={1440}
             loading='lazy'
-            className='mx-auto w-full max-w-sm rounded-2xl'
+            className='img-outline mx-auto w-full max-w-sm rounded-2xl'
           />
           <div>
             <p className='text-primary mb-4 text-sm tracking-widest uppercase'>Our founder</p>

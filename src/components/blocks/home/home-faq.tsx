@@ -23,7 +23,7 @@ export const HomeFaq = ({ faqItems }: { faqItems: FAQs }) => (
           Ask Maria directly
           <IconArrowUpRight
             aria-hidden
-            className='size-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+            className='size-5 transition-[translate] duration-150 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
           />
         </a>
       </div>

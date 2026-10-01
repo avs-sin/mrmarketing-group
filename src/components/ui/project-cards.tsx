@@ -37,7 +37,7 @@ export function ProjectCard({
   const card = (
     <Card
       className={cn(
-        'group bg-background relative h-full overflow-hidden overflow-visible shadow-none ring-0',
+        'group bg-background relative h-full overflow-visible rounded-[calc(var(--radius)*1.4+1.5rem)] shadow-none ring-0',
         className
       )}
       {...props}
@@ -54,13 +54,17 @@ export function ProjectCard({
 
         <CursorFollow>
           <div className='bg-primary text-primary-foreground flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm text-nowrap shadow-lg'>
-            View More <IconArrowRight className='size-4' />
+            View More <IconArrowRight className='size-4 stroke-[1.5]' />
           </div>
         </CursorFollow>
 
         <CardContent className='flex flex-col gap-6'>
           <div className='overflow-hidden rounded-xl'>
-            <img src={image} alt={title} className={cn('w-full rounded-xl object-cover object-top', imageClassName)} />
+            <img
+              src={image}
+              alt={title}
+              className={cn('img-outline w-full rounded-xl object-cover object-top', imageClassName)}
+            />
           </div>
 
           <div className='space-y-4'>

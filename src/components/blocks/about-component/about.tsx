@@ -36,7 +36,7 @@ const AboutUs = () => (
         width={960}
         height={1344}
         loading='lazy'
-        className='mx-auto w-full max-w-sm rounded-2xl'
+        className='img-outline mx-auto w-full max-w-sm rounded-2xl'
       />
     </ContentLayout>
   </section>

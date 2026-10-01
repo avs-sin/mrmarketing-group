@@ -40,7 +40,7 @@ function NavigationMenuItem({ className, ...props }: React.ComponentPropsWithRef
 }
 
 const navigationMenuTriggerStyle = cva(
-  'group/navigation-menu-trigger hover:bg-muted focus:bg-muted focus-visible:ring-ring/30 data-popup-open:bg-muted/50 data-popup-open:hover:bg-muted data-open:bg-muted/50 data-open:hover:bg-muted data-open:focus:bg-muted inline-flex h-9 w-max items-center justify-center rounded-3xl px-4.5 py-2.5 text-sm font-medium transition-all outline-none focus-visible:ring-3 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50'
+  'group/navigation-menu-trigger hover:bg-muted focus:bg-muted focus-visible:ring-ring/30 data-popup-open:bg-muted/50 data-popup-open:hover:bg-muted data-open:bg-muted/50 data-open:hover:bg-muted data-open:focus:bg-muted inline-flex h-9 w-max items-center justify-center rounded-3xl px-4.5 py-2.5 text-sm font-medium transition-[color,background-color,box-shadow] duration-150 ease-out outline-none focus-visible:ring-3 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50'
 )
 
 function NavigationMenuTrigger({ className, children, ...props }: NavigationMenuPrimitive.Trigger.Props) {
@@ -52,7 +52,7 @@ function NavigationMenuTrigger({ className, children, ...props }: NavigationMenu
     >
       {children}{' '}
       <IconChevronDown
-        className='relative top-px ml-1 size-3 transition duration-300 group-data-open/navigation-menu-trigger:rotate-180 group-data-popup-open/navigation-menu-trigger:rotate-180'
+        className='relative top-px ml-1 size-3 transition-[rotate] duration-150 ease-out group-data-open/navigation-menu-trigger:rotate-180 group-data-popup-open/navigation-menu-trigger:rotate-180'
         aria-hidden='true'
       />
     </NavigationMenuPrimitive.Trigger>
@@ -106,7 +106,7 @@ function NavigationMenuLink({ className, ...props }: NavigationMenuPrimitive.Lin
     <NavigationMenuPrimitive.Link
       data-slot='navigation-menu-link'
       className={cn(
-        "hover:bg-muted focus:bg-muted focus-visible:ring-ring/30 data-[active=true]:bg-muted/50 data-[active=true]:hover:bg-muted data-[active=true]:focus:bg-muted flex items-center gap-1.5 rounded-3xl p-3 text-sm transition-all outline-none focus-visible:ring-3 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-2xl [&_svg:not([class*='size-'])]:size-4",
+        "hover:bg-muted focus:bg-muted focus-visible:ring-ring/30 data-[active=true]:bg-muted/50 data-[active=true]:hover:bg-muted data-[active=true]:focus:bg-muted flex items-center gap-1.5 rounded-3xl p-3 text-sm transition-[color,background-color,box-shadow] duration-150 ease-out outline-none focus-visible:ring-3 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-lg [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}

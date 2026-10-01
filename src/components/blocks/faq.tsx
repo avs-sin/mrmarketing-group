@@ -31,12 +31,14 @@ const Faq = ({ faqItems, background }: { faqItems: FAQs; background?: string }) 
           {/* Left Accordion */}
           <div>
             <Accordion
-              className='w-full overflow-hidden rounded-lg border [&>*>[data-slot="accordion-content"]]:px-0'
+              className='shadow-surface w-full overflow-hidden rounded-lg border-0 [&>*>[data-slot="accordion-content"]]:px-0'
               defaultValue={['item-1']}
             >
               {firstHalf.map((item, index) => (
                 <AccordionItem key={index} value={`item-${index + 1}`} className='data-open:bg-transparent'>
-                  <AccordionTrigger className='px-2.5 text-lg font-medium'>{item.question}</AccordionTrigger>
+                  <AccordionTrigger className='px-2.5 font-sans text-base font-medium sm:text-lg'>
+                    {item.question}
+                  </AccordionTrigger>
                   <AccordionContent className='text-muted-foreground px-2.5 text-base'>{item.answer}</AccordionContent>
                 </AccordionItem>
               ))}
@@ -44,10 +46,12 @@ const Faq = ({ faqItems, background }: { faqItems: FAQs; background?: string }) 
           </div>
           {/* Right Accordion */}
           <div>
-            <Accordion className='w-full overflow-hidden rounded-lg border [&>*>[data-slot="accordion-content"]]:px-0'>
+            <Accordion className='shadow-surface w-full overflow-hidden rounded-lg border-0 [&>*>[data-slot="accordion-content"]]:px-0'>
               {secondHalf.map((item, index) => (
                 <AccordionItem key={index} value={`item-${index + 1}`}>
-                  <AccordionTrigger className='px-2.5 text-base'>{item.question}</AccordionTrigger>
+                  <AccordionTrigger className='px-2.5 font-sans text-base font-medium sm:text-lg'>
+                    {item.question}
+                  </AccordionTrigger>
                   <AccordionContent className='text-muted-foreground px-2.5 text-base'>{item.answer}</AccordionContent>
                 </AccordionItem>
               ))}

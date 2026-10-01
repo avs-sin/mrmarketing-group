@@ -33,7 +33,7 @@ export const MediaCard = ({ asset }: { asset: MediaAsset }) => {
 
   return (
     <article aria-label={asset.label} className='min-w-0'>
-      <div data-media-frame className='border-border relative aspect-9/16 overflow-hidden rounded-2xl border bg-black'>
+      <div data-media-frame className='img-outline relative aspect-9/16 overflow-hidden rounded-2xl bg-black'>
         {!playing || failed ? (
           <>
             <img
@@ -52,9 +52,10 @@ export const MediaCard = ({ asset }: { asset: MediaAsset }) => {
                 onClick={() => setPlaying(true)}
                 className='group focus-visible:outline-primary absolute inset-0 flex items-end justify-start bg-gradient-to-t from-black/55 via-transparent to-transparent p-4 transition-colors hover:bg-black/20 focus-visible:outline-4 focus-visible:outline-offset-[-4px]'
               >
-                <span className='flex items-center gap-2 rounded-full border border-white/30 bg-black/55 py-2 pr-4 pl-2 text-sm font-medium text-white backdrop-blur-sm transition-transform duration-300 group-hover:scale-105'>
+                <span className='flex items-center gap-2 rounded-full bg-black/55 py-2 pr-4 pl-2 text-sm font-medium text-white shadow-[0_0_0_1px_oklch(1_0_0/0.3)] backdrop-blur-sm transition-[scale] duration-200 ease-out group-hover:scale-105'>
                   <span className='bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-full'>
-                    <IconPlayerPlay aria-hidden className='size-4 fill-current' />
+                    {/* Optical centering: a triangle's visual centre sits right of its box centre */}
+                    <IconPlayerPlay aria-hidden className='size-4 translate-x-px fill-current' />
                   </span>
                   Play film
                 </span>

@@ -37,7 +37,7 @@ const ContactForm = () => (
           <li key={pillar.id}>
             <a
               href={mailto(`Discuss ${pillar.name}`)}
-              className='border-border hover:border-primary block rounded-lg border p-4 focus-visible:outline-2 focus-visible:outline-offset-2'
+              className='shadow-surface block rounded-lg p-4 transition-[box-shadow] duration-150 ease-out hover:shadow-[0_0_0_1px_var(--primary)] focus-visible:outline-2 focus-visible:outline-offset-2'
             >
               Discuss {pillar.name}
             </a>

@@ -28,7 +28,7 @@ const CTASection = () => {
                 </p>
 
                 <Button size='lg' render={<Link href='/contact-us' />} nativeButton={false}>
-                  Start a Project <IconPhoneCall />
+                  Start a Project <IconPhoneCall data-icon='inline-end' />
                 </Button>
               </div>
             </CardContent>

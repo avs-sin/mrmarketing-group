@@ -41,7 +41,7 @@ const HeroSection = ({ services }: { services: ServiceMetadata[] }) => (
               <Link
                 key={s.slug}
                 href={`/services/${s.slug}`}
-                className='border-border hover:border-primary focus-visible:outline-primary rounded-full border px-5 py-3 focus-visible:outline-2'
+                className='shadow-surface focus-visible:outline-primary rounded-full px-5 py-3 transition-[box-shadow,scale] duration-150 ease-out hover:shadow-[0_0_0_1px_var(--primary)] focus-visible:outline-2 active:scale-[0.96]'
               >
                 {s.title}
               </Link>

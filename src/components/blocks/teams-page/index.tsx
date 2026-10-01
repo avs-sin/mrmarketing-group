@@ -33,7 +33,10 @@ const HeroSection = () => {
           />
           <Button size='lg' className='group' render={<Link href='/contact-us' />} nativeButton={false}>
             Work With Us
-            <IconArrowRight className='transition-transform duration-200 group-hover:translate-x-0.5' />
+            <IconArrowRight
+              data-icon='inline-end'
+              className='transition-[translate] duration-150 ease-out group-hover:translate-x-0.5'
+            />
           </Button>
         </div>
       </ContentLayout>

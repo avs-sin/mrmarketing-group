@@ -38,10 +38,13 @@ const RecentProjects = ({ projectData }: { projectData: ProjectsProp[] }) => {
           <div className='space-x-4'>
             <Button size='lg' className='group' render={<Link href='/projects' />} nativeButton={false}>
               View More
-              <IconArrowRight className='transition-transform duration-200 group-hover:translate-x-0.5' />
+              <IconArrowRight
+                data-icon='inline-end'
+                className='transition-[translate] duration-150 ease-out group-hover:translate-x-0.5'
+              />
             </Button>
             <Button size='lg' variant='secondary' render={<Link href='/contact-us' />} nativeButton={false}>
-              Start a Project <IconPhoneCall />
+              Start a Project <IconPhoneCall data-icon='inline-end' />
             </Button>
           </div>
         </div>

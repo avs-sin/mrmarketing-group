@@ -100,7 +100,7 @@ const HeroSection = ({ orbitItems }: HeroSectionProps) => {
 
         <div className='space-x-4'>
           <Button size='lg' render={<Link href='/contact-us' />} nativeButton={false}>
-            Start a Project <IconPhoneCall />
+            Start a Project <IconPhoneCall data-icon='inline-end' />
           </Button>
           <Button
             size='lg'
@@ -110,7 +110,10 @@ const HeroSection = ({ orbitItems }: HeroSectionProps) => {
             nativeButton={false}
           >
             Our Work
-            <IconArrowRight className='transition-transform duration-200 group-hover:translate-x-0.5' />
+            <IconArrowRight
+              data-icon='inline-end'
+              className='transition-[translate] duration-150 ease-out group-hover:translate-x-0.5'
+            />
           </Button>
         </div>
 

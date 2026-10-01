@@ -65,27 +65,30 @@ const Footer = () => {
                   <div className='text-lg font-medium'>Agency</div>
                   <ul className='text-muted-foreground space-y-3'>
                     <li>
-                      <Link href='/' className='hover:text-foreground transition-colors duration-300'>
+                      <Link href='/' className='hover:text-foreground transition-colors duration-150 ease-out'>
                         Home
                       </Link>
                     </li>
                     <li>
-                      <Link href='/services' className='hover:text-foreground transition-colors duration-300'>
+                      <Link href='/services' className='hover:text-foreground transition-colors duration-150 ease-out'>
                         Services
                       </Link>
                     </li>
                     <li>
-                      <Link href='/projects' className='hover:text-foreground transition-colors duration-300'>
+                      <Link href='/projects' className='hover:text-foreground transition-colors duration-150 ease-out'>
                         Our work
                       </Link>
                     </li>
                     <li>
-                      <Link href='/about-us' className='hover:text-foreground transition-colors duration-300'>
+                      <Link href='/about-us' className='hover:text-foreground transition-colors duration-150 ease-out'>
                         About
                       </Link>
                     </li>
                     <li>
-                      <Link href='/contact-us' className='hover:text-foreground transition-colors duration-300'>
+                      <Link
+                        href='/contact-us'
+                        className='hover:text-foreground transition-colors duration-150 ease-out'
+                      >
                         Start a Project
                       </Link>
                     </li>
@@ -97,19 +100,22 @@ const Footer = () => {
                     <li>
                       <a
                         href={`mailto:${siteConfig.email}`}
-                        className='hover:text-foreground break-all transition-colors duration-300'
+                        className='hover:text-foreground break-all transition-colors duration-150 ease-out'
                       >
                         {siteConfig.email}
                       </a>
                     </li>
                     <li>
-                      <a href={siteConfig.phoneHref} className='hover:text-foreground transition-colors duration-300'>
+                      <a
+                        href={siteConfig.phoneHref}
+                        className='hover:text-foreground transition-colors duration-150 ease-out'
+                      >
                         {siteConfig.phone}
                       </a>
                     </li>
                     <li>{siteConfig.location}</li>
                     <li>
-                      <Link href='/teams' className='hover:text-foreground transition-colors duration-300'>
+                      <Link href='/teams' className='hover:text-foreground transition-colors duration-150 ease-out'>
                         Founder
                       </Link>
                     </li>
@@ -121,7 +127,10 @@ const Footer = () => {
                     <ul className='text-muted-foreground grid gap-3 sm:grid-cols-2'>
                       {servicePillars.map(pillar => (
                         <li key={pillar.id}>
-                          <Link href={pillar.href} className='hover:text-foreground'>
+                          <Link
+                            href={pillar.href}
+                            className='hover:text-foreground transition-colors duration-150 ease-out'
+                          >
                             {pillar.name}
                           </Link>
                         </li>

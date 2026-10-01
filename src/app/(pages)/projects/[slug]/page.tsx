@@ -129,15 +129,15 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
             <div className='space-x-4'>
               {metadata.liveWebsite && (
                 <Button size='lg' render={<Link target='_blank' href={metadata.liveWebsite} />} nativeButton={false}>
-                  Preview <IconEye />
+                  Preview <IconEye data-icon='inline-end' />
                 </Button>
               )}
               <Button size='lg' variant='secondary' render={<Link href='/contact-us' />} nativeButton={false}>
-                Start a Project <IconPhoneCall />
+                Start a Project <IconPhoneCall data-icon='inline-end' />
               </Button>
             </div>
           </div>
-          <Card className='bg-background border shadow-none'>
+          <Card className='bg-background shadow-surface ring-0'>
             <CardContent className='grid grid-cols-2 justify-items-center gap-4 sm:grid-cols-2'>
               <div className='flex flex-col items-center'>
                 <div className='text-base font-medium'>Industry</div>
@@ -150,16 +150,16 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
             </CardContent>
           </Card>
 
-          <div className='bg-background rounded-xl p-4 sm:p-6 md:p-10'>
+          <div className='bg-background rounded-[calc(var(--radius)*1.4+1rem)] p-4 sm:rounded-[calc(var(--radius)*1.4+1.5rem)] sm:p-6 md:p-10'>
             <img
               src={metadata.image}
               alt={metadata.title}
-              className='mx-auto max-h-160 w-full rounded-xl object-contain'
+              className='img-outline mx-auto max-h-160 w-full rounded-xl object-contain'
             />
           </div>
 
           {metadata.tools && metadata.tools.length > 0 && (
-            <Card className='bg-background border shadow-none ring-0'>
+            <Card className='bg-background shadow-surface ring-0'>
               <CardContent className='flex flex-wrap items-center gap-6'>
                 <span className='text-base font-semibold'>Tools:</span>
                 {metadata.tools.map(tool => {

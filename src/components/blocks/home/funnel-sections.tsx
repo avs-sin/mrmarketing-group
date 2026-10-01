@@ -49,7 +49,7 @@ export const Founder = () => {
           <h2 className='type-display text-5xl tracking-tight text-balance sm:text-7xl'>Maria Romano</h2>
           <ul className='mt-5 flex flex-wrap gap-2' aria-label='Roles'>
             {['Founder', 'Entrepreneur', 'Open-format DJ'].map(role => (
-              <li key={role} className='border-border rounded-full border px-3 py-1 text-sm font-medium'>
+              <li key={role} className='shadow-surface rounded-full px-3 py-1 text-sm font-medium'>
                 {role}
               </li>
             ))}
@@ -72,7 +72,7 @@ export const Founder = () => {
             Meet Maria and the agency
             <IconArrowUpRight
               aria-hidden
-              className='size-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
+              className='size-5 transition-[translate] duration-150 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
             />
           </Link>
         </div>
@@ -87,14 +87,14 @@ export const Founder = () => {
 export const Recognition = () => (
   <section className='py-16 sm:py-24 lg:py-32'>
     <ContentLayout className='grid items-center gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-12 lg:gap-24'>
-      <div className='bg-card border-border mx-auto w-full max-w-[18rem] rounded-3xl border p-3 sm:max-w-sm'>
+      <div className='bg-card shadow-surface mx-auto w-full max-w-[18rem] rounded-[calc(var(--radius)*1.8+0.75rem)] p-3 sm:max-w-sm'>
         <img
           src='/images/mrmg/refined/recognition.webp'
           alt='Deluxe Version Magazine graphic naming Maria Romano among the 40 Under Forty National Icons of 2026'
           width={960}
           height={1200}
           loading='lazy'
-          className='w-full rounded-2xl'
+          className='img-outline w-full rounded-2xl'
         />
       </div>
       <div>
@@ -140,10 +140,7 @@ export const AudienceAndProcess = () => (
           </p>
           <ul className='mt-6 flex flex-wrap gap-2' aria-label='Industries'>
             {industries.map(industry => (
-              <li
-                key={industry}
-                className='bg-background border-border rounded-full border px-4 py-2 text-sm font-medium'
-              >
+              <li key={industry} className='bg-background shadow-surface rounded-full px-4 py-2 text-sm font-medium'>
                 {industry}
               </li>
             ))}
@@ -152,7 +149,7 @@ export const AudienceAndProcess = () => (
       </div>
       <ol className='mt-14 grid gap-4 md:grid-cols-3 md:gap-6 lg:mt-20'>
         {steps.map(([title, body], i) => (
-          <li key={title} className='bg-background border-border relative rounded-2xl border p-6 sm:p-8'>
+          <li key={title} className='bg-background shadow-surface relative rounded-2xl p-6 sm:p-8'>
             <span aria-hidden className='type-display text-primary text-5xl leading-none'>
               0{i + 1}
             </span>
@@ -188,7 +185,7 @@ export const CTABand = ({ location, headline }: { location: string; headline: st
             <Button
               size='lg'
               variant='secondary'
-              className='h-12 px-6 text-base'
+              className='h-12 ps-6 pe-5.5 text-base'
               render={<Link href='/contact-us' data-track='cta_book_call' data-track-location={location} />}
               nativeButton={false}
             >
@@ -198,7 +195,7 @@ export const CTABand = ({ location, headline }: { location: string; headline: st
               href={siteConfig.phoneHref}
               data-track='cta_call_phone'
               data-track-location={`${location}_phone`}
-              className='inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/40 px-6 font-medium transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-white'
+              className='inline-flex h-12 items-center justify-center gap-2 rounded-full ps-5.5 pe-6 font-medium shadow-[0_0_0_1px_oklch(1_0_0/0.4)] transition-[background-color,scale] duration-150 ease-out hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-white active:scale-[0.96]'
             >
               <IconPhone aria-hidden className='size-5' />
               Call {siteConfig.phone}
@@ -207,7 +204,7 @@ export const CTABand = ({ location, headline }: { location: string; headline: st
               href={`mailto:${siteConfig.email}`}
               data-track='cta_email'
               data-track-location={`${location}_email`}
-              className='inline-flex h-12 items-center justify-center gap-2 rounded-full px-2 font-medium underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-white'
+              className='inline-flex h-12 items-center justify-center gap-2 rounded-full px-2 font-medium underline underline-offset-4 transition-[scale] duration-150 ease-out focus-visible:outline-2 focus-visible:outline-white active:scale-[0.96]'
             >
               <IconMail aria-hidden className='size-5' />
               Email Maria

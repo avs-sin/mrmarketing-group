@@ -358,9 +358,9 @@ const HeaderNavigationSmallScreen = ({
                   className='hover:bg-accent group data-[active=true]:bg-accent flex w-full items-center justify-between rounded-sm px-3 py-2 text-sm data-[active=true]:font-medium'
                 >
                   <div className='flex items-center gap-2'>{navItem.title}</div>
-                  <IconChevronRight className='size-4 shrink-0 transition-transform duration-300 group-data-panel-open:rotate-90' />
+                  <IconChevronRight className='size-4 shrink-0 stroke-[1.5] transition-[rotate] duration-150 ease-out group-data-panel-open:rotate-90' />
                 </CollapsibleTrigger>
-                <CollapsibleContent className='data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down overflow-hidden transition-all duration-300'>
+                <CollapsibleContent className='h-(--collapsible-panel-height) overflow-hidden transition-[height] duration-200 ease-out data-ending-style:h-0 data-starting-style:h-0'>
                   {navItem.splitItems
                     ? navItem.items.map((item, i) => (
                         <div key={i} className='mt-1.5'>
@@ -376,7 +376,7 @@ const HeaderNavigationSmallScreen = ({
                                 className='hover:bg-accent data-[active=true]:text-primary ml-4.5 flex items-center gap-2 rounded-sm px-3 py-2 text-sm data-[active=true]:font-medium'
                                 onClick={handleLinkClick}
                               >
-                                {subItem.icon ? subItem.icon : <IconCircle className='size-3' />}
+                                {subItem.icon ? subItem.icon : <IconCircle className='size-3 stroke-[1.5]' />}
                                 {subItem.title}
                               </Link>
                             )
@@ -394,7 +394,7 @@ const HeaderNavigationSmallScreen = ({
                             className='hover:bg-accent data-[active=true]:text-primary ml-3 flex items-center gap-2 rounded-sm px-3 py-2 text-sm data-[active=true]:font-medium'
                             onClick={handleLinkClick}
                           >
-                            {item.icon ? item.icon : <IconCircle className='size-3' />}
+                            {item.icon ? item.icon : <IconCircle className='size-3 stroke-[1.5]' />}
                             {item.title}
                           </Link>
                         )
