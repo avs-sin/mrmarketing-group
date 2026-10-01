@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
 type SectionHeaderProps = {
+  headingLevel?: 'h1' | 'h2'
   badge?: string
   title?: string
   description?: string
@@ -16,6 +17,7 @@ type SectionHeaderProps = {
 } & ComponentProps<'section'>
 
 export function SectionHeader({
+  headingLevel: Heading = 'h2',
   badge,
   title,
   description,
@@ -33,9 +35,11 @@ export function SectionHeader({
         </Badge>
       )}
 
-      <h2 className={cn('type-display text-4xl leading-none tracking-wide md:text-5xl lg:text-6xl', titleClassName)}>
+      <Heading
+        className={cn('type-display text-4xl leading-none tracking-wide md:text-5xl lg:text-6xl', titleClassName)}
+      >
         {title}
-      </h2>
+      </Heading>
 
       {description && (
         <p className={cn('text-muted-foreground max-w-2xl text-lg', descriptionClassName)}>{description}</p>

@@ -1,23 +1,24 @@
 // React Imports
 import type { ComponentType, SVGProps } from 'react'
 
-// Next Imports
 import Link from 'next/link'
+
+// Next Imports
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
 // Third-party Imports
-import { IconArrowUpRight, IconEye, IconPhoneCall } from '@tabler/icons-react'
+import { IconEye, IconPhoneCall } from '@tabler/icons-react'
+
+import { Button } from '@/components/ui/button'
 
 // Component Imports
 import MDXContent from '@/components/mdx-content'
 import RelatedProjectSection from '@/components/projects/related-project-section/related-project-section'
 import ContentLayout from '@/components/layout/content-layout'
 import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import CTASection from '@/components/blocks/cta-section'
 import { SectionHeader } from '@/components/ui/section-header'
-import TestimonialsComponent from '@/components/blocks/testimonials'
 import Faq from '@/components/blocks/faq'
 import BeamRays from '@/components/ui/beam-rays'
 
@@ -37,7 +38,6 @@ import FrammerIcon from '@/assets/svg/frammer-icon'
 import GithubIcon from '@/assets/svg/github-icon'
 import NotionIcon from '@/assets/svg/notion-icon'
 import MiroIcon from '@/assets/svg/miro-icon'
-import { testimonials } from '@/assets/data/testimonial'
 import { faqItems } from '@/assets/data/faq'
 
 const toolIcons: Record<string, ComponentType<SVGProps<SVGSVGElement>>> = {
@@ -120,6 +120,7 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
               duration={3}
             />
             <SectionHeader
+              headingLevel='h1'
               badge={metadata.slug}
               title={metadata.title}
               description={metadata.description}
@@ -137,7 +138,7 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
             </div>
           </div>
           <Card className='bg-background border shadow-none'>
-            <CardContent className='grid grid-cols-2 justify-items-center gap-4 sm:grid-cols-3 lg:grid-cols-5'>
+            <CardContent className='grid grid-cols-2 justify-items-center gap-4 sm:grid-cols-2'>
               <div className='flex flex-col items-center'>
                 <div className='text-base font-medium'>Industry</div>
                 <div className='text-muted-foreground text-sm'>{metadata.industry}</div>
@@ -146,40 +147,15 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
                 <div className='text-base font-medium'>Category</div>
                 <div className='text-muted-foreground text-sm'>{metadata.category}</div>
               </div>
-              <div className='flex flex-col items-center'>
-                <div className='text-base font-medium'>Timeline</div>
-                <div className='text-muted-foreground text-sm'>{metadata.timeline}</div>
-              </div>
-              <div className='flex flex-col items-center'>
-                <span className='text-base font-medium'>Live Website</span>
-                {metadata.liveWebsite ? (
-                  <Button
-                    variant='link'
-                    className='text-muted-foreground h-auto justify-start p-0 text-sm underline'
-                    render={<Link href={metadata.liveWebsite} target='_blank' rel='noopener noreferrer' />}
-                    nativeButton={false}
-                  >
-                    Visit Website <IconArrowUpRight className='size-4' />
-                  </Button>
-                ) : (
-                  <span className='text-muted-foreground text-base'>—</span>
-                )}
-              </div>
-              <div className='flex flex-col items-center max-sm:col-span-2'>
-                <div className='text-base font-medium'>Release Date</div>
-                <div className='text-muted-foreground text-sm'>
-                  {new Date(metadata.releaseDate ?? '').toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: '2-digit'
-                  })}
-                </div>
-              </div>
             </CardContent>
           </Card>
 
           <div className='bg-background rounded-xl p-4 sm:p-6 md:p-10'>
-            <img src={metadata.image} alt={metadata.title} className='mx-auto w-full rounded-xl object-cover' />
+            <img
+              src={metadata.image}
+              alt={metadata.title}
+              className='mx-auto max-h-160 w-full rounded-xl object-contain'
+            />
           </div>
 
           {metadata.tools && metadata.tools.length > 0 && (
@@ -205,7 +181,6 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
         </ContentLayout>
       </section>
       <RelatedProjectSection projects={relatedProjects} />
-      <TestimonialsComponent testimonials={testimonials} />
       <Faq faqItems={faqItems} background='bg-card' />
       <CTASection />
 

@@ -7,6 +7,8 @@ import { IconArrowRight, IconPhoneCall } from '@tabler/icons-react'
 // Next Imports
 import Link from 'next/link'
 
+import manifest from '@/assets/data/media-manifest.json'
+
 // Component Imports
 import ContentLayout from '@/components/layout/content-layout'
 import { SectionHeader } from '@/components/ui/section-header'
@@ -46,7 +48,13 @@ const HeroSection = async ({ badge, title, description, image, slug }: HeroSecti
             opacity={0.18}
             duration={3}
           />
-          <SectionHeader badge={badge} title={title} description={description} badgeClassName='bg-card z-1' />
+          <SectionHeader
+            headingLevel='h1'
+            badge={badge}
+            title={title}
+            description={description}
+            badgeClassName='bg-card z-1'
+          />
           <div className='space-x-4'>
             <Button size='lg' render={<Link href='/contact-us' />} nativeButton={false}>
               Start a Project <IconPhoneCall />
@@ -65,7 +73,11 @@ const HeroSection = async ({ badge, title, description, image, slug }: HeroSecti
         </div>
         <Card className='bg-background shadow-none ring-0'>
           <CardContent>
-            <img src={image} alt={title} className='max-h-120 w-full rounded-2xl border object-cover' />
+            <img
+              src={image}
+              alt={manifest.find(asset => asset.src === image || asset.poster === image)?.alt ?? title}
+              className='max-h-120 w-full rounded-2xl border bg-black object-contain'
+            />
           </CardContent>
         </Card>
         <div className='mt-10'>

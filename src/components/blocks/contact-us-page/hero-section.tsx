@@ -18,6 +18,7 @@ const HeroSection = () => {
             duration={3}
           />
           <SectionHeader
+            headingLevel='h1'
             badge='Contact Us'
             title='Start a Project.'
             description='Creative support built around your brand — from content and creator partnerships to events and meaningful collaborations.'

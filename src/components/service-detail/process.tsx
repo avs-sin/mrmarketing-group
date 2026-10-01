@@ -81,7 +81,7 @@ const Process = ({ data }: { data: TimelineEntry[] }) => {
             className='sticky top-28 items-start pt-2 text-start'
             badge='Process'
             title='Our Process'
-            description='From strategy to execution, our process ensures we create customized marketing plans that drive results. We understand your goals, tailor our approach, and execute with precision to deliver measurable success.'
+            description='We start with your audience, identity, and goals, shape a tailored creative direction, and bring the plan to life with consistent execution.'
           />
         </div>
         <div ref={ref} className='relative'>

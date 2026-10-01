@@ -1,13 +1,21 @@
 {
-  "name": "MR Marketing Group",
+  "name": "Mr. Marketing Group",
   "short_name": "MR Marketing",
-  "description": "Las Vegas full-service marketing agency for hospitality, nightlife, and restaurant brands.",
+  "description": "Las Vegas creative marketing agency combining strategy, content, social media, creator partnerships, and events.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#080808",
   "theme_color": "#e03020",
   "icons": [
-    { "src": "/favicon/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/favicon/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "/favicon/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }

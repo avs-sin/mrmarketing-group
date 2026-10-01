@@ -1,67 +1,56 @@
-// Next Imports
 import Link from 'next/link'
 
-// Component Imports
 import ContentLayout from '@/components/layout/content-layout'
-import { Card, CardContent, CardTitle, CardDescription } from '@/components/ui/card'
+import type { TeamProps } from '@/components/blocks/teams'
 
-// SVG Imports
-import GithubIcon from '@/assets/svg/github-icon'
-import InstagramIcon from '@/assets/svg/instagram-icon'
-
-export type TeamProps = {
-  src: string
-  title: string
-  description: string
-  isFeatured: boolean
-  href: string
-}
-
-const Teams = ({ teamMembers }: { teamMembers: TeamProps[] }) => {
-  return (
-    <section className='bg-card overflow-hidden py-8 sm:py-16 lg:py-24'>
-      <ContentLayout className='space-y-6'>
-        {Array.from({ length: Math.ceil(teamMembers.length / 4) }).map((_, index) => (
-          <div
-            key={index}
-            className='bg-background grid grid-cols-1 gap-6 rounded-2xl p-6 md:grid-cols-2 lg:grid-cols-4'
-          >
-            {teamMembers.slice(index * 4, index * 4 + 4).map((item, i) => (
-              <Card
-                className='group border-primary/20 hover:border-primary relative h-full border text-base shadow-none ring-0 transition-all duration-300'
-                key={i}
-              >
-                <CardContent className='flex flex-col gap-4'>
-                  <div className='group relative flex w-full flex-col items-center justify-end overflow-hidden rounded-xl'>
-                    <img
-                      src={item.src}
-                      alt={item.title}
-                      className='h-68 w-full object-cover transition-transform duration-300 group-hover:scale-105'
-                    />
-                  </div>
-                  <div className='flex items-center justify-between'>
-                    <div>
-                      <CardTitle className='text-lg font-semibold'> {item.title}</CardTitle>
-                      <CardDescription className='text-base'>{item.description}</CardDescription>
-                    </div>
-                    <div className='flex gap-2.5'>
-                      <Link href='#'>
-                        {' '}
-                        <GithubIcon className='size-5 text-black' />{' '}
-                      </Link>
-                      <Link href='#'>
-                        <InstagramIcon className='size-5 text-sky-600' />{' '}
-                      </Link>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+const Teams = ({ teamMembers }: { teamMembers: TeamProps[] }) => (
+  <section className='bg-card py-16 sm:py-24'>
+    <ContentLayout>
+      {teamMembers.map(member => (
+        <div key={member.title} className='grid items-center gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20'>
+          <img
+            src={member.src}
+            alt='Maria Romano seated, smiling at the camera'
+            width={960}
+            height={1440}
+            loading='lazy'
+            className='mx-auto w-full max-w-sm rounded-2xl'
+          />
+          <div>
+            <p className='text-primary mb-4 text-sm tracking-widest uppercase'>Our founder</p>
+            <h2 className='type-display text-5xl sm:text-7xl'>{member.title}</h2>
+            <p className='mt-4 text-lg font-medium'>{member.description}</p>
+            <div className='text-muted-foreground mt-7 max-w-2xl space-y-5 text-lg leading-relaxed'>
+              <p>
+                Maria Romano is the founder of Mr. Marketing Group, a creative marketing agency based in Las Vegas. With
+                more than a decade of experience in nightlife, hospitality, dining, and entertainment, she brings a
+                firsthand understanding of what draws people to a brand - and keeps them coming back.
+              </p>
+              <p>
+                As an entrepreneur and open-format DJ, Maria has built her career around connecting with people. Her
+                ability to read an audience shapes her approach to marketing, combining thoughtful strategy, cinematic
+                content, and experiences that give brands a distinct identity.
+              </p>
+              <p>
+                Through Mr. Marketing Group and its creator program, The Mr. Collective, Maria brings businesses and
+                creatives together to tell compelling stories. She stays closely involved in the creative process,
+                helping turn each client&#x27;s vision into a brand presence that feels authentic, polished, and
+                memorable.
+              </p>
+            </div>
+            <Link
+              href={member.href}
+              target='_blank'
+              rel='noopener noreferrer'
+              className='mt-7 inline-block py-2 underline underline-offset-4'
+            >
+              Maria on Instagram
+            </Link>
           </div>
-        ))}
-      </ContentLayout>
-    </section>
-  )
-}
+        </div>
+      ))}
+    </ContentLayout>
+  </section>
+)
 
 export default Teams

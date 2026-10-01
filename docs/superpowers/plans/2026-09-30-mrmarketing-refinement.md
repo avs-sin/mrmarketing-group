@@ -8,7 +8,7 @@
 
 **Tech Stack:** Existing Next.js 16.2.6, React 19.2.6, Tailwind 4.3.0, TypeScript, MDX, pnpm; FFmpeg and Pillow for offline assets; Node built-in tests for asset contracts and Playwright for behavioral checks.
 
-**Spec:** `docs/superpowers/specs/2026-09-30-mrmarketing-refinement-design.md`; media selections: `docs/superpowers/specs/2026-09-30-mrmarketing-media-review.md`. Both are proposed for user review, not approved implementation instructions yet.
+**Spec:** `docs/superpowers/specs/2026-09-30-mrmarketing-refinement-design.md`; media selections: `docs/superpowers/specs/2026-09-30-mrmarketing-media-review.md`. The user selected executing-plans for local implementation. Publishing is not requested.
 
 ## Global Constraints
 

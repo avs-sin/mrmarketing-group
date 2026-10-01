@@ -32,8 +32,8 @@ const RecentProjects = ({ projectData }: { projectData: ProjectsProp[] }) => {
         {/* Header */}
         <div className='mb-12 space-y-4 text-center sm:mb-16 lg:mb-24'>
           <SectionHeader
-            title='The Brands We Build.'
-            description='Restaurants, lounges, and event series across Las Vegas. Content, events, partnerships, and campaigns that fill rooms.'
+            title='Selected Portfolio.'
+            description='Explore selected content, creative, and event portfolio entries.'
           />
           <div className='space-x-4'>
             <Button size='lg' className='group' render={<Link href='/projects' />} nativeButton={false}>
@@ -53,7 +53,7 @@ const RecentProjects = ({ projectData }: { projectData: ProjectsProp[] }) => {
                 title={project.title ?? ''}
                 description={project.description ?? ''}
                 image={project.image ?? ''}
-                imageClassName='rounded-md object-top object-cover md:h-75 md:w-full'
+                imageClassName='rounded-md bg-black object-contain md:h-75 md:w-full'
               />
             </Link>
           ))}

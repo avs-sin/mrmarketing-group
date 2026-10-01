@@ -6,7 +6,6 @@ import type { Metadata } from 'next'
 import HeroSection from '@/components/service-detail/hero-section'
 import WhatWeDo from '@/components/service-detail/what-we-do/what-we-do'
 import Process from '@/components/service-detail/process'
-import TestimonialsComponent from '@/components/blocks/testimonials'
 import Faq from '@/components/blocks/faq'
 import CTASection from '@/components/blocks/cta-section'
 
@@ -21,7 +20,6 @@ import {
 } from '@/lib/seo'
 
 // Data Imports
-import { testimonials } from '@/assets/data/testimonial'
 import { faqItems } from '@/assets/data/faq'
 
 export async function generateStaticParams() {
@@ -89,7 +87,6 @@ const ServiceDetailsPage = async ({ params }: { params: Promise<{ slug: string }
         items={metadata.whatWeDoItems}
       />
       <Process data={metadata.process ?? []} />
-      <TestimonialsComponent testimonials={testimonials} />
       <Faq faqItems={faqItems} background='bg-card' />
       <CTASection />
 

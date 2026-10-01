@@ -41,15 +41,19 @@ const ContactUs = ({ contactCards }: { contactCards: ContactCard }) => {
           <CardContent className='grid gap-9 md:grid-cols-2'>
             <ContactForm />
 
-            {/* Map Section */}
-            <div className='rounded-xl border'>
-              <iframe
-                className='size-full min-h-100 rounded-xl'
+            <figure className='mx-auto w-full max-w-sm self-center'>
+              <img
+                src='/images/mrmg/refined/founder-alternate.webp'
+                alt='Maria Romano seated in a bright interior'
+                width={960}
+                height={1440}
                 loading='lazy'
-                src='https://maps.google.com/maps?hl=en&q=Las%20Vegas%2C%20NV&t=&z=11&ie=UTF8&iwloc=B&output=embed'
-                title='Google Maps'
+                className='w-full rounded-xl'
               />
-            </div>
+              <figcaption className='text-muted-foreground mt-4 text-sm'>
+                Maria Romano · Founder, Mr. Marketing Group
+              </figcaption>
+            </figure>
           </CardContent>
         </Card>
 

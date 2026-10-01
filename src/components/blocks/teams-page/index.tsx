@@ -25,9 +25,10 @@ const HeroSection = () => {
             duration={3}
           />
           <SectionHeader
+            headingLevel='h1'
             badge='Founder'
             title='The Person Behind the Brands'
-            description='MR Marketing Group is led by Maria Romano, a professional DJ, marketer, and Las Vegas creative.'
+            description='Mr. Marketing Group is led by Maria Romano, an entrepreneur and open-format DJ with more than a decade of industry experience.'
             badgeClassName='bg-card z-1'
           />
           <Button size='lg' className='group' render={<Link href='/contact-us' />} nativeButton={false}>

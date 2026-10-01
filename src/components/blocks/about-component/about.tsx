@@ -1,48 +1,45 @@
-// Next Imports
 import Link from 'next/link'
 
-// Third-party Imports
-import { IconArrowRight } from '@tabler/icons-react'
-
-// Component Imports
-import { Button } from '@/components/ui/button'
-import { SectionHeader } from '@/components/ui/section-header'
 import ContentLayout from '@/components/layout/content-layout'
 
-const AboutUs = () => {
-  return (
-    <section className='overflow-x-hidden py-8 sm:py-16 lg:py-24'>
-      <ContentLayout>
-        <div className='grid grid-cols-1 items-center gap-16 xl:h-130 xl:grid-cols-2'>
-          <div className='max-w-2xl space-y-8 sm:space-y-16 lg:space-y-24'>
-            <div className='space-y-4'>
-              <SectionHeader
-                title='We Are MR Marketing Group'
-                description='MR Marketing Group is a Las Vegas-based full-service marketing agency built at the intersection of nightlife, hospitality, and creator culture. We work with restaurants, nightlife venues, and entertainment brands to build real presence, online and in the room. From flyers to full campaigns, we make brands impossible to ignore.'
-                className='items-start text-left'
-              />
-
-              <div className='flex gap-4'>
-                <Button className='group' size='lg' render={<Link href='/about-us' />} nativeButton={false}>
-                  Work With Us
-                  <IconArrowRight className='transition-transform duration-200 group-hover:translate-x-0.5' />
-                </Button>
-              </div>
-            </div>
-          </div>
-          <div className='relative h-full max-xl:h-130'>
-            <div className='relative mx-auto w-fit'>
-              <img
-                src='/images/mrmg/about-founder.webp'
-                alt='DJ decks under red light'
-                className='pointer-events-none relative h-120 w-full rounded-3xl object-cover'
-              />
-            </div>
-          </div>
+const AboutUs = () => (
+  <section className='py-16 sm:py-24'>
+    <ContentLayout className='grid items-center gap-12 lg:grid-cols-[1.3fr_0.7fr]'>
+      <div>
+        <p className='text-primary mb-4 text-sm tracking-widest uppercase'>The agency</p>
+        <h2 className='type-display text-5xl sm:text-6xl'>Strategy meets storytelling.</h2>
+        <div className='text-muted-foreground mt-7 max-w-2xl space-y-5 text-lg leading-relaxed'>
+          <p>
+            Mr. Marketing Group is a Las Vegas-based creative marketing agency helping businesses build distinctive
+            brands, connect with their audiences, and grow. We bring strategy and storytelling together through social
+            media management, cinematic content production, branding, influencer partnerships, digital advertising, and
+            events.
+          </p>
+          <p>
+            Founded by Maria Romano, MMG draws on more than a decade of experience in hospitality, nightlife, dining,
+            and entertainment. That experience shapes our approach: understand the audience, capture what makes a
+            business special, and create experiences people remember.
+          </p>
+          <p>
+            From restaurants and luxury real estate to hospitality, healthcare, and professional services, we tailor
+            every strategy to the brand behind it. We work as an extension of your team, bringing creative direction,
+            consistent execution, and a clear purpose to every campaign.
+          </p>
         </div>
-      </ContentLayout>
-    </section>
-  )
-}
+        <Link href='/contact-us' className='mt-8 inline-block py-2 font-medium underline underline-offset-4'>
+          Work with us
+        </Link>
+      </div>
+      <img
+        src='/images/mrmg/refined/recognition-event.webp'
+        alt='Maria Romano at a recognition event'
+        width={960}
+        height={1344}
+        loading='lazy'
+        className='mx-auto w-full max-w-sm rounded-2xl'
+      />
+    </ContentLayout>
+  </section>
+)
 
 export default AboutUs

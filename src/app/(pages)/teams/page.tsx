@@ -17,19 +17,18 @@ import {
 import { teamMembers } from '@/assets/data/team-members'
 
 export const metadata: Metadata = generateSEOMetadata({
-  title: 'Teams',
-  description: 'Meet Maria Romano, founder of MR Marketing Group: professional DJ, marketer, and Las Vegas creative.',
+  title: 'Founder',
+  description: 'Meet Maria Romano, founder of Mr. Marketing Group, entrepreneur and open-format DJ.',
   url: '/teams',
-  keywords: ['team', 'people', 'about', 'culture', 'careers']
+  keywords: ['Maria Romano', 'founder', 'open-format DJ', 'Las Vegas']
 })
 
 const TeamsPage = () => {
   const jsonLd = combineSchemas(
     generateWebsiteSchema(),
     generateWebPageSchema({
-      name: 'Teams',
-      description:
-        'Meet Maria Romano, founder of MR Marketing Group: professional DJ, marketer, and Las Vegas creative.',
+      name: 'Founder',
+      description: 'Meet Maria Romano, founder of Mr. Marketing Group, entrepreneur and open-format DJ.',
       url: '/teams'
     })
   )

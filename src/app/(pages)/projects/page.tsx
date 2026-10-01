@@ -15,8 +15,7 @@ import { getProjects } from '@/lib/projects'
 
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Projects',
-  description:
-    "The Las Vegas restaurants, lounges, and event brands we build: Chef's Roma Kitchen, Tuscan Cove, Saffron Lounge, MADE Events, and Past Curfew.",
+  description: 'Selected creative work and portfolio entries from Mr. Marketing Group.',
   url: '/projects',
   keywords: ['projects', 'portfolio', 'case studies', 'work']
 })
@@ -28,8 +27,7 @@ const ProjectsPage = async () => {
     generateWebsiteSchema(),
     generateWebPageSchema({
       name: 'Projects',
-      description:
-        "The Las Vegas restaurants, lounges, and event brands we build: Chef's Roma Kitchen, Tuscan Cove, Saffron Lounge, MADE Events, and Past Curfew.",
+      description: 'Selected creative work and portfolio entries from Mr. Marketing Group.',
       url: '/projects'
     })
   )

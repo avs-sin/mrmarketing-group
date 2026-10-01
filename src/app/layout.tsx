@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     template: `%s | ${siteConfig.name}`,
-    default: `${siteConfig.name} | Las Vegas Full-Service Marketing Agency`
+    default: `${siteConfig.name} | Las Vegas Creative Marketing Agency`
   },
   description: siteConfig.description,
   robots: 'index,follow',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     'event marketing',
     'content creation',
     'brand strategy',
-    'MR Marketing Group'
+    'Mr. Marketing Group'
   ],
   authors: [
     {

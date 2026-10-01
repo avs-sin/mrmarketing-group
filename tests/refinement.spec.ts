@@ -64,6 +64,7 @@ test('portrait_layout_has_no_overflow', async ({ page }) => {
     await expect.poll(() => image.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true)
   }
 
+  await page.evaluate(() => window.scrollTo(0, 0))
   await page.screenshot({
     path: `.superpowers/sdd/2026-09-30-mrmarketing-refinement/home-${page.viewportSize()!.width}.png`,
     fullPage: true
@@ -113,4 +114,72 @@ test('contact_never_claims_unsent_delivery', async ({ page }) => {
   await expect(page.locator('main form')).toHaveCount(0)
   await expect(page.locator('main')).not.toContainText(/inquiry received|Maria will call|you.re booked/i)
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+})
+
+test('all_selected_clips_play_and_captions_load', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'load' })
+
+  for (const label of [
+    'Restaurant content',
+    'Restaurant collaboration',
+    'Community event coverage',
+    'Maria’s approach'
+  ]) {
+    const card = page.getByRole('article', { name: label, exact: true })
+
+    await card.getByRole('button', { name: `Play ${label}`, exact: true }).click()
+    const video = card.locator('video')
+
+    await expect.poll(() => video.evaluate((el: HTMLVideoElement) => el.currentTime)).toBeGreaterThan(0)
+    expect(await video.evaluate((el: HTMLVideoElement) => el.videoWidth / el.videoHeight)).toBeCloseTo(9 / 16)
+    await video.evaluate((el: HTMLVideoElement) => {
+      el.textTracks[0].mode = 'hidden'
+    })
+    await expect
+      .poll(() => video.evaluate((el: HTMLVideoElement) => el.textTracks[0].cues?.length ?? 0))
+      .toBeGreaterThan(0)
+    await video.evaluate((el: HTMLVideoElement) => el.pause())
+  }
+})
+
+test('supporting_pages_load_images_and_fit_viewport', async ({ page }) => {
+  for (const route of [
+    '/about-us',
+    '/teams',
+    '/services',
+    '/services/the-mr-collective',
+    '/contact-us',
+    '/projects',
+    '/projects/tuscan-cove'
+  ]) {
+    const errors: string[] = []
+    const onError = (e: Error) => errors.push(e.message)
+
+    page.on('pageerror', onError)
+    await page.goto(route, { waitUntil: 'load' })
+    await expect(page.locator('main h1')).toBeVisible()
+
+    for (const image of await page.locator('main img').all()) {
+      await image.scrollIntoViewIfNeeded()
+      await expect.poll(() => image.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true)
+    }
+
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), route).toBe(true)
+    expect(errors, route).toEqual([])
+    await page.evaluate(() => window.scrollTo(0, 0))
+    await page.screenshot({
+      path: `.superpowers/sdd/2026-09-30-mrmarketing-refinement/${route.slice(1).replaceAll('/', '-')}-${page.viewportSize()!.width}.png`,
+      fullPage: true
+    })
+    page.off('pageerror', onError)
+  }
+})
+
+test('service_detail_has_no_empty_sections_or_template_assets', async ({ page }) => {
+  await page.goto('/services/the-mr-collective', { waitUntil: 'load' })
+  const headings = await page.locator('main h2, main h3').allTextContents()
+
+  expect(headings.filter(text => !text.trim())).toEqual([])
+  await expect(page.locator('main img[src*="/images/logos/"]')).toHaveCount(0)
+  await expect(page.locator('main img[src*="Sample Code"]')).toHaveCount(0)
 })

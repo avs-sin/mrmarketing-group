@@ -30,9 +30,10 @@ const ProjectSection = ({ projects }: { projects: ProjectMetadata[] }) => {
             duration={3}
           />
           <SectionHeader
-            badge='Our Clients'
-            title='The Brands We Build.'
-            description='Restaurants, lounges, and event series across Las Vegas. Content, events, partnerships, and campaigns that fill rooms.'
+            headingLevel='h1'
+            badge='Selected work'
+            title='Stories. People. Experiences.'
+            description='Explore real content from our latest media, alongside selected portfolio entries.'
             badgeClassName='z-1 bg-card'
           />
           <div className='space-x-4'>
@@ -43,10 +44,10 @@ const ProjectSection = ({ projects }: { projects: ProjectMetadata[] }) => {
               size='lg'
               className='group'
               variant='secondary'
-              render={<Link href='/#pricing' />}
+              render={<Link href='/#work' />}
               nativeButton={false}
             >
-              View Pricing
+              Watch selected work
               <IconArrowRight className='transition-transform duration-200 group-hover:translate-x-0.5' />
             </Button>
           </div>
@@ -60,7 +61,7 @@ const ProjectSection = ({ projects }: { projects: ProjectMetadata[] }) => {
                 title={project.title ?? ''}
                 description={project.description ?? ''}
                 image={project.image ?? ''}
-                imageClassName='rounded-md object-top object-cover md:h-75 md:w-full'
+                imageClassName='rounded-md bg-black object-contain md:h-75 md:w-full'
               />
             </Link>
           ))}
