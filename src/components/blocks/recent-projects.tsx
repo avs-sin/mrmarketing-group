@@ -62,7 +62,7 @@ const RecentProjects = ({ projectData }: { projectData: ProjectsProp[] }) => {
                 title={project.title ?? ''}
                 description={project.description ?? ''}
                 image={project.image ?? ''}
-                imageClassName='rounded-md bg-black object-contain md:h-75 md:w-full'
+                imageClassName='aspect-video w-full rounded-md object-cover'
               />
             </Link>
           ))}

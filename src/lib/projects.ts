@@ -26,6 +26,9 @@ export type ProjectMetadata = {
 
   /** Offering ids (see service-pillars) behind this work */
   services?: string[]
+
+  /** media-manifest id of a film to play on the project page */
+  video?: string
 }
 
 // local content directory (comment below line if using remote fetching)

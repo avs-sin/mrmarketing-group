@@ -7,7 +7,7 @@ import { IconArrowRight, IconPhoneCall } from '@tabler/icons-react'
 // Next Imports
 import Link from 'next/link'
 
-import manifest from '@/assets/data/media-manifest.json'
+import MediaFeature from '@/components/blocks/media-feature'
 
 // Component Imports
 import ContentLayout from '@/components/layout/content-layout'
@@ -84,11 +84,7 @@ const HeroSection = async ({ badge, title, description, image, slug }: HeroSecti
         </div>
         <Card className='bg-background rounded-[calc(var(--radius)*1.8+1.5rem)] shadow-none ring-0'>
           <CardContent>
-            <img
-              src={image}
-              alt={manifest.find(asset => asset.src === image || asset.poster === image)?.alt ?? title}
-              className='img-outline max-h-120 w-full rounded-2xl bg-black object-contain'
-            />
+            <MediaFeature image={image} alt={title ?? ''} />
           </CardContent>
         </Card>
         <div className='mt-10'>

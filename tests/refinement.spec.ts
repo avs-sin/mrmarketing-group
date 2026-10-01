@@ -292,3 +292,31 @@ test('service_and_project_pages_preselect_their_offering', async ({ request }) =
     expect(html, route).toContain(`href="/contact-us?service=${service}#inquiry"`)
   }
 })
+
+test('video_stills_only_appear_as_playable_films', async ({ page }) => {
+  for (const route of [
+    '/',
+    '/services',
+    '/projects',
+    '/services/content-creation',
+    '/services/the-mr-collective',
+    '/services/event-marketing',
+    '/services/social-media-management',
+    '/projects/tuscan-cove'
+  ]) {
+    await page.goto(route, { waitUntil: 'domcontentloaded' })
+
+    // A poster frame anywhere else looks like a video that can't be played
+    const orphanStills = await page.evaluate(() =>
+      [...document.querySelectorAll('img')]
+        .filter(img => /-poster\.webp/.test(img.src))
+        .filter(img => !img.closest('article')?.querySelector('button[aria-label^="Play"]'))
+        .map(img => img.src)
+    )
+
+    expect(orphanStills, route).toEqual([])
+  }
+
+  await page.goto('/services/event-marketing', { waitUntil: 'load' })
+  await expect(page.getByRole('button', { name: 'Play Community event coverage', exact: true })).toBeVisible()
+})

@@ -19,6 +19,7 @@ import ContentLayout from '@/components/layout/content-layout'
 import { Card, CardContent } from '@/components/ui/card'
 import { CTABand } from '@/components/blocks/home/funnel-sections'
 import PillarLinks from '@/components/blocks/funnel/pillar-links'
+import MediaFeature from '@/components/blocks/media-feature'
 import { getPillar, inquiryHref, projectPillars } from '@/lib/funnel'
 import { servicePillars } from '@/assets/data/service-pillars'
 import { SectionHeader } from '@/components/ui/section-header'
@@ -174,11 +175,7 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
           </Card>
 
           <div className='bg-background rounded-[calc(var(--radius)*1.4+1rem)] p-4 sm:rounded-[calc(var(--radius)*1.4+1.5rem)] sm:p-6 md:p-10'>
-            <img
-              src={metadata.image}
-              alt={metadata.title}
-              className='img-outline mx-auto max-h-160 w-full rounded-xl object-contain'
-            />
+            <MediaFeature image={metadata.image} video={metadata.video} alt={metadata.title ?? ''} />
           </div>
 
           {metadata.tools && metadata.tools.length > 0 && (

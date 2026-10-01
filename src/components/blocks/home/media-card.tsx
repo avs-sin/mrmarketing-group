@@ -1,6 +1,8 @@
 'use client'
 
-import { useState, useSyncExternalStore } from 'react'
+import { useRef, useState, useSyncExternalStore } from 'react'
+
+import { flushSync } from 'react-dom'
 
 import Link from 'next/link'
 import { IconPlayerPlay } from '@tabler/icons-react'
@@ -30,6 +32,16 @@ export const MediaCard = ({ asset }: { asset: MediaAsset }) => {
 
   const [playing, setPlaying] = useState(false)
   const [failed, setFailed] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  // Mount the player synchronously and call play() while still inside the tap: iOS Safari only allows
+  // unmuted playback that starts within the user gesture, so playing after a later re-render can stall.
+  const start = () => {
+    flushSync(() => setPlaying(true))
+    void videoRef.current?.play().catch(() => {
+      /* Native controls remain available if playback is denied. */
+    })
+  }
 
   return (
     <article aria-label={asset.label} className='min-w-0'>
@@ -49,7 +61,7 @@ export const MediaCard = ({ asset }: { asset: MediaAsset }) => {
                 type='button'
                 disabled={!ready}
                 aria-label={`Play ${asset.label}`}
-                onClick={() => setPlaying(true)}
+                onClick={start}
                 className='group focus-visible:outline-primary absolute inset-0 flex items-end justify-start bg-gradient-to-t from-black/55 via-transparent to-transparent p-4 transition-colors hover:bg-black/20 focus-visible:outline-4 focus-visible:outline-offset-[-4px]'
               >
                 <span className='flex items-center gap-2 rounded-full bg-black/55 py-2 pr-4 pl-2 text-sm font-medium text-white shadow-[0_0_0_1px_oklch(1_0_0/0.3)] backdrop-blur-sm transition-[scale] duration-200 ease-out group-hover:scale-105'>
@@ -64,12 +76,7 @@ export const MediaCard = ({ asset }: { asset: MediaAsset }) => {
           </>
         ) : (
           <video
-            ref={node => {
-              if (node)
-                void node.play().catch(() => {
-                  /* Native controls remain available if playback is denied. */
-                })
-            }}
+            ref={videoRef}
             src={asset.src}
             poster={asset.poster}
             controls
