@@ -31,8 +31,7 @@ const Footer = () => {
                   <Logo variant='white' />
                 </Link>
                 <p className='text-muted-foreground'>
-                  Las Vegas full-service marketing agency for hospitality, nightlife, and restaurant brands. Beyond
-                  Content. Built for Culture.
+                  A Las Vegas creative marketing agency. Strategy, storytelling, and experiences tailored to your brand.
                 </p>
                 <div className='flex items-center gap-4'>
                   <Link
@@ -77,7 +76,7 @@ const Footer = () => {
                     </li>
                     <li>
                       <Link href='/projects' className='hover:text-foreground transition-colors duration-300'>
-                        Clients
+                        Our work
                       </Link>
                     </li>
                     <li>

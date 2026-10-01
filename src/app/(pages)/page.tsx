@@ -22,7 +22,7 @@ import Testimonials from '@/components/blocks/testimonials'
 // Util Imports
 import { generateMetadata as generateSEOMetadata, combineSchemas, generateWebsiteSchema } from '@/lib/seo'
 import { getProjects } from '@/lib/projects'
-import { getServices } from '@/lib/services'
+import { servicePillars } from '@/assets/data/service-pillars'
 
 // Data Imports
 import { faqItems } from '@/assets/data/faq'
@@ -37,21 +37,6 @@ export const metadata: Metadata = generateSEOMetadata({
 
 const Home = async () => {
   const projects = await getProjects()
-
-  const serviceOrder = [
-    'content-creation',
-    'event-marketing',
-    'brand-strategy',
-    'social-media-management',
-    'sponsorship-partnerships',
-    'flyers-creative-design',
-    'paid-advertising'
-  ]
-
-  const services = (await getServices())
-    .filter(s => serviceOrder.includes(s.slug))
-    .sort((a, b) => serviceOrder.indexOf(a.slug) - serviceOrder.indexOf(b.slug))
-    .map(s => ({ slug: s.slug, title: s.title ?? '', description: s.description ?? '', image: s.image ?? '' }))
 
   const jsonLd = combineSchemas(generateWebsiteSchema())
 
@@ -70,7 +55,7 @@ const Home = async () => {
       <TheStack />
       <RiskReversal />
       <CTABand location='home_mid' headline='Book the call. Bring your event calendar.' />
-      <ServicesBoard services={services} />
+      <ServicesBoard services={servicePillars} />
       <RecentProjects projectData={featuredProjects} />
       <Testimonials testimonials={testimonials} />
       <Pricing plans={plans} />

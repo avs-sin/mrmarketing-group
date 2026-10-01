@@ -6,7 +6,6 @@ import CTASection from '@/components/blocks/cta-section'
 import Faq from '@/components/blocks/faq'
 import HeroSection from '@/components/blocks/service-page-hero-section'
 import RecentProjects from '@/components/blocks/recent-projects'
-import TestimonialsComponent from '@/components/blocks/testimonials'
 
 // Util Imports
 import { generateMetadata as generateSEOMetadata, combineSchemas, generateWebsiteSchema } from '@/lib/seo'
@@ -15,12 +14,11 @@ import { getServices } from '@/lib/services'
 
 // Data Imports
 import { faqItems } from '@/assets/data/faq'
-import { testimonials } from '@/assets/data/testimonial'
 
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Services',
   description:
-    'MR Marketing Group services: content creation, event marketing, brand strategy, social media management, sponsorships and partnerships, flyers and creative design, and paid advertising for Las Vegas restaurants, venues, and entertainment brands.',
+    'Explore Mr. Creative, The Mr. Collective, Mr. Social, and Mr. Connected: content, social media, creators, experiences, and partnerships.',
   url: '/services'
 })
 
@@ -37,7 +35,6 @@ const Services = async () => {
     <div>
       <HeroSection services={services} />
       <RecentProjects projectData={featuredProjects} />
-      <TestimonialsComponent testimonials={testimonials} />
       <Faq faqItems={faqItems} background='bg-card' />
       <CTASection />
       {/* Add JSON-LD to your page */}

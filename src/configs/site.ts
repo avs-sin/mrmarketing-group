@@ -3,10 +3,10 @@ export type SiteConfig = typeof siteConfig
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 
 export const siteConfig = {
-  name: 'MR Marketing Group',
-  brand: 'MR Marketing Group',
+  name: 'Mr. Marketing Group',
+  brand: 'Mr. Marketing Group',
   description:
-    'MR Marketing Group is a Las Vegas-based full-service marketing agency specializing in content creation, event marketing, and brand strategy for restaurants, nightlife venues, and entertainment brands.',
+    'Mr. Marketing Group is a Las Vegas creative marketing agency combining strategy, cinematic content, social media, creator partnerships, and events.',
   url: baseUrl,
   ogImage: `${baseUrl}/images/og-image.png`,
   twitterHandle: '@wearemrmarketing',

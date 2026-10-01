@@ -55,10 +55,11 @@ const HeroSection = async ({ badge, title, description, image, slug }: HeroSecti
               size='lg'
               className='group'
               variant='secondary'
-              render={<Link href='/#pricing' />}
+              render={<Link href='/contact-us' />}
               nativeButton={false}
             >
-              View Pricing <IconArrowRight className='transition-transform duration-200 group-hover:translate-x-0.5' />
+              Discuss your project{' '}
+              <IconArrowRight className='transition-transform duration-200 group-hover:translate-x-0.5' />
             </Button>
           </div>
         </div>

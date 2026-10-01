@@ -1,3 +1,4 @@
+import { servicePillars } from '@/assets/data/service-pillars'
 // React Imports
 import type { ReactNode } from 'react'
 
@@ -15,45 +16,12 @@ const navigationData: Navigation[] = [
     title: 'Services',
     contentClassName: 'w-80!',
     items: [
-      {
-        title: 'Content Creation',
-        href: '/services/content-creation',
-        description: 'Short-form video, photography, Reels, and TikToks shot on-site.'
-      },
-      {
-        title: 'Event Marketing',
-        href: '/services/event-marketing',
-        description: 'Strategy, promotion, flyers, and day-of execution.'
-      },
-      {
-        title: 'Brand Strategy',
-        href: '/services/brand-strategy',
-        description: 'Positioning, voice, identity, and messaging.'
-      },
-      {
-        title: 'Social Media Management',
-        href: '/services/social-media-management',
-        description: 'Instagram, TikTok, and Facebook, fully managed.'
-      },
-      {
-        title: 'Sponsorship & Partnerships',
-        href: '/services/sponsorship-partnerships',
-        description: 'Liquor brands, local creators, and industry players.'
-      },
-      {
-        title: 'Flyers & Creative Design',
-        href: '/services/flyers-creative-design',
-        description: 'Promo materials for Stories, print, and everywhere else.'
-      },
-      {
-        title: 'Paid Advertising',
-        href: '/services/paid-advertising',
-        description: 'Meta and Instagram Ads that drive foot traffic and bookings.'
-      }
+      ...servicePillars.map(pillar => ({ title: pillar.name, href: pillar.href, description: pillar.descriptor })),
+      { title: 'All services', href: '/services', description: 'Explore our offerings and supporting capabilities.' }
     ]
   },
   {
-    title: 'Clients',
+    title: 'Our work',
     href: '/projects'
   },
   {
