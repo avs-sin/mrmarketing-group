@@ -22,7 +22,7 @@ const Faq = ({ faqItems, background }: { faqItems: FAQs; background?: string }) 
         {/* FAQ Header */}
 
         <SectionHeader
-          title='Questions We Get at the Bar'
+          title='A Few Things to Know'
           description='Straight answers about how MR Marketing Group works.'
           className='mb-12 sm:mb-16 lg:mb-24'
         />

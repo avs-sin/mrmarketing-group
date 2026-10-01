@@ -2,16 +2,16 @@
 import Link from 'next/link'
 
 // Third-party Imports
-import { IconArrowRight, IconBrandInstagram, IconBrandTiktok } from '@tabler/icons-react'
+import { IconBrandInstagram, IconBrandTiktok } from '@tabler/icons-react'
 
 // Component Imports
 import ContentLayout from '@/components/layout/content-layout'
 import Logo from '@/components/logo'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
 
 // Config Imports
+import { servicePillars } from '@/assets/data/service-pillars'
+
 import { siteConfig } from '@/configs/site'
 
 const Footer = () => {
@@ -97,7 +97,7 @@ const Footer = () => {
                     <li>
                       <a
                         href={`mailto:${siteConfig.email}`}
-                        className='hover:text-foreground transition-colors duration-300'
+                        className='hover:text-foreground break-all transition-colors duration-300'
                       >
                         {siteConfig.email}
                       </a>
@@ -117,17 +117,20 @@ const Footer = () => {
                 </div>
                 <div className='col-span-full flex flex-col gap-5 sm:col-span-2'>
                   <div>
-                    <p className='mb-3 text-lg font-medium'>Get event and content updates</p>
-                    <div className='flex gap-2'>
-                      <Input type='email' placeholder='Your email...' />
-                      <Button size='icon' type='submit' aria-label='Subscribe'>
-                        <IconArrowRight />
-                      </Button>
-                    </div>
+                    <p className='mb-3 text-lg font-medium'>Our offerings</p>
+                    <ul className='text-muted-foreground grid gap-3 sm:grid-cols-2'>
+                      {servicePillars.map(pillar => (
+                        <li key={pillar.id}>
+                          <Link href={pillar.href} className='hover:text-foreground'>
+                            {pillar.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                   <Separator />
                   <p className='text-muted-foreground text-sm'>
-                    © {new Date().getFullYear()} MR Marketing Group · Las Vegas, NV · All rights reserved
+                    © {new Date().getFullYear()} Mr. Marketing Group · Las Vegas, NV · All rights reserved
                   </p>
                 </div>
               </div>

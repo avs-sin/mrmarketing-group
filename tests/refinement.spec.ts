@@ -91,3 +91,26 @@ test('legacy_routes_and_collective_resolve', async ({ request }) => {
   expect((await request.get('/services/not-a-real-service')).status()).toBe(404)
   expect(await (await request.get('/sitemap.xml')).text()).toContain('/services/the-mr-collective')
 })
+test('contact_never_claims_unsent_delivery', async ({ page }) => {
+  await page.goto('/contact-us', { waitUntil: 'domcontentloaded' })
+  const email = page.getByRole('link', { name: 'Email Maria', exact: true })
+
+  await expect(email).toHaveAttribute('href', 'mailto:Maria@mrmarketing-group.com?subject=Discuss%20a%20project')
+  await expect(page.getByText('Maria@mrmarketing-group.com', { exact: true }).first()).toBeVisible()
+  await expect(page.locator('a[href="tel:+17249710239"]').first()).toBeVisible()
+
+  for (const name of ['Mr. Creative', 'The Mr. Collective', 'Mr. Social', 'Mr. Connected']) {
+    const link = page.getByRole('link', { name: `Discuss ${name}`, exact: true })
+
+    await expect(link).toBeVisible()
+    expect(decodeURIComponent((await link.getAttribute('href'))!.split('subject=')[1])).toBe(`Discuss ${name}`)
+  }
+
+  await expect(page.getByText('Opens your email app. Your inquiry is sent when you send the email.')).toBeVisible()
+  await email.focus()
+  await expect(email).toBeFocused()
+  await expect(page.getByRole('button', { name: 'Subscribe', exact: true })).toHaveCount(0)
+  await expect(page.locator('main form')).toHaveCount(0)
+  await expect(page.locator('main')).not.toContainText(/inquiry received|Maria will call|you.re booked/i)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+})

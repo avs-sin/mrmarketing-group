@@ -1,31 +1,29 @@
-// Component Imports
 import type { FAQs } from '@/components/blocks/faq'
 
-// Written as objection handlers: the five reasons owners do not sign, answered directly.
 export const faqItems: FAQs = [
   {
-    question: 'What does it cost?',
+    question: 'What can Mr. Marketing Group help with?',
     answer:
-      'A first event package starts from $1,500 and covers the flyer, the social push, and on-site content for one night. Retainers are quoted after that night, based on what your venue actually needs. You will always have a written number before any work starts.'
+      'Our four offerings bring together content production and social media through Mr. Creative; UGC and influencer marketing through The Mr. Collective; events and experiences through Mr. Social; and brand partnerships through Mr. Connected.'
   },
   {
-    question: 'Am I locked into a contract?',
+    question: 'Which industries do you work with?',
     answer:
-      'Not on the first event. It is one night, one price. If it fills the room, we talk about a monthly retainer. If it does not, you owe nothing more.'
+      'We tailor our approach to restaurants, luxury real estate, hospitality, healthcare, and professional services. Every strategy begins with the identity and audience of the brand behind it.'
   },
   {
-    question: 'We already have someone doing our social. Why would we need you?',
+    question: 'How does The Mr. Collective work?',
     answer:
-      'Keep them. Most of our clients have a person posting. What they do not have is the event calendar, the liquor partner, the flyer that gets shared, and the promoter list. That is the part we bring. We work alongside your team, not over it.'
+      'We match brands with creators who fit their identity and audience, managing creative direction, creator coordination, and campaign execution. Projects can include product features, lifestyle videos, restaurant visits, hotel experiences, and event coverage.'
   },
   {
-    question: 'We tried an agency before and nothing changed. What is different?',
+    question: 'Can you collaborate with our internal team?',
     answer:
-      'The last agency probably never set foot in your venue. Maria is a working DJ who books and plays these rooms. We shoot on-site, we know the promoters, and we bring partners to the table. The first call includes an honest audit of what the last agency missed.'
+      'Yes. We work as an extension of your team, bringing creative direction, consistent execution, and a clear purpose to each campaign.'
   },
   {
-    question: 'How fast can you move?',
+    question: 'How do we discuss scope and pricing?',
     answer:
-      'A single event can be planned and promoted inside two weeks. If your event is this week, call or text Maria directly at +1 (724) 971-0239 and we will tell you what is still possible.'
+      'Contact Maria with your brand, goals, and the services you have in mind. The scope of support is tailored to your business; ask Maria about a proposal for your project.'
   }
 ]

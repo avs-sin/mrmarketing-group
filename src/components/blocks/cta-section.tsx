@@ -23,8 +23,8 @@ const CTASection = () => {
                 <h2 className='text-3xl font-semibold'>Let&apos;s Build Something.</h2>
 
                 <p className='text-muted-foreground max-w-3xl text-base'>
-                  Ready to elevate your brand in Las Vegas? Whether you&apos;re a restaurant, venue, or entertainment
-                  brand, we&apos;re ready to get to work.
+                  From restaurants and luxury real estate to hospitality, healthcare, and professional services, let’s
+                  shape the right creative approach for your brand.
                 </p>
 
                 <Button size='lg' render={<Link href='/contact-us' />} nativeButton={false}>

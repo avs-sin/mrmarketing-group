@@ -29,7 +29,7 @@ const ContactUs = ({ contactCards }: { contactCards: ContactCard }) => {
                   <div className='space-y-1'>
                     <h4 className='text-lg font-medium'>{card.title}</h4>
                     <p className='text-muted-foreground text-sm'>{card.ctaText}</p>
-                    <p className='text-muted-foreground text-sm'>{card.ctaLink}</p>
+                    <p className='text-muted-foreground text-sm break-all'>{card.ctaLink}</p>
                   </div>
                 </div>
               )
@@ -45,6 +45,7 @@ const ContactUs = ({ contactCards }: { contactCards: ContactCard }) => {
             <div className='rounded-xl border'>
               <iframe
                 className='size-full min-h-100 rounded-xl'
+                loading='lazy'
                 src='https://maps.google.com/maps?hl=en&q=Las%20Vegas%2C%20NV&t=&z=11&ie=UTF8&iwloc=B&output=embed'
                 title='Google Maps'
               />

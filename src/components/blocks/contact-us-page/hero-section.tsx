@@ -20,7 +20,7 @@ const HeroSection = () => {
           <SectionHeader
             badge='Contact Us'
             title='Start a Project.'
-            description="Ready to elevate your brand in Las Vegas? Whether you're a restaurant, venue, or entertainment brand, we're ready to get to work."
+            description='Creative support built around your brand — from content and creator partnerships to events and meaningful collaborations.'
             badgeClassName='bg-card z-1'
           />
         </div>
