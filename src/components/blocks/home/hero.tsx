@@ -27,7 +27,7 @@ const HomeHero = () => (
           <Button
             size='lg'
             className='h-12 ps-6 pe-5.5 text-base'
-            render={<Link href='/contact-us' data-track='cta_book_call' data-track-location='home_hero' />}
+            render={<Link href='/contact-us#inquiry' data-track='cta_book_call' data-track-location='home_hero' />}
             nativeButton={false}
           >
             Start a project <IconArrowUpRight aria-hidden className='size-5' />

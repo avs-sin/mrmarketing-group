@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { SectionHeader } from '@/components/ui/section-header'
 import ContentLayout from '@/components/layout/content-layout'
 import { ProjectCard } from '@/components/ui/project-cards'
+import { inquiryHref } from '@/lib/funnel'
 
 export type ProjectsProp = {
   slug: string
@@ -43,7 +44,12 @@ const RecentProjects = ({ projectData }: { projectData: ProjectsProp[] }) => {
                 className='transition-[translate] duration-150 ease-out group-hover:translate-x-0.5'
               />
             </Button>
-            <Button size='lg' variant='secondary' render={<Link href='/contact-us' />} nativeButton={false}>
+            <Button
+              size='lg'
+              variant='secondary'
+              render={<Link href={inquiryHref()} data-track='cta_book_call' data-track-location='recent_projects' />}
+              nativeButton={false}
+            >
               Start a Project <IconPhoneCall data-icon='inline-end' />
             </Button>
           </div>

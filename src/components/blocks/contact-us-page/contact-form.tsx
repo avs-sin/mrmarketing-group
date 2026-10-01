@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { siteConfig } from '@/configs/site'
 import InquiryForm from './inquiry-form'
 
@@ -33,6 +35,37 @@ const ContactForm = () => (
         {siteConfig.phone}
       </a>
     </div>
+
+    {/* Not ready yet: keep them moving through the site instead of losing them */}
+    <nav aria-label='Not ready yet?' className='border-border border-t pt-7'>
+      <h3 className='font-medium'>Not ready yet?</h3>
+      <ul className='text-muted-foreground mt-3 flex flex-wrap gap-x-6 gap-y-2'>
+        <li>
+          <Link
+            href='/projects'
+            className='hover:text-foreground underline underline-offset-4 transition-colors duration-150'
+          >
+            See our work
+          </Link>
+        </li>
+        <li>
+          <Link
+            href='/services'
+            className='hover:text-foreground underline underline-offset-4 transition-colors duration-150'
+          >
+            Compare offerings
+          </Link>
+        </li>
+        <li>
+          <Link
+            href='/about-us'
+            className='hover:text-foreground underline underline-offset-4 transition-colors duration-150'
+          >
+            Meet Maria
+          </Link>
+        </li>
+      </ul>
+    </nav>
   </div>
 )
 

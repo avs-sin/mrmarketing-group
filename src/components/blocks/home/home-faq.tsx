@@ -1,9 +1,10 @@
-import { IconArrowUpRight } from '@tabler/icons-react'
 
 import ContentLayout from '@/components/layout/content-layout'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import type { FAQs } from '@/components/blocks/faq'
 import { siteConfig } from '@/configs/site'
+import Handoff from '@/components/blocks/funnel/handoff'
+import { inquiryHref } from '@/lib/funnel'
 import { Eyebrow } from './eyebrow'
 
 /** Homepage FAQ: editorial split layout with one accordion, matching the rest of the page's left-aligned rhythm. */
@@ -16,16 +17,15 @@ export const HomeFaq = ({ faqItems }: { faqItems: FAQs }) => (
         <p className='text-muted-foreground mt-5 max-w-sm text-lg text-pretty'>
           Straight answers about how Mr. Marketing Group works.
         </p>
-        <a
-          href={`mailto:${siteConfig.email}?subject=${encodeURIComponent('A question for Maria')}`}
-          className='group hover:text-primary focus-visible:outline-primary mt-6 inline-flex items-center gap-2 rounded-md py-2 font-medium underline underline-offset-8 transition-colors focus-visible:outline-2'
-        >
-          Ask Maria directly
-          <IconArrowUpRight
-            aria-hidden
-            className='size-5 transition-[translate] duration-150 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5'
-          />
-        </a>
+        <Handoff
+          className='mt-6'
+          location='home_faq'
+          primary={{ label: 'Start a project', href: inquiryHref() }}
+          secondary={{
+            label: 'Ask Maria directly',
+            href: `mailto:${siteConfig.email}?subject=${encodeURIComponent('A question for Maria')}`
+          }}
+        />
       </div>
       <Accordion
         className='rounded-none border-0 border-t [&_[data-slot=accordion-content]]:px-0'

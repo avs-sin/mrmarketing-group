@@ -23,6 +23,9 @@ export type ProjectMetadata = {
   tools?: string[]
   image?: string
   keywords?: string[]
+
+  /** Offering ids (see service-pillars) behind this work */
+  services?: string[]
 }
 
 // local content directory (comment below line if using remote fetching)

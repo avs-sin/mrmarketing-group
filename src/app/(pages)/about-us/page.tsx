@@ -5,7 +5,7 @@ import AboutUs from '@/components/blocks/about-component/about'
 import Teams from '@/components/blocks/teams'
 import ServicesBoard from '@/components/blocks/home/services-board'
 import { Recognition } from '@/components/blocks/home/funnel-sections'
-import CTASection from '@/components/blocks/cta-section'
+import { CTABand } from '@/components/blocks/home/funnel-sections'
 import { teamMembers } from '@/assets/data/team-members'
 import { servicePillars } from '@/assets/data/service-pillars'
 import { generateMetadata as generateSEOMetadata } from '@/lib/seo'
@@ -24,7 +24,13 @@ const AboutUsPage = () => (
     <Teams teamMembers={teamMembers} />
     <ServicesBoard services={servicePillars} />
     <Recognition />
-    <CTASection />
+    <CTABand
+      location='about_final'
+      eyebrow='Work with Maria'
+      headline='Bring a founder-led team to your brand.'
+      body='Maria stays closely involved in every engagement. Tell her what you’re building.'
+      secondary={{ label: 'See our work', href: '/projects' }}
+    />
   </>
 )
 

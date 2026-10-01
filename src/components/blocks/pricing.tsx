@@ -88,7 +88,7 @@ const Pricing = ({ plans }: { plans: Plans }) => {
 
                 <Button
                   size='lg'
-                  render={<Link href='/contact-us' />}
+                  render={<Link href='/contact-us#inquiry' />}
                   variant={plan.isPopular ? 'default' : 'outline'}
                   className='w-full rounded-full'
                   nativeButton={false}

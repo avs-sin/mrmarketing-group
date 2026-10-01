@@ -86,7 +86,7 @@ const Footer = () => {
                     </li>
                     <li>
                       <Link
-                        href='/contact-us'
+                        href='/contact-us#inquiry'
                         className='hover:text-foreground transition-colors duration-150 ease-out'
                       >
                         Start a Project

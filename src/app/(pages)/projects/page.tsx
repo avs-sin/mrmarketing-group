@@ -11,6 +11,9 @@ import {
   generateWebsiteSchema,
   generateWebPageSchema
 } from '@/lib/seo'
+import { CTABand } from '@/components/blocks/home/funnel-sections'
+import PillarLinks from '@/components/blocks/funnel/pillar-links'
+import { servicePillars } from '@/assets/data/service-pillars'
 import { getProjects } from '@/lib/projects'
 
 export const metadata: Metadata = generateSEOMetadata({
@@ -35,6 +38,20 @@ const ProjectsPage = async () => {
   return (
     <>
       <ProjectSection projects={projects} />
+      <PillarLinks
+        eyebrow='How we made it'
+        title='Four ways to connect.'
+        description='Every project here started with one of these offerings.'
+        pillars={servicePillars}
+        location='projects_offerings'
+        className='bg-card'
+      />
+      <CTABand
+        location='projects_final'
+        eyebrow='Your brand next'
+        headline='Like what you see? Let’s make yours.'
+        secondary={{ label: 'Explore our offerings', href: '/services' }}
+      />
 
       {/* Add JSON-LD to your page */}
       <script

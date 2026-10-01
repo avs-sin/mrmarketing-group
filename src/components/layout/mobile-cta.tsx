@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { IconArrowUpRight } from '@tabler/icons-react'
 
+import { inquiryHref, pillarForServiceSlug } from '@/lib/funnel'
 import { cn } from '@/lib/utils'
 
 /** Mobile-only "Start a project" bar: appears after the first screen, hides near the footer and on /contact-us. */
@@ -33,6 +34,10 @@ const MobileCTA = () => {
 
   if (pathname.startsWith('/contact-us')) return null
 
+  // On a service page, carry that offering into the form
+  const serviceSlug = pathname.match(/^\/services\/([^/]+)/)?.[1]
+  const href = inquiryHref(serviceSlug ? pillarForServiceSlug(serviceSlug) : null)
+
   return (
     <div
       aria-hidden={!visible}
@@ -43,7 +48,7 @@ const MobileCTA = () => {
       )}
     >
       <Link
-        href='/contact-us#inquiry'
+        href={href}
         data-track='cta_book_call'
         data-track-location='mobile_sticky'
         className='bg-primary text-primary-foreground flex h-12 items-center justify-center gap-2 rounded-full font-medium shadow-lg transition-[scale] duration-150 ease-out active:scale-[0.96]'

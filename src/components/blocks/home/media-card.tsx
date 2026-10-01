@@ -85,7 +85,7 @@ export const MediaCard = ({ asset }: { asset: MediaAsset }) => {
         {failed && (
           <div role='status' className='absolute inset-x-0 bottom-0 bg-black/90 p-5 text-white'>
             <p>Video unavailable</p>
-            <Link href='/contact-us' className='mt-2 inline-block underline underline-offset-4'>
+            <Link href='/contact-us#inquiry' className='mt-2 inline-block underline underline-offset-4'>
               Start a project
             </Link>
           </div>

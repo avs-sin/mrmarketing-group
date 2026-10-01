@@ -45,7 +45,7 @@ test('failed_video_keeps_poster_and_contact', async ({ page }) => {
 
   await expect(card.getByText('Video unavailable', { exact: true })).toBeVisible()
   await expect(card.getByRole('img')).toBeVisible()
-  await expect(card.getByRole('link', { name: 'Start a project' })).toHaveAttribute('href', '/contact-us')
+  await expect(card.getByRole('link', { name: 'Start a project' })).toHaveAttribute('href', '/contact-us#inquiry')
 })
 
 test('portrait_layout_has_no_overflow', async ({ page }) => {
@@ -250,4 +250,45 @@ test('service_detail_has_no_empty_sections_or_template_assets', async ({ page })
   expect(headings.filter(text => !text.trim())).toEqual([])
   await expect(page.locator('main img[src*="/images/logos/"]')).toHaveCount(0)
   await expect(page.locator('main img[src*="Sample Code"]')).toHaveCount(0)
+})
+
+test('every_page_routes_into_the_inquiry_funnel', async ({ request }) => {
+  const routes = [
+    '/',
+    '/about-us',
+    '/teams',
+    '/services',
+    '/projects',
+    '/services/content-creation',
+    '/services/brand-strategy',
+    '/projects/tuscan-cove',
+    '/projects/made-events',
+    '/not-a-page'
+  ]
+
+  for (const route of routes) {
+    const html = await (await request.get(route)).text()
+    const main = html.split('<main')[1]?.split('</main>')[0] ?? html
+
+    expect(main, `${route} has an inquiry CTA`).toMatch(/href="\/contact-us(\?service=\w+)?#inquiry"/)
+    expect(main, `${route} has an onward page`).toMatch(/href="\/(projects|services|about-us)/)
+  }
+})
+
+test('service_and_project_pages_preselect_their_offering', async ({ request }) => {
+  const expectations: [string, string][] = [
+    ['/services/content-creation', 'creative'],
+    ['/services/the-mr-collective', 'collective'],
+    ['/services/event-marketing', 'social'],
+    ['/services/sponsorship-partnerships', 'connected'],
+    ['/services/social-media-management', 'creative'],
+    ['/projects/saffron-lounge', 'creative'],
+    ['/projects/made-events', 'social']
+  ]
+
+  for (const [route, service] of expectations) {
+    const html = await (await request.get(route)).text()
+
+    expect(html, route).toContain(`href="/contact-us?service=${service}#inquiry"`)
+  }
 })

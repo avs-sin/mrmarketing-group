@@ -26,7 +26,7 @@ const AboutUs = () => (
             consistent execution, and a clear purpose to every campaign.
           </p>
         </div>
-        <Link href='/contact-us' className='mt-8 inline-block py-2 font-medium underline underline-offset-4'>
+        <Link href='/contact-us#inquiry' className='mt-8 inline-block py-2 font-medium underline underline-offset-4'>
           Work with us
         </Link>
       </div>

@@ -14,7 +14,7 @@ const HeroSection = () => (
       <p className='text-muted-foreground mt-6 max-w-2xl text-lg leading-relaxed'>
         A Las Vegas creative marketing agency, founded by Maria Romano.
       </p>
-      <Link href='/contact-us' className='mt-7 inline-block py-3 font-medium underline underline-offset-4'>
+      <Link href='/contact-us#inquiry' className='mt-7 inline-block py-3 font-medium underline underline-offset-4'>
         Start a project
       </Link>
     </ContentLayout>

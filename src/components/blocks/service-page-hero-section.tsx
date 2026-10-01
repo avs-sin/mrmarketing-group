@@ -18,7 +18,7 @@ const HeroSection = ({ services }: { services: ServiceMetadata[] }) => (
           Creative marketing shaped around your business. Explore our four offerings, from cinematic content to the
           collaborations and experiences that connect people.
         </p>
-        <Button size='lg' className='mt-8' render={<Link href='/contact-us' />} nativeButton={false}>
+        <Button size='lg' className='mt-8' render={<Link href='/contact-us#inquiry' />} nativeButton={false}>
           Start a project
         </Button>
       </ContentLayout>

@@ -12,6 +12,7 @@ import { SectionHeader } from '@/components/ui/section-header'
 import BeamRays from '@/components/ui/beam-rays'
 
 // Type Imports
+import { inquiryHref } from '@/lib/funnel'
 import type { ProjectMetadata } from '@/lib/projects'
 
 const ProjectSection = ({ projects }: { projects: ProjectMetadata[] }) => {
@@ -37,7 +38,11 @@ const ProjectSection = ({ projects }: { projects: ProjectMetadata[] }) => {
             badgeClassName='z-1 bg-card'
           />
           <div className='space-x-4'>
-            <Button size='lg' render={<Link href='/contact-us' />} nativeButton={false}>
+            <Button
+              size='lg'
+              render={<Link href={inquiryHref()} data-track='cta_book_call' data-track-location='projects_hero' />}
+              nativeButton={false}
+            >
               Start a Project <IconPhoneCall data-icon='inline-end' />
             </Button>
             <Button

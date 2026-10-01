@@ -17,7 +17,10 @@ import MDXContent from '@/components/mdx-content'
 import RelatedProjectSection from '@/components/projects/related-project-section/related-project-section'
 import ContentLayout from '@/components/layout/content-layout'
 import { Card, CardContent } from '@/components/ui/card'
-import CTASection from '@/components/blocks/cta-section'
+import { CTABand } from '@/components/blocks/home/funnel-sections'
+import PillarLinks from '@/components/blocks/funnel/pillar-links'
+import { getPillar, inquiryHref, projectPillars } from '@/lib/funnel'
+import { servicePillars } from '@/assets/data/service-pillars'
 import { SectionHeader } from '@/components/ui/section-header'
 import Faq from '@/components/blocks/faq'
 import BeamRays from '@/components/ui/beam-rays'
@@ -89,7 +92,16 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
 
   const { metadata, content } = project
 
-  const relatedProjects = projects.filter(project => project.slug !== slug).slice(0, 2)
+  const pillarIds = projectPillars(metadata.services)
+  const primaryPillar = getPillar(pillarIds[0])
+
+  // Prefer related work that shares an offering with this project
+  const others = projects.filter(project => project.slug !== slug)
+
+  const sharesOffering = (project: (typeof projects)[number]) =>
+    projectPillars(project.services).some(id => pillarIds.includes(id))
+
+  const relatedProjects = [...others.filter(sharesOffering), ...others.filter(p => !sharesOffering(p))].slice(0, 2)
 
   const jsonLd = combineSchemas(
     generateWebsiteSchema(),
@@ -132,7 +144,18 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
                   Preview <IconEye data-icon='inline-end' />
                 </Button>
               )}
-              <Button size='lg' variant='secondary' render={<Link href='/contact-us' />} nativeButton={false}>
+              <Button
+                size='lg'
+                variant='secondary'
+                render={
+                  <Link
+                    href={inquiryHref(primaryPillar?.id)}
+                    data-track='cta_book_call'
+                    data-track-location={`project_${slug}_hero`}
+                  />
+                }
+                nativeButton={false}
+              >
                 Start a Project <IconPhoneCall data-icon='inline-end' />
               </Button>
             </div>
@@ -180,9 +203,30 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
           </div>
         </ContentLayout>
       </section>
-      <RelatedProjectSection projects={relatedProjects} />
+      <PillarLinks
+        eyebrow='Behind this work'
+        title='The offerings we used.'
+        description='Each one can be the start of your project.'
+        pillars={servicePillars.filter(pillar => pillarIds.includes(pillar.id))}
+        location={`project_${slug}_offerings`}
+      />
+      <RelatedProjectSection
+        projects={relatedProjects}
+        badge='More work'
+        title='Similar brands we’ve worked with.'
+        description='More Las Vegas restaurants, lounges, and events.'
+        service={primaryPillar?.id}
+        location={`project_${slug}_related`}
+      />
       <Faq faqItems={faqItems} background='bg-card' />
-      <CTASection />
+      <CTABand
+        location={`project_${slug}_final`}
+        eyebrow='Your brand next'
+        headline='Want work like this for your brand?'
+        body='Tell Maria what you’re building. The form starts with the offering behind this project; change it any time.'
+        service={primaryPillar?.id}
+        secondary={primaryPillar ? { label: `Explore ${primaryPillar.name}`, href: primaryPillar.href } : undefined}
+      />
 
       {/* Add JSON-LD to your page */}
       <script

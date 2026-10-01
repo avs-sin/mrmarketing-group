@@ -31,7 +31,7 @@ const HeroSection = () => {
             description='Mr. Marketing Group is led by Maria Romano, an entrepreneur and open-format DJ with more than a decade of industry experience.'
             badgeClassName='bg-card z-1'
           />
-          <Button size='lg' className='group' render={<Link href='/contact-us' />} nativeButton={false}>
+          <Button size='lg' className='group' render={<Link href='/contact-us#inquiry' />} nativeButton={false}>
             Work With Us
             <IconArrowRight
               data-icon='inline-end'

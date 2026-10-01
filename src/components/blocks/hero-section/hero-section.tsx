@@ -99,7 +99,7 @@ const HeroSection = ({ orbitItems }: HeroSectionProps) => {
         <p className='text-muted-foreground text-sm'>Trusted by Las Vegas restaurants, lounges, hotels & events</p>
 
         <div className='space-x-4'>
-          <Button size='lg' render={<Link href='/contact-us' />} nativeButton={false}>
+          <Button size='lg' render={<Link href='/contact-us#inquiry' />} nativeButton={false}>
             Start a Project <IconPhoneCall data-icon='inline-end' />
           </Button>
           <Button

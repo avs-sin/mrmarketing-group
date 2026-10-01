@@ -59,7 +59,7 @@ const Header = ({ navigationData }: HeaderProps) => {
             <ThemeCustomizer />
             <Button
               className='text-primary bg-primary-foreground hover:bg-primary-foreground/80 max-md:hidden'
-              render={<Link href='/contact-us' />}
+              render={<Link href='/contact-us#inquiry' data-track='cta_book_call' data-track-location='header' />}
               nativeButton={false}
             >
               Let&apos;s Talk
@@ -67,7 +67,7 @@ const Header = ({ navigationData }: HeaderProps) => {
 
             <Button
               className='text-primary bg-primary-foreground hover:bg-primary-foreground/80 md:hidden'
-              render={<Link href='/contact-us' />}
+              render={<Link href='/contact-us#inquiry' />}
               nativeButton={false}
               size='icon'
               aria-label='Contact us'

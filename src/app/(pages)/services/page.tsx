@@ -2,7 +2,7 @@
 import type { Metadata } from 'next'
 
 // Component Imports
-import CTASection from '@/components/blocks/cta-section'
+import { CTABand } from '@/components/blocks/home/funnel-sections'
 import Faq from '@/components/blocks/faq'
 import HeroSection from '@/components/blocks/service-page-hero-section'
 import RecentProjects from '@/components/blocks/recent-projects'
@@ -36,7 +36,15 @@ const Services = async () => {
       <HeroSection services={services} />
       <RecentProjects projectData={featuredProjects} />
       <Faq faqItems={faqItems} background='bg-card' />
-      <CTASection />
+      <CTABand
+        location='services_final'
+        eyebrow='Not sure where to start?'
+        headline='Tell us the goal. We’ll recommend the mix.'
+        body='Pick “Not sure yet” in the first step and Maria will suggest the right combination of offerings for your brand.'
+        service='unsure'
+        ctaLabel='Help me choose'
+        secondary={{ label: 'See our work', href: '/projects' }}
+      />
       {/* Add JSON-LD to your page */}
       <script
         type='application/ld+json'

@@ -1,6 +1,8 @@
 import ContentLayout from '@/components/layout/content-layout'
 import manifest from '@/assets/data/media-manifest.json'
 import { Eyebrow } from './eyebrow'
+import Handoff from '@/components/blocks/funnel/handoff'
+import { inquiryHref } from '@/lib/funnel'
 import { MediaCard } from './media-card'
 
 const workIds = ['restaurant-production', 'restaurant-collaboration', 'community-event']
@@ -42,6 +44,13 @@ export const WorkGallery = () => (
       <p className='text-muted-foreground mt-4 text-sm text-pretty md:mt-8'>
         <span className='md:hidden'>Swipe for more films. </span>Selected past work. Play a film to hear the story.
       </p>
+      <Handoff
+        className='mt-10'
+        location='home_work'
+        lead='Want content like this for your brand?'
+        primary={{ label: 'Start with Mr. Creative', href: inquiryHref('creative') }}
+        secondary={{ label: 'See all work', href: '/projects' }}
+      />
     </ContentLayout>
   </section>
 )

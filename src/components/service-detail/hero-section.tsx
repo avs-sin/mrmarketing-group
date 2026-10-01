@@ -19,7 +19,7 @@ import MDXContent from '@/components/mdx-content'
 
 // Util Imports
 import { getServiceBySlug } from '@/lib/services'
-import { servicePillars } from '@/assets/data/service-pillars'
+import { inquiryHref, pillarForServiceSlug } from '@/lib/funnel'
 
 type HeroSectionProps = {
   badge?: string
@@ -33,8 +33,7 @@ const HeroSection = async ({ badge, title, description, image, slug }: HeroSecti
   const service = await getServiceBySlug(slug)
 
   // Preselect this offering in the contact page's inquiry form
-  const pillar = servicePillars.find(item => item.href === `/services/${slug}`)
-  const inquiryHref = pillar ? `/contact-us?service=${pillar.id}#inquiry` : '/contact-us#inquiry'
+  const startHref = inquiryHref(pillarForServiceSlug(slug))
 
   if (!service) notFound()
 
@@ -61,14 +60,18 @@ const HeroSection = async ({ badge, title, description, image, slug }: HeroSecti
             badgeClassName='bg-card z-1'
           />
           <div className='space-x-4'>
-            <Button size='lg' render={<Link href={inquiryHref} />} nativeButton={false}>
+            <Button
+              size='lg'
+              render={<Link href={startHref} data-track='cta_book_call' data-track-location={`service_${slug}_hero`} />}
+              nativeButton={false}
+            >
               Start a Project <IconPhoneCall data-icon='inline-end' />
             </Button>
             <Button
               size='lg'
               className='group'
               variant='secondary'
-              render={<Link href={inquiryHref} />}
+              render={<Link href={startHref} />}
               nativeButton={false}
             >
               Discuss your project{' '}

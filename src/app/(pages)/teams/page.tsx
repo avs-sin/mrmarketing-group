@@ -14,6 +14,7 @@ import {
 } from '@/lib/seo'
 
 // Data Imports
+import { CTABand } from '@/components/blocks/home/funnel-sections'
 import { teamMembers } from '@/assets/data/team-members'
 
 export const metadata: Metadata = generateSEOMetadata({
@@ -38,6 +39,12 @@ const TeamsPage = () => {
       <div>
         <HeroSection />
         <Teams teamMembers={teamMembers} />
+        <CTABand
+          location='teams_final'
+          eyebrow='Work with Maria'
+          headline='Put Maria’s perspective on your brand.'
+          secondary={{ label: 'Explore our offerings', href: '/services' }}
+        />
       </div>
 
       {/* Add JSON-LD to your page */}

@@ -2,6 +2,8 @@
 import ContentLayout from '@/components/layout/content-layout'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { SectionHeader } from '@/components/ui/section-header'
+import Handoff from '@/components/blocks/funnel/handoff'
+import { inquiryHref } from '@/lib/funnel'
 
 // Util Imports
 import { cn } from '@/lib/utils'
@@ -58,6 +60,13 @@ const Faq = ({ faqItems, background }: { faqItems: FAQs; background?: string }) 
             </Accordion>
           </div>
         </div>
+        <Handoff
+          className='mt-12 items-center text-center sm:mt-16 [&>div]:justify-center'
+          location='faq'
+          lead='Still deciding? Maria can tailor a proposal to your brand.'
+          primary={{ label: 'Start a project', href: inquiryHref() }}
+          secondary={{ label: 'See our work', href: '/projects' }}
+        />
       </ContentLayout>
     </section>
   )
