@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
 
 test('does_not_download_video_before_play', async ({ page }) => {
   const requests: string[] = []
@@ -99,21 +99,89 @@ test('contact_never_claims_unsent_delivery', async ({ page }) => {
   await expect(email).toHaveAttribute('href', 'mailto:Maria@mrmarketing-group.com?subject=Discuss%20a%20project')
   await expect(page.getByText('Maria@mrmarketing-group.com', { exact: true }).first()).toBeVisible()
   await expect(page.locator('a[href="tel:+17249710239"]').first()).toBeVisible()
-
-  for (const name of ['Mr. Creative', 'The Mr. Collective', 'Mr. Social', 'Mr. Connected']) {
-    const link = page.getByRole('link', { name: `Discuss ${name}`, exact: true })
-
-    await expect(link).toBeVisible()
-    expect(decodeURIComponent((await link.getAttribute('href'))!.split('subject=')[1])).toBe(`Discuss ${name}`)
-  }
-
   await expect(page.getByText('Opens your email app. Your inquiry is sent when you send the email.')).toBeVisible()
   await email.focus()
   await expect(email).toBeFocused()
   await expect(page.getByRole('button', { name: 'Subscribe', exact: true })).toHaveCount(0)
-  await expect(page.locator('main form')).toHaveCount(0)
-  await expect(page.locator('main')).not.toContainText(/inquiry received|Maria will call|you.re booked/i)
+  await expect(page.locator('main')).not.toContainText(/inquiry received|sent to maria|Maria will call|you.re booked/i)
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
+})
+
+const completeInquiry = async (page: Page) => {
+  const form = page.locator('#inquiry')
+
+  await expect(form.getByRole('radio', { name: /^Mr\. Social/ })).toBeChecked()
+  await form.getByRole('button', { name: 'Continue' }).click()
+  await form.getByRole('button', { name: 'Continue' }).click()
+  await expect(form.getByText('Choose a budget range.')).toBeVisible()
+  await form.locator('label', { hasText: 'Prefer to discuss' }).click()
+  await form.locator('label', { hasText: 'Within 1–3 months' }).click()
+  await form.getByRole('button', { name: 'Continue' }).click()
+  await form.getByRole('button', { name: 'Send to Maria' }).click()
+  await expect(form.getByText('Enter your name.')).toBeVisible()
+  await form.getByLabel('Name').fill('Test Visitor')
+  await form.getByLabel('Email').fill('visitor@example.com')
+  await form.getByLabel('Your brand and goals').fill('Launching a new rooftop bar and want an opening event.')
+  await form.getByRole('button', { name: 'Send to Maria' }).click()
+}
+
+test('inquiry_form_qualifies_and_falls_back_honestly', async ({ page }) => {
+  await page.route('**/api/inquiry', r => r.fulfill({ status: 503, json: { status: 'not_configured' } }))
+  await page.goto('/contact-us?service=social#inquiry', { waitUntil: 'load' })
+  await completeInquiry(page)
+  await expect(page.getByText('has not been sent', { exact: false })).toBeVisible()
+  await expect(page.locator('main')).not.toContainText(/sent to maria/i)
+  const fallback = page.getByRole('link', { name: 'Open email with my answers' })
+  const body = decodeURIComponent((await fallback.getAttribute('href'))!.split('body=')[1])
+
+  expect(body).toContain('Offering: Mr. Social')
+  expect(body).toContain('Timeline: Within 1–3 months')
+  expect(body).toContain('Launching a new rooftop bar')
+})
+
+test('inquiry_form_confirms_only_real_delivery', async ({ page }) => {
+  await page.route('**/api/inquiry', r => r.fulfill({ status: 200, json: { status: 'sent' } }))
+  await page.goto('/contact-us?service=social#inquiry', { waitUntil: 'load' })
+  await completeInquiry(page)
+  await expect(page.getByRole('heading', { name: 'Sent to Maria' })).toBeVisible()
+})
+
+test('inquiry_api_validates_and_reports_unconfigured', async ({ request }) => {
+  expect((await request.post('/api/inquiry', { data: { service: 'social' } })).status()).toBe(400)
+
+  const valid = {
+    service: 'social',
+    budget: 'Prefer to discuss',
+    timeline: 'Just exploring',
+    name: 'Test Visitor',
+    email: 'visitor@example.com',
+    message: 'Hello, testing the inquiry endpoint.'
+  }
+
+  if (!process.env.RESEND_API_KEY) {
+    const res = await request.post('/api/inquiry', { data: valid })
+
+    expect(res.status()).toBe(503)
+    expect((await res.json()).status).toBe('not_configured')
+  }
+
+  expect((await (await request.post('/api/inquiry', { data: { ...valid, website: 'spam' } })).json()).status).toBe(
+    'sent'
+  )
+})
+
+test('mobile_sticky_cta_appears_after_hero', async ({ page }) => {
+  test.skip(page.viewportSize()!.width >= 768, 'mobile only')
+  await page.goto('/', { waitUntil: 'load' })
+  const bar = page.locator('a[data-track-location="mobile_sticky"]')
+  const wrapper = bar.locator('..')
+
+  // Hidden bars stay in the DOM but are inert and hidden from assistive tech
+  await expect(wrapper).toHaveAttribute('aria-hidden', 'true')
+  await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.5))
+  await expect(wrapper).toHaveAttribute('aria-hidden', 'false')
+  await expect(bar).toBeInViewport()
+  await expect(bar).toHaveAttribute('href', '/contact-us#inquiry')
 })
 
 test('all_selected_clips_play_and_captions_load', async ({ page }) => {

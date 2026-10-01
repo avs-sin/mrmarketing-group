@@ -7,6 +7,7 @@ import { servicePillars } from '@/assets/data/service-pillars'
 // Component Imports
 import Footer from '@/components/layout/footer'
 import Header from '@/components/layout/header'
+import MobileCTA from '@/components/layout/mobile-cta'
 import type { Navigation } from '@/components/layout/header-navigation'
 
 const navigationData: Navigation[] = [
@@ -48,6 +49,8 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
 
       {/* Footer Section */}
       <Footer />
+
+      <MobileCTA />
     </div>
   )
 }
