@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { IconArrowUpRight } from '@tabler/icons-react'
+
 import ContentLayout from '@/components/layout/content-layout'
 import type { ServicePillar } from '@/assets/data/service-pillars'
 
@@ -39,4 +40,5 @@ const ServicesBoard = ({ services }: { services: readonly ServicePillar[] }) => 
     </ContentLayout>
   </section>
 )
+
 export default ServicesBoard

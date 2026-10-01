@@ -1,6 +1,8 @@
-import { servicePillars } from '@/assets/data/service-pillars'
-// React Imports
 import type { ReactNode } from 'react'
+
+import { servicePillars } from '@/assets/data/service-pillars'
+
+// React Imports
 
 // Component Imports
 import Footer from '@/components/layout/footer'

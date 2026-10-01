@@ -1,138 +1,112 @@
-// Next Imports
 import Link from 'next/link'
+import { IconArrowUpRight } from '@tabler/icons-react'
 
-// Third-party Imports
-import { IconClock, IconHandStop, IconFileOff } from '@tabler/icons-react'
-
-// Component Imports
-import { Button } from '@/components/ui/button'
 import ContentLayout from '@/components/layout/content-layout'
-
-// Config Imports
+import { Button } from '@/components/ui/button'
 import { siteConfig } from '@/configs/site'
+import manifest from '@/assets/data/media-manifest.json'
+import { MediaCard } from './media-card'
 
-// PLACEHOLDER: confirm with Maria before launch.
-export const FIRST_EVENT_PRICE = 'from $1,500'
-
-const track = (event: string, location: string) => ({ 'data-track': event, 'data-track-location': location })
-
-/* 2. Trust strip: no outcome claims, only verifiable facts */
 export const TrustStrip = () => (
-  <section className='border-border border-b'>
+  <section className='border-border border-y'>
     <ContentLayout>
-      <ul className='text-muted-foreground grid grid-cols-2 gap-x-8 gap-y-3 py-5 text-sm sm:grid-cols-4'>
-        <li>Based in Las Vegas</li>
-        <li>Founder is a working DJ</li>
-        <li>Guest on the Vegas Circle Podcast</li>
-        <li>Top 40 Under 40, Deluxe Version Magazine</li>
+      <ul className='text-muted-foreground grid gap-4 py-6 text-sm sm:grid-cols-3'>
+        <li>Las Vegas-based</li>
+        <li>More than a decade of industry experience</li>
+        <li>Founder-led creative direction</li>
       </ul>
     </ContentLayout>
   </section>
 )
 
-/* 3. Big Domino and named enemy */
-export const BigDomino = () => (
-  <section className='bg-primary text-primary-foreground py-16 sm:py-24'>
-    <ContentLayout className='max-w-4xl'>
-      <p className='type-display text-5xl leading-[0.95] sm:text-7xl'>
-        Most agencies post about nightlife. Maria works in it.
-      </p>
-      <p className='mt-8 max-w-2xl text-lg leading-relaxed text-white/85'>
-        A packed room does not come from a content calendar built in an office across town. It comes from someone who
-        knows the promoters, the liquor reps, and the regulars by name. That is the whole difference, and it is the only
-        reason to hire us.
-      </p>
-    </ContentLayout>
-  </section>
-)
+export const Founder = () => {
+  const explainer = manifest.find(item => item.id === 'founder-explainer')
 
-/* 4. Attractive character */
-export const Founder = () => (
+  return (
+    <section className='bg-card py-16 sm:py-24'>
+      <ContentLayout className='grid items-center gap-12 lg:grid-cols-[1.3fr_0.7fr] lg:gap-24'>
+        <div>
+          <p className='text-primary mb-4 text-sm tracking-widest uppercase'>The person behind the perspective</p>
+          <h2 className='type-display text-5xl tracking-tight sm:text-7xl'>Maria Romano</h2>
+          <p className='mt-4 text-lg font-medium'>Founder. Entrepreneur. Open-format DJ.</p>
+          <div className='text-muted-foreground mt-7 max-w-xl space-y-5 text-lg leading-relaxed'>
+            <p>
+              More than a decade in nightlife, hospitality, dining, and entertainment has given Maria a firsthand
+              understanding of what draws people to a brand — and keeps them coming back.
+            </p>
+            <p>
+              Her ability to read an audience shapes a creative approach built on thoughtful strategy, cinematic
+              content, and meaningful experiences. She stays closely involved, helping each client’s vision become a
+              brand presence that feels authentic, polished, and memorable.
+            </p>
+          </div>
+          <Link
+            href='/about-us'
+            className='focus-visible:outline-primary mt-8 inline-flex items-center gap-2 rounded-md py-2 font-medium underline underline-offset-8 focus-visible:outline-2'
+          >
+            Meet Maria and the agency <IconArrowUpRight aria-hidden className='size-5' />
+          </Link>
+        </div>
+        <div className='mx-auto w-full max-w-xs'>
+          {explainer && <MediaCard asset={{ ...explainer, kind: 'video' }} />}
+        </div>
+      </ContentLayout>
+    </section>
+  )
+}
+
+export const Recognition = () => (
   <section className='py-16 sm:py-24'>
-    <ContentLayout className='grid items-center gap-12 lg:grid-cols-2'>
+    <ContentLayout className='grid items-center gap-12 md:grid-cols-[0.7fr_1.3fr] lg:gap-24'>
       <img
-        src='/images/mrmg/about-founder.webp'
-        alt='Maria Romano at the DJ decks'
-        className='aspect-4/5 w-full rounded-2xl object-cover'
+        src='/images/mrmg/refined/recognition.webp'
+        alt='Deluxe Version Magazine graphic naming Maria Romano among the 40 Under Forty National Icons of 2026'
+        width={960}
+        height={1200}
+        loading='lazy'
+        className='mx-auto w-full max-w-sm rounded-2xl'
       />
       <div>
-        <h2 className='type-display text-5xl leading-none sm:text-6xl'>Maria Romano</h2>
-        <p className='text-muted-foreground mt-2 text-base'>Founder. DJ. Marketer.</p>
-        <div className='mt-8 space-y-5 text-lg leading-relaxed'>
-          <p>
-            Maria started behind the decks at Las Vegas brunches and lounges. The venues she played asked her to fix
-            their flyers. Then their social. Then their events. MR Marketing Group is what that became.
+        <p className='text-primary mb-4 text-sm tracking-widest uppercase'>Recognition</p>
+        <h2 className='type-display max-w-2xl text-5xl leading-[1.05] tracking-tight sm:text-7xl'>
+          A creative voice.
+          <br />A recognized perspective.
+        </h2>
+        <p className='text-muted-foreground mt-6 max-w-md text-lg leading-relaxed'>
+          Deluxe Version Magazine — 40 Under Forty, National Icons of 2026.
+        </p>
+      </div>
+    </ContentLayout>
+  </section>
+)
+
+export const AudienceAndProcess = () => (
+  <section className='bg-card py-16 sm:py-24'>
+    <ContentLayout>
+      <div className='grid gap-8 lg:grid-cols-2'>
+        <h2 className='type-display text-5xl tracking-tight sm:text-7xl'>
+          Your world.
+          <br />
+          Our creative lens.
+        </h2>
+        <div>
+          <p className='text-muted-foreground text-lg leading-relaxed'>
+            From restaurants and luxury real estate to hospitality, healthcare, and professional services, we tailor
+            every strategy to the brand behind it.
           </p>
-          <p>
-            Today the agency runs content, events, and partnerships for restaurants, lounges, and hotels across the
-            city, and produces MADE, an invite-only creator night.
-          </p>
-          <p className='border-primary border-l-4 pl-5 font-medium'>
-            We only take hospitality, nightlife, and the brands that live inside them. If you sell software, we are the
-            wrong call, and we will tell you so.
-          </p>
+          <p className='mt-5 text-lg'>We work as an extension of your team.</p>
         </div>
       </div>
-    </ContentLayout>
-  </section>
-)
-
-/* 5. Epiphany story: one client, before and after */
-export const ClientStory = () => (
-  <section className='bg-card py-16 sm:py-24'>
-    <ContentLayout className='grid gap-12 lg:grid-cols-[1fr_1.2fr]'>
-      <div>
-        <p className='text-primary text-base font-medium'>One night, start to finish</p>
-        <h2 className='type-display mt-2 text-5xl leading-none sm:text-6xl'>March Madness at Tuscan Cove</h2>
-      </div>
-      <div className='space-y-6 text-lg leading-relaxed'>
-        <p>
-          Tuscan Cove had a patio, a bar full of TVs, and a tournament nobody was coming in to watch. The owner had
-          posted the schedule. Nothing moved.
-        </p>
-        <p>
-          We treated it like an event, not a post. A flyer built for Instagram Stories. A liquor partner, Telson
-          Tequila, brought in to sponsor the nights and put product on the tables. A push through the accounts and group
-          chats that actually reach people who go out on a weeknight.
-        </p>
-        <p>
-          The watch parties ran through the tournament. The same playbook now runs their executive dinners and brand
-          activations.
-        </p>
-        <Link
-          href='/projects/tuscan-cove'
-          className='text-primary inline-block font-medium underline-offset-4 hover:underline'
-        >
-          Read the full case
-        </Link>
-      </div>
-    </ContentLayout>
-  </section>
-)
-
-/* 6. The stack: what the first call includes */
-const stack = [
-  ['Content audit', 'We look at your last 30 days of posts and tell you what is working and what is noise.'],
-  ['Event calendar review', 'Which nights deserve a push, which ones do not, and what is missing.'],
-  ['One flyer concept', 'A direction for your next promotion, sketched on the call.'],
-  ['Partner shortlist', 'Two or three liquor brands or creators who fit your room.'],
-  ['A written next step', 'One page. What we would do first and what it costs.']
-]
-
-export const TheStack = () => (
-  <section className='py-16 sm:py-24'>
-    <ContentLayout className='grid gap-12 lg:grid-cols-[minmax(0,26rem)_1fr]'>
-      <div>
-        <h2 className='type-display text-5xl leading-none sm:text-6xl'>What the first call covers</h2>
-        <p className='text-muted-foreground mt-4 text-lg'>Twenty minutes with Maria. No deck, no pitch.</p>
-        <p className='mt-8 text-lg font-medium'>Free. A first event package starts {FIRST_EVENT_PRICE}.</p>
-      </div>
-      <ol className='border-border border-t'>
-        {stack.map(([title, body], i) => (
-          <li key={title} className='border-border grid gap-2 border-b py-5 sm:grid-cols-[3rem_14rem_1fr] sm:gap-6'>
-            <span className='type-display text-primary text-3xl leading-none'>{i + 1}</span>
-            <span className='text-lg font-medium'>{title}</span>
-            <span className='text-muted-foreground'>{body}</span>
+      <ol className='border-border mt-14 grid gap-8 border-t pt-10 md:grid-cols-3'>
+        {[
+          ['Understand the brand', 'Your audience, your identity, and what makes your business special.'],
+          ['Shape the creative direction', 'Strategy and storytelling, brought together around your goals.'],
+          ['Execute and refine', 'Consistent creative work with a clear purpose behind every campaign.']
+        ].map(([title, body], i) => (
+          <li key={title}>
+            <span className='text-primary text-sm'>0{i + 1}</span>
+            <h3 className='mt-4 text-xl font-medium'>{title}</h3>
+            <p className='text-muted-foreground mt-3 leading-relaxed'>{body}</p>
           </li>
         ))}
       </ol>
@@ -140,65 +114,31 @@ export const TheStack = () => (
   </section>
 )
 
-/* 7. Risk reversal: three operational promises */
-const promises = [
-  {
-    icon: IconClock,
-    title: 'One business day',
-    body: 'Send the form before 5 pm and Maria replies the same or next business day.'
-  },
-  {
-    icon: IconHandStop,
-    title: 'The ten-minute honest answer',
-    body: 'If your venue is not a fit, we say so in the first ten minutes and point you somewhere better.'
-  },
-  {
-    icon: IconFileOff,
-    title: 'No contract on the first event',
-    body: 'Your first package is one night. If it fills the room, we talk about a retainer. If not, you owe nothing more.'
-  }
-]
-
-export const RiskReversal = () => (
-  <section className='bg-card py-16 sm:py-24'>
-    <ContentLayout>
-      <h2 className='type-display text-5xl leading-none sm:text-6xl'>What we promise before you sign anything</h2>
-      <div className='mt-10 grid gap-6 md:grid-cols-3'>
-        {promises.map(p => (
-          <div key={p.title} className='bg-background rounded-2xl p-6'>
-            <p.icon className='text-primary size-7' />
-            <p className='mt-4 text-xl font-medium'>{p.title}</p>
-            <p className='text-muted-foreground mt-2 leading-relaxed'>{p.body}</p>
-          </div>
-        ))}
-      </div>
-    </ContentLayout>
-  </section>
-)
-
-/* 8 and 13. CTA bands */
 export const CTABand = ({ location, headline }: { location: string; headline: string }) => (
   <section className='py-16 sm:py-24'>
-    <ContentLayout className='flex flex-col items-start gap-6'>
-      <h2 className='type-display max-w-3xl text-5xl leading-[0.95] sm:text-7xl'>{headline}</h2>
-      <div className='flex flex-wrap gap-3'>
-        <Button
-          size='lg'
-          render={<Link href='/contact-us' {...track('cta_book_call', location)} />}
-          nativeButton={false}
-        >
-          Book the 20-minute call
-        </Button>
-        <Button
-          size='lg'
-          variant='outline'
-          render={<a href={siteConfig.phoneHref} {...track('cta_call_phone', `${location}_phone`)} />}
-          nativeButton={false}
-        >
-          Call {siteConfig.phone}
-        </Button>
+    <ContentLayout>
+      <div className='bg-primary text-primary-foreground rounded-2xl p-7 sm:p-12'>
+        <p className='mb-5 text-sm tracking-widest uppercase'>Let’s connect</p>
+        <h2 className='type-display max-w-4xl text-5xl leading-[1.05] tracking-tight sm:text-7xl'>{headline}</h2>
+        <div className='mt-8 flex flex-wrap items-center gap-5'>
+          <Button
+            size='lg'
+            variant='secondary'
+            render={<Link href='/contact-us' data-track='cta_book_call' data-track-location={location} />}
+            nativeButton={false}
+          >
+            Start a project <IconArrowUpRight aria-hidden />
+          </Button>
+          <a
+            href={siteConfig.phoneHref}
+            data-track='cta_call_phone'
+            data-track-location={`${location}_phone`}
+            className='rounded-md py-3 underline underline-offset-4 focus-visible:outline-2'
+          >
+            Call {siteConfig.phone}
+          </a>
+        </div>
       </div>
-      <p className='text-muted-foreground text-sm'>Reply within one business day. No contract on the first event.</p>
     </ContentLayout>
   </section>
 )

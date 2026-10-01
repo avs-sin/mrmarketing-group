@@ -1,4 +1,5 @@
 import Link from 'next/link'
+
 import ContentLayout from '@/components/layout/content-layout'
 import { Button } from '@/components/ui/button'
 import ServicesBoard from '@/components/blocks/home/services-board'
@@ -50,4 +51,5 @@ const HeroSection = ({ services }: { services: ServiceMetadata[] }) => (
     </section>
   </>
 )
+
 export default HeroSection

@@ -1,6 +1,6 @@
 # Mr. Marketing Group refinement — proposed design
 
-Status: proposed for user review; no product code or deployment authorized by this artifact.
+Status: approved for local implementation when the user selected executing-plans; publishing has not been requested.
 
 ## Intent and scope
 
