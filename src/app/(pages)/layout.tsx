@@ -29,10 +29,6 @@ const navigationData: Navigation[] = [
   {
     title: 'About',
     href: '/about-us'
-  },
-  {
-    title: 'Start a Project',
-    href: '/contact-us'
   }
 ]
 
