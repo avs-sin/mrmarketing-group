@@ -1,0 +1,98 @@
+[
+  {
+    "id": "founder",
+    "kind": "image",
+    "src": "/images/mrmg/refined/founder-960.webp",
+    "label": "Maria Romano",
+    "alt": "Maria Romano smiling in a seated portrait",
+    "sourceFile": "Photo Sep 18 2026, 4 26 44 PM (1).jpg",
+    "sourceSha256": "7c8ee5129038db2b5aac9f1fcf164b6e93038d734c23278b9224bc2f56b0ea3b",
+    "width": 960,
+    "height": 1440
+  },
+  {
+    "id": "founder-alternate",
+    "kind": "image",
+    "src": "/images/mrmg/refined/founder-alternate.webp",
+    "label": "Maria Romano",
+    "alt": "Maria Romano seated in a bright interior",
+    "sourceFile": "Photo Sep 18 2026, 4 26 44 PM (2).jpg",
+    "sourceSha256": "31037742c1c69a0782780e651a46f7bbccbf607ce88e0967a978298c99d079e0",
+    "width": 960,
+    "height": 1440
+  },
+  {
+    "id": "recognition",
+    "kind": "image",
+    "src": "/images/mrmg/refined/recognition.webp",
+    "label": "2026 recognition",
+    "alt": "Deluxe Version Magazine graphic naming Maria Romano among the 40 Under Forty National Icons of 2026",
+    "sourceFile": "Photo Sep 18 2026, 10 03 32 AM.png",
+    "sourceSha256": "7c7e04979f880399e7df4bf6e31241ef2d19108a1665f68887c41eb4f6762f1e",
+    "width": 960,
+    "height": 1200
+  },
+  {
+    "id": "recognition-event",
+    "kind": "image",
+    "src": "/images/mrmg/refined/recognition-event.webp",
+    "label": "Recognition event",
+    "alt": "Maria Romano beside the Deluxe Version Magazine recognition sign in Las Vegas",
+    "sourceFile": "Photo Jun 12 2026, 9 02 09 PM.jpg",
+    "sourceSha256": "804e7c733ac78266ef15042e2580c4b9d9696af64ea5df19d19def50b06ba2a4",
+    "width": 960,
+    "height": 1344
+  },
+  {
+    "id": "founder-explainer",
+    "kind": "video",
+    "src": "/videos/mrmg/founder-explainer.mp4",
+    "poster": "/images/mrmg/refined/founder-explainer-poster.webp",
+    "captions": "/captions/mrmg/founder-explainer.vtt",
+    "alt": "Maria speaking about personalized branding",
+    "label": "Maria\u2019s approach",
+    "sourceFile": "Maria Reel 1.mp4",
+    "sourceSha256": "3c93b4c70b0d133667680b5dceba9d0c94e8d3a8682083091cdede9ad82ec82a",
+    "width": 720,
+    "height": 1280
+  },
+  {
+    "id": "restaurant-production",
+    "kind": "video",
+    "src": "/videos/mrmg/restaurant-production.mp4",
+    "poster": "/images/mrmg/refined/restaurant-production-poster.webp",
+    "captions": "/captions/mrmg/restaurant-production.vtt",
+    "alt": "Wings preparation and tasting in a restaurant kitchen",
+    "label": "Restaurant content",
+    "sourceFile": "2026-0624_TUSCAN-ANTONIONWINGS.mp4",
+    "sourceSha256": "fcb93ac66ee797c6bb90b6a99f8a3bdab1265a8fa7f03f8574a43fc26d4576f9",
+    "width": 720,
+    "height": 1280
+  },
+  {
+    "id": "restaurant-collaboration",
+    "kind": "video",
+    "src": "/videos/mrmg/restaurant-collaboration.mp4",
+    "poster": "/images/mrmg/refined/restaurant-collaboration-poster.webp",
+    "captions": "/captions/mrmg/restaurant-collaboration.vtt",
+    "alt": "A burger taste test at Tuscan Cove",
+    "label": "Restaurant collaboration",
+    "sourceFile": "2026-0708_BULLETHEAD-3-TASTETEST.mp4",
+    "sourceSha256": "035e0ddfd6cc9bfb7c9d2f94b9c736f99abce6d7b6aac101f12cdb045cca4b22",
+    "width": 720,
+    "height": 1280
+  },
+  {
+    "id": "community-event",
+    "kind": "video",
+    "src": "/videos/mrmg/community-event.mp4",
+    "poster": "/images/mrmg/refined/community-event-poster.webp",
+    "captions": "/captions/mrmg/community-event.vtt",
+    "alt": "Maria and guests at a community gathering with dogs",
+    "label": "Community event coverage",
+    "sourceFile": "2026-0830_MOMOFOUNDATION-A.mp4",
+    "sourceSha256": "55fc351618be4dc4f40e58734f50315cd536057da66993ce0453fce5e2e7a1ee",
+    "width": 720,
+    "height": 1280
+  }
+]
