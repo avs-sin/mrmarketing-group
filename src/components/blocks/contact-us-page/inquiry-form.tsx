@@ -13,6 +13,7 @@ import {
   budgetOptions,
   emptyInquiry,
   inquirySubject,
+  limits,
   inquiryText,
   serviceOptions,
   stepFields,
@@ -156,7 +157,14 @@ const InquiryForm = () => {
       if (response.ok && data.status === 'sent') setOutcome({ kind: 'sent' })
       else if (response.status === 400 && data.errors && Object.keys(data.errors).length) {
         setErrors(data.errors)
-        setStep(stepFields.findIndex(fields => fields.some(field => data.errors?.[field])))
+
+        // Never land on a step that doesn't exist (which used to strand the visitor on an empty form)
+        setStep(
+          Math.max(
+            0,
+            stepFields.findIndex(fields => fields.some(field => data.errors?.[field]))
+          )
+        )
       } else setOutcome({ kind: 'fallback', reason: data.status === 'not_configured' ? 'not_configured' : 'failed' })
     } catch {
       moved.current = true
@@ -312,6 +320,7 @@ const InquiryForm = () => {
               <Input
                 id={`${field}-field`}
                 type={type}
+                maxLength={limits[field]}
                 autoComplete={autoComplete}
                 value={inquiry[field]}
                 onChange={event => update(field)(event.target.value)}
@@ -331,6 +340,7 @@ const InquiryForm = () => {
             <Label htmlFor='message-field'>Your brand and goals</Label>
             <Textarea
               id='message-field'
+              maxLength={limits.message}
               rows={4}
               value={inquiry.message}
               onChange={event => update('message')(event.target.value)}

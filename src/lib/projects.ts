@@ -74,14 +74,20 @@ export async function getProjects(limit?: number): Promise<ProjectMetadata[]> {
     // // Fetch metadata for each file
     // const projects = await Promise.all(mdxFiles.map(async (file: any) => await getProjectMetadata(file.name)))
 
-    // Sort projects by release date
-    const sortedProjects = projects.sort((a, b) => {
-      if (new Date(a.releaseDate ?? '') < new Date(b.releaseDate ?? '')) {
-        return 1
-      } else {
-        return -1
-      }
-    })
+    // Featured first, then newest release date, then title. A consistent comparator keeps the order stable even
+    // when projects have no releaseDate (the old one always returned -1, so order depended on the file system).
+    const releaseTime = (project: ProjectMetadata) => {
+      const time = Date.parse(project.releaseDate ?? '')
+
+      return Number.isNaN(time) ? 0 : time
+    }
+
+    const sortedProjects = projects.sort(
+      (a, b) =>
+        Number(Boolean(b.isFeatured)) - Number(Boolean(a.isFeatured)) ||
+        releaseTime(b) - releaseTime(a) ||
+        (a.title ?? a.slug).localeCompare(b.title ?? b.slug)
+    )
 
     if (limit) {
       return sortedProjects.slice(0, limit)

@@ -320,3 +320,63 @@ test('video_stills_only_appear_as_playable_films', async ({ page }) => {
   await page.goto('/services/event-marketing', { waitUntil: 'load' })
   await expect(page.getByRole('button', { name: 'Play Community event coverage', exact: true })).toBeVisible()
 })
+
+test('server_field_errors_land_on_a_visible_step', async ({ page }) => {
+  await page.route('**/api/inquiry', r =>
+    r.fulfill({
+      status: 400,
+      json: { status: 'invalid', errors: { company: 'That’s a little long — please shorten it.' } }
+    })
+  )
+  await page.goto('/contact-us?service=social#inquiry', { waitUntil: 'load' })
+  await completeInquiry(page)
+  const form = page.locator('#inquiry')
+
+  // Previously this stranded the visitor on an empty "Step 0 of 3"
+  await expect(form.getByText('Step 3 of 3')).toBeVisible()
+  await expect(form.getByText('That’s a little long — please shorten it.')).toBeVisible()
+  await expect(form.getByLabel('Business or brand')).toHaveAttribute('maxlength', '160')
+})
+
+test('inquiry_api_rejects_cross_site_and_non_json_posts', async ({ request, baseURL }) => {
+  const valid = {
+    service: 'social',
+    budget: 'Prefer to discuss',
+    timeline: 'Just exploring',
+    name: 'Test Visitor',
+    email: 'visitor@example.com',
+    message: 'Hello, testing the inquiry endpoint.'
+  }
+
+  const plain = await request.post('/api/inquiry', {
+    headers: { 'content-type': 'text/plain' },
+    data: JSON.stringify(valid)
+  })
+
+  expect(plain.status()).toBe(415)
+
+  const crossSite = await request.post('/api/inquiry', { headers: { origin: 'https://evil.example' }, data: valid })
+
+  expect(crossSite.status()).toBe(403)
+
+  const sameSite = await request.post('/api/inquiry', { headers: { origin: baseURL! }, data: valid })
+
+  expect([200, 503]).toContain(sameSite.status())
+})
+
+test('links_are_not_announced_as_buttons', async ({ request }) => {
+  for (const route of ['/', '/services/content-creation', '/projects/tuscan-cove', '/teams']) {
+    const html = await (await request.get(route)).text()
+
+    expect(html.match(/<a\b[^>]*role="button"/g) ?? [], route).toEqual([])
+  }
+})
+
+test('projects_list_in_a_stable_featured_first_order', async ({ request }) => {
+  const html = await (await request.get('/projects')).text()
+  const order = ['Chef&#x27;s Roma Kitchen', 'MADE Events', 'Saffron Lounge', 'Tuscan Cove Bar + Patio', 'Past Curfew']
+  const positions = order.map(title => html.indexOf(title))
+
+  expect(positions.every(position => position > -1)).toBe(true)
+  expect([...positions].sort((a, b) => a - b)).toEqual(positions)
+})

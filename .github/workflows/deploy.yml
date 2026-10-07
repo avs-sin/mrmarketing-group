@@ -1,11 +1,60 @@
-name: Deploy to Vercel
+name: CI and deploy
 
 on:
   push:
     branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  trigger:
+  # Gate: nothing reaches production unless lint, types and the production build pass
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm build
+
+  # End-to-end tests in real Google Chrome (Playwright's bundled Chromium can't play the H.264 films).
+  # Informational for now; once green on GitHub, add `e2e` to the deploy job's `needs` to make it a gate.
+  e2e:
+    runs-on: ubuntu-latest
+    env:
+      PW_CHANNEL: chrome
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install-deps chromium
+      - run: pnpm exec playwright test
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: .superpowers/sdd/2026-09-30-mrmarketing-refinement/test-results
+          retention-days: 7
+
+  deploy:
+    needs: verify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Vercel production deploy

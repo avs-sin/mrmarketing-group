@@ -36,7 +36,7 @@ export const emptyInquiry: Inquiry = {
   message: ''
 }
 
-const limits: Record<keyof Inquiry, number> = {
+export const limits: Record<keyof Inquiry, number> = {
   service: 40,
   budget: 40,
   timeline: 40,
@@ -52,7 +52,12 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 export const serviceLabel = (value: string) => serviceOptions.find(option => option.value === value)?.label ?? value
 
 /** Fields checked per form step, in order. */
-export const stepFields: (keyof Inquiry)[][] = [['service'], ['budget', 'timeline'], ['name', 'email', 'message']]
+// Every field the server checks belongs to exactly one step, so a server error always maps back to a visible step
+export const stepFields: (keyof Inquiry)[][] = [
+  ['service'],
+  ['budget', 'timeline'],
+  ['name', 'email', 'company', 'phone', 'message']
+]
 
 export const validateInquiry = (
   inquiry: Inquiry,

@@ -8,7 +8,9 @@ export default defineConfig({
   expect: { timeout: 15_000 },
   fullyParallel: false,
   workers: 1,
-  use: { baseURL: 'http://localhost:3108', trace: 'retain-on-failure' },
+
+  // CI sets PW_CHANNEL=chrome: real Chrome includes the H.264 codec the films need
+  use: { baseURL: 'http://localhost:3108', trace: 'retain-on-failure', channel: process.env.PW_CHANNEL },
   projects: [
     { name: 'desktop', use: { browserName: 'chromium', viewport: { width: 1440, height: 900 } } },
     { name: 'mobile', use: { browserName: 'chromium', viewport: { width: 390, height: 844 } } }

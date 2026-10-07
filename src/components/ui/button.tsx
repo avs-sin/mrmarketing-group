@@ -1,3 +1,5 @@
+import { cloneElement, isValidElement } from 'react'
+
 import { Button as ButtonPrimitive } from '@base-ui/react/button'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -45,14 +47,28 @@ function Button({
   variant = 'default',
   size = 'default',
   static: isStatic = false,
+  nativeButton,
+  render,
+  children,
   ...props
 }: ButtonPrimitive.Props & VariantProps<typeof buttonVariants> & { static?: boolean }) {
+  const classes = cn(buttonVariants({ variant, size }), !isStatic && tapScale, className)
+
+  // Rendered as a link (nativeButton={false}): output the link itself with button styling. Base UI would add
+  // role="button", so screen readers would announce navigation as an action.
+  if (nativeButton === false && isValidElement<{ className?: string }>(render)) {
+    return cloneElement(render, {
+      'data-slot': 'button',
+      ...props,
+      className: cn(classes, render.props.className),
+      children
+    } as Record<string, unknown>)
+  }
+
   return (
-    <ButtonPrimitive
-      data-slot='button'
-      className={cn(buttonVariants({ variant, size }), !isStatic && tapScale, className)}
-      {...props}
-    />
+    <ButtonPrimitive data-slot='button' className={classes} nativeButton={nativeButton} render={render} {...props}>
+      {children}
+    </ButtonPrimitive>
   )
 }
 
