@@ -192,6 +192,14 @@ test('legacy_hash_links_land_on_matching_sections', async ({ page }) => {
     await expect(page.locator(`[id="${id}"]`), id).toHaveCount(1)
   }
 
+  // Fresh loads, as old-site links arrive
+  for (const id of ['about', 'contact', 'work', 'services']) {
+    await page.goto('about:blank')
+    await page.goto(`/#${id}`, { waitUntil: 'load' })
+    await expect(page.locator(`[id="${id}"]`), `fresh /#${id}`).toBeInViewport()
+  }
+
+  // Same-page hash changes in quick succession: the last target must win (a dropped jump was a real bug)
   await page.goto('/#contact', { waitUntil: 'load' })
   const contact = page.locator('#contact')
 
@@ -199,6 +207,10 @@ test('legacy_hash_links_land_on_matching_sections', async ({ page }) => {
   await expect(contact.getByRole('link', { name: 'Email Maria' })).toHaveAttribute('href', /^mailto:Maria@/)
   await page.goto('/#about', { waitUntil: 'load' })
   await expect(page.locator('#about').getByRole('heading', { name: 'Maria Romano' })).toBeInViewport()
+
+  // User-style click on a hydrated Next.js link to a same-page hash
+  await page.locator('a[href="/#work"]', { hasText: 'See our work' }).first().click()
+  await expect(page.locator('#work')).toBeInViewport()
 })
 
 test('public_pages_have_no_theme_customizer', async ({ page }) => {
