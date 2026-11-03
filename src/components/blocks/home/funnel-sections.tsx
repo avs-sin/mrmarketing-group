@@ -5,34 +5,26 @@ import ContentLayout from '@/components/layout/content-layout'
 import { Button } from '@/components/ui/button'
 import { siteConfig } from '@/configs/site'
 import manifest from '@/assets/data/media-manifest.json'
-import { cn } from '@/lib/utils'
 import { getPillar, inquiryHref, type PillarId } from '@/lib/funnel'
 import { emailMariaHref } from '@/lib/contact'
 import Handoff from '@/components/blocks/funnel/handoff'
 import { Eyebrow } from './eyebrow'
 import { MediaCard } from './media-card'
 
-const credentials = [
-  { lead: '10+', label: 'Years of Maria’s experience in nightlife, hospitality, and dining' },
-  { lead: 'LV', label: 'Las Vegas-based and culturally connected' },
-  { lead: '4', label: 'Ways to connect, under one creative team' },
-  { lead: '1', label: 'Founder, closely involved with every client' }
+// Only facts the site can show: Maria's bio, the magazine honor, and the client films in the work section
+const proof = [
+  { lead: '10+ years', label: 'Maria’s experience in nightlife, hospitality, and dining' },
+  { lead: '40 Under Forty', label: 'Deluxe Version Magazine, National Icons of 2026' },
+  { lead: 'Tuscan Cove', label: 'Restaurant films, featured in the work below' }
 ]
 
 export const TrustStrip = () => (
   <section aria-label='Why Mr. Marketing Group' className='border-border border-y'>
     <ContentLayout>
-      <ul className='divide-border grid grid-cols-2 lg:grid-cols-4 lg:divide-x'>
-        {credentials.map(({ lead, label }, i) => (
-          <li
-            key={lead}
-            className={cn(
-              'flex flex-col gap-2 py-6 sm:py-8 lg:px-8 lg:first:pl-0',
-              i % 2 === 0 ? 'pr-4' : 'border-border border-l pl-4 lg:border-l-0',
-              i < 2 && 'border-border border-b lg:border-b-0'
-            )}
-          >
-            <span className='type-display text-primary text-4xl leading-none sm:text-5xl'>{lead}</span>
+      <ul className='divide-border grid divide-y sm:grid-cols-3 sm:divide-x sm:divide-y-0'>
+        {proof.map(({ lead, label }) => (
+          <li key={lead} className='flex flex-col gap-2 py-6 sm:px-6 sm:py-8 sm:first:pl-0 lg:px-10'>
+            <span className='type-display text-3xl leading-none tracking-tight sm:text-4xl'>{lead}</span>
             <span className='text-muted-foreground text-sm leading-snug text-pretty'>{label}</span>
           </li>
         ))}
@@ -47,7 +39,31 @@ export const Founder = () => {
   // id='about' keeps the old site's /#about links landing on Maria's story
   return (
     <section id='about' className='bg-card scroll-mt-28 py-16 sm:py-24 lg:py-32'>
-      <ContentLayout className='grid items-center gap-12 md:grid-cols-[1.3fr_0.7fr] md:gap-12 lg:gap-24'>
+      <ContentLayout className='grid items-start gap-12 md:grid-cols-[0.9fr_1.1fr] lg:gap-20'>
+        <figure className='relative mx-auto w-full max-w-md md:sticky md:top-28 md:max-w-none'>
+          <img
+            src='/images/mrmg/refined/founder-960.webp'
+            srcSet='/images/mrmg/refined/founder-640.webp 640w, /images/mrmg/refined/founder-960.webp 960w, /images/mrmg/refined/founder-1440.webp 1440w'
+            sizes='(min-width: 768px) 42vw, 90vw'
+            alt='Maria Romano smiling in a seated portrait'
+            width={960}
+            height={1440}
+            loading='lazy'
+            className='img-outline aspect-4/5 w-full rounded-2xl object-cover object-[50%_25%]'
+          />
+          <figcaption className='absolute bottom-4 left-4 flex items-center gap-3 rounded-full bg-black/65 py-2 pr-5 pl-2 text-white shadow-[0_0_0_1px_oklch(1_0_0/0.15)] backdrop-blur-md'>
+            <span
+              aria-hidden
+              className='bg-primary flex size-9 items-center justify-center rounded-full text-xs font-semibold'
+            >
+              MR
+            </span>
+            <span>
+              <span className='block text-sm font-medium'>Maria Romano</span>
+              <span className='block text-xs text-white/70'>Founder · Las Vegas</span>
+            </span>
+          </figcaption>
+        </figure>
         <div>
           <Eyebrow>The person behind the perspective</Eyebrow>
           <h2 className='type-display text-5xl tracking-tight text-balance sm:text-7xl'>Maria Romano</h2>
@@ -69,21 +85,37 @@ export const Founder = () => {
               brand presence that feels authentic, polished, and memorable.
             </p>
           </div>
+          {/* Recognition and Maria's own film, side by side under her story */}
+          <div className='mt-10 grid grid-cols-2 gap-4 sm:gap-6'>
+            <figure>
+              <img
+                src='/images/mrmg/refined/recognition.webp'
+                alt='Deluxe Version Magazine graphic naming Maria Romano among the 40 Under Forty National Icons of 2026'
+                width={960}
+                height={1200}
+                loading='lazy'
+                className='img-outline aspect-9/16 w-full rounded-2xl bg-black object-contain'
+              />
+              <figcaption className='mt-4'>
+                <span className='block text-base font-medium'>40 Under Forty, National Icons of 2026</span>
+                <span className='text-muted-foreground block text-sm'>Deluxe Version Magazine</span>
+              </figcaption>
+            </figure>
+            {explainer && <MediaCard asset={{ ...explainer, kind: 'video' }} />}
+          </div>
           <Handoff
-            className='mt-8'
+            className='mt-10'
             location='home_founder'
             primary={{ label: 'Start a project with Maria', href: inquiryHref() }}
             secondary={{ label: 'Meet Maria and the agency', href: '/about-us' }}
           />
-        </div>
-        <div className='mx-auto w-full max-w-[17rem] sm:max-w-xs'>
-          {explainer && <MediaCard asset={{ ...explainer, kind: 'video' }} />}
         </div>
       </ContentLayout>
     </section>
   )
 }
 
+/** Used on the About page; the homepage shows the honor inside the founder section. */
 export const Recognition = () => (
   <section className='py-16 sm:py-24 lg:py-32'>
     <ContentLayout className='grid items-center gap-10 md:grid-cols-[0.8fr_1.2fr] md:gap-12 lg:gap-24'>
@@ -114,8 +146,6 @@ export const Recognition = () => (
   </section>
 )
 
-const industries = ['Restaurants', 'Luxury real estate', 'Hospitality', 'Healthcare', 'Professional services']
-
 const steps = [
   ['Understand the brand', 'Your audience, your identity, and what makes your business special.'],
   ['Shape the creative direction', 'Strategy and storytelling, brought together around your goals.'],
@@ -123,38 +153,29 @@ const steps = [
 ] as const
 
 export const AudienceAndProcess = () => (
-  <section className='bg-card py-16 sm:py-24 lg:py-32'>
+  <section className='py-16 sm:py-24 lg:py-32'>
     <ContentLayout>
       <div className='grid gap-8 lg:grid-cols-2 lg:gap-16'>
         <div>
-          <Eyebrow>Who we work with</Eyebrow>
+          <Eyebrow>How we work</Eyebrow>
           <h2 className='type-display text-5xl tracking-tight text-balance sm:text-7xl'>
             Your world.
             <br />
             Our creative lens.
           </h2>
         </div>
-        <div className='lg:pt-12'>
-          <p className='text-muted-foreground text-lg leading-relaxed text-pretty'>
-            Our selected work so far centers on Las Vegas restaurants, bars, and events. We tailor every strategy to
-            the brand behind it, working as an extension of your team, across sectors including:
-          </p>
-          <ul className='mt-6 flex flex-wrap gap-2' aria-label='Industries'>
-            {industries.map(industry => (
-              <li key={industry} className='bg-background shadow-surface rounded-full px-4 py-2 text-sm font-medium'>
-                {industry}
-              </li>
-            ))}
-          </ul>
-        </div>
+        <p className='text-muted-foreground text-lg leading-relaxed text-pretty lg:pt-12'>
+          Our selected work so far centers on Las Vegas restaurants, bars, and events. We tailor every strategy to the
+          brand behind it, working as an extension of your team.
+        </p>
       </div>
-      <ol className='mt-14 grid gap-4 md:grid-cols-3 md:gap-6 lg:mt-20'>
+      <ol className='mt-14 grid gap-10 md:grid-cols-3 md:gap-8 lg:mt-20'>
         {steps.map(([title, body], i) => (
-          <li key={title} className='bg-background shadow-surface relative rounded-2xl p-6 sm:p-8'>
-            <span aria-hidden className='type-display text-primary text-5xl leading-none'>
+          <li key={title} className='border-border border-t pt-6'>
+            <span aria-hidden className='type-display text-primary text-6xl leading-none'>
               0{i + 1}
             </span>
-            <h3 className='mt-6 font-sans text-xl font-medium'>
+            <h3 className='mt-5 font-sans text-xl font-medium'>
               <span className='sr-only'>Step {i + 1}: </span>
               {title}
             </h3>
@@ -163,7 +184,7 @@ export const AudienceAndProcess = () => (
         ))}
       </ol>
       <Handoff
-        className='mt-10 lg:mt-14'
+        className='mt-12 lg:mt-16'
         location='home_process'
         lead='Step 01 starts with a short email to Maria.'
         primary={{ label: 'Tell us about your brand', href: inquiryHref() }}

@@ -3,16 +3,28 @@ import { IconArrowDown, IconArrowUpRight } from '@tabler/icons-react'
 
 import { Button } from '@/components/ui/button'
 import ContentLayout from '@/components/layout/content-layout'
+import { cn } from '@/lib/utils'
 import { Eyebrow } from './eyebrow'
+import { HeroLoop } from './hero-loop'
+
+// Short silent cuts of the films in the work section; the first tile is the large one
+const loops = [
+  { id: 'restaurant-collaboration', label: 'Restaurant collaboration' },
+  { id: 'restaurant-production', label: 'Restaurant content' },
+  { id: 'community-event', label: 'Community event coverage' }
+] as const
 
 const HomeHero = () => (
-  <section id='home' className='relative overflow-hidden pt-28 pb-12 sm:pt-36 sm:pb-16 lg:pt-32 lg:pb-20 [@media(min-width:1024px)_and_(max-height:820px)]:pt-28'>
+  <section
+    id='home'
+    className='relative overflow-hidden pt-28 pb-14 sm:pt-36 sm:pb-20 lg:pt-32 lg:pb-24 [@media(min-width:1024px)_and_(max-height:820px)]:pt-28'
+  >
     {/* Soft red glow behind the headline; decorative only */}
     <div
       aria-hidden
       className='bg-primary/15 pointer-events-none absolute -top-40 -left-40 size-[36rem] rounded-full blur-3xl'
     />
-    <ContentLayout className='relative grid items-center gap-10 md:gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-16'>
+    <ContentLayout className='relative grid items-center gap-10 md:gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-14'>
       <div>
         <Eyebrow>Las Vegas content, social media &amp; events</Eyebrow>
         <h1 className='type-display text-[clamp(3.25rem,14vw,4.5rem)] leading-[0.95] tracking-tight text-balance sm:text-[5.5rem] xl:text-[6.5rem]'>
@@ -45,37 +57,36 @@ const HomeHero = () => (
           </Link>
         </div>
         <p className='text-muted-foreground mt-6 max-w-lg text-sm leading-relaxed text-pretty sm:mt-8'>
-          Selected work includes restaurant films featuring Tuscan Cove and community event coverage.{' '}
-          <Link href='/#work' className='hover:text-foreground underline underline-offset-4'>
-            Watch the films
-          </Link>
-          .
+          Selected work includes restaurant films featuring Tuscan Cove and community event coverage.
         </p>
       </div>
-      <figure className='relative mx-auto w-full max-w-md md:max-w-lg lg:mx-0 lg:w-auto lg:max-w-none lg:justify-self-end'>
-        <img
-          src='/images/mrmg/refined/founder-960.webp'
-          srcSet='/images/mrmg/refined/founder-640.webp 640w, /images/mrmg/refined/founder-960.webp 960w, /images/mrmg/refined/founder-1440.webp 1440w'
-          sizes='(min-width: 1024px) 40vw, 90vw'
-          alt='Maria Romano smiling in a seated portrait'
-          width={960}
-          height={1440}
-          fetchPriority='high'
-          className='img-outline aspect-4/5 w-full rounded-2xl object-cover object-[50%_25%] lg:aspect-2/3 lg:h-[min(calc(100svh-12rem),44rem)] lg:min-h-[32rem] lg:w-auto'
-        />
-        <figcaption className='absolute bottom-4 left-4 flex items-center gap-3 rounded-full bg-black/65 py-2 pr-5 pl-2 text-white shadow-[0_0_0_1px_oklch(1_0_0/0.15)] backdrop-blur-md'>
-          <span
-            aria-hidden
-            className='bg-primary flex size-9 items-center justify-center rounded-full text-xs font-semibold'
+      {/*
+        Film wall: one large tile beside two stacked ones. Widths run 2:1 and every tile is 9:16,
+        so the two small tiles together match the large tile's height.
+      */}
+      <div className='mx-auto grid w-full max-w-xl grid-cols-[2fr_1fr] gap-3 sm:gap-4 lg:max-w-none'>
+        {loops.map(({ id, label }, index) => (
+          <figure
+            key={id}
+            className={cn(
+              'img-outline relative overflow-hidden rounded-2xl bg-black',
+              index === 0 ? 'row-span-2 aspect-9/16' : 'min-h-0'
+            )}
           >
-            MR
-          </span>
-          <span>
-            <span className='block text-sm font-medium'>Maria Romano</span>
-            <span className='block text-xs text-white/70'>Founder · Las Vegas</span>
-          </span>
-        </figcaption>
-      </figure>
+            <HeroLoop src={`/videos/mrmg/loops/${id}.mp4`} poster={`/images/mrmg/refined/${id}-loop.webp`} />
+            <figcaption
+              className={cn(
+                'absolute bottom-3 left-3 rounded-full bg-black/65 font-medium text-white shadow-[0_0_0_1px_oklch(1_0_0/0.15)] backdrop-blur-md',
+
+                // Small tiles are too narrow for a caption on phones
+                index === 0 ? 'px-3.5 py-1.5 text-sm' : 'max-w-[calc(100%-1.5rem)] truncate px-2.5 py-1 text-xs max-sm:hidden'
+              )}
+            >
+              {label}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
     </ContentLayout>
   </section>
 )

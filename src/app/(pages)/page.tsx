@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 import HomeHero from '@/components/blocks/home/hero'
 import ServicesBoard from '@/components/blocks/home/services-board'
-import { TrustStrip, Founder, Recognition, AudienceAndProcess, CTABand } from '@/components/blocks/home/funnel-sections'
+import { TrustStrip, Founder, AudienceAndProcess, CTABand } from '@/components/blocks/home/funnel-sections'
 import { WorkGallery } from '@/components/blocks/home/work-gallery'
 import { HomeFaq } from '@/components/blocks/home/home-faq'
 import {
@@ -24,7 +24,6 @@ const Home = () => (
     <ServicesBoard services={servicePillars} />
     <WorkGallery />
     <Founder />
-    <Recognition />
     <AudienceAndProcess />
     <HomeFaq faqItems={faqItems} />
     <CTABand id='contact' location='home_final' headline='Let’s build a brand people connect with.' />

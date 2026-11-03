@@ -8,7 +8,7 @@ import { MediaCard } from './media-card'
 const workIds = ['restaurant-production', 'restaurant-collaboration', 'community-event']
 
 export const WorkGallery = () => (
-  <section id='work' className='scroll-mt-28 py-16 sm:py-24 lg:py-32'>
+  <section id='work' className='bg-card scroll-mt-28 py-16 sm:py-24 lg:py-32'>
     <ContentLayout>
       <div className='mb-8 flex flex-col justify-between gap-5 sm:mb-12 lg:flex-row lg:items-end'>
         <div>

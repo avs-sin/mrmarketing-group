@@ -7,7 +7,7 @@ import { inquiryHref } from '@/lib/funnel'
 import { Eyebrow } from './eyebrow'
 
 const ServicesBoard = ({ services }: { services: readonly ServicePillar[] }) => (
-  <section id='services' className='bg-card scroll-mt-28 py-16 sm:py-24 lg:py-32'>
+  <section id='services' className='scroll-mt-28 py-16 sm:py-24 lg:py-32'>
     <ContentLayout>
       <div className='mb-10 flex flex-col justify-between gap-6 sm:mb-14 lg:flex-row lg:items-end'>
         <div>
@@ -20,44 +20,45 @@ const ServicesBoard = ({ services }: { services: readonly ServicePillar[] }) => 
           From the story you tell to the people you bring together. Choose a focus, or let us connect the pieces.
         </p>
       </div>
-      <ul className='grid gap-4 md:grid-cols-2 md:gap-5'>
+      {/* One full-width row per offering: the name carries the row, the whole row opens its page */}
+      <ul className='border-border border-t'>
         {services.map((service, index) => (
           <li
             key={service.id}
-            className='group bg-background shadow-surface hover:shadow-surface-hover relative flex h-full flex-col rounded-2xl p-6 transition-[box-shadow,translate] duration-200 ease-out sm:p-10 lg:hover:-translate-y-1 lg:hover:shadow-[var(--surface-shadow-hover),0_24px_48px_-24px_color-mix(in_oklch,var(--primary)_45%,transparent)]'
+            className='group border-border relative grid gap-x-8 gap-y-3 border-b py-8 sm:py-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)_auto] lg:items-center lg:py-12'
           >
-            <div className='mb-8 flex items-center justify-between sm:mb-12'>
-              <span className='text-muted-foreground text-sm tabular-nums'>
-                0{index + 1} / 0{services.length}
-              </span>
-              <span
-                aria-hidden
-                className='shadow-surface group-hover:bg-primary group-hover:text-primary-foreground text-primary flex size-10 items-center justify-center rounded-full transition-colors duration-150 ease-out'
-              >
-                <IconArrowUpRight className='size-5 transition-[translate] duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
-              </span>
+            <div className='flex items-baseline gap-4 sm:gap-6'>
+              <span className='text-muted-foreground w-7 shrink-0 text-sm tabular-nums'>0{index + 1}</span>
+              <h3 className='type-display text-5xl leading-none tracking-tight transition-[color,translate] duration-200 ease-out group-hover:text-primary sm:text-7xl lg:group-hover:translate-x-2 xl:text-[5.25rem]'>
+                {/* Stretched link: the whole row opens the service page */}
+                <Link
+                  href={service.href}
+                  className='focus-visible:after:outline-primary after:absolute after:inset-0 focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2'
+                >
+                  {service.name}
+                </Link>
+              </h3>
             </div>
-            <h3 className='type-display text-4xl tracking-tight sm:text-5xl'>
-              {/* Stretched link: the whole card opens the service page */}
+            <div className='ps-11 sm:ps-13 lg:ps-0'>
+              <p className='text-primary text-sm font-medium'>{service.descriptor}</p>
+              <p className='text-muted-foreground mt-2 max-w-md leading-relaxed text-pretty'>{service.description}</p>
+              {/* Shortcut straight to the Email Maria panel, layered above the stretched link */}
               <Link
-                href={service.href}
-                className='focus-visible:after:outline-primary after:absolute after:inset-0 after:rounded-2xl focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-2'
+                href={inquiryHref(service.id)}
+                data-track='cta_book_call'
+                data-track-location={`services_board_${service.id}`}
+                className='hover:text-primary focus-visible:outline-primary relative z-10 mt-4 inline-flex items-center gap-1.5 rounded-md text-sm font-medium underline underline-offset-4 transition-colors duration-150 focus-visible:outline-2'
               >
-                {service.name}
+                Start with {service.name}
+                <IconArrowRight aria-hidden className='size-4' />
               </Link>
-            </h3>
-            <p className='text-primary mt-3 text-sm font-medium'>{service.descriptor}</p>
-            <p className='text-muted-foreground mt-4 max-w-lg leading-relaxed text-pretty'>{service.description}</p>
-            {/* Shortcut straight to the Email Maria panel, layered above the stretched link */}
-            <Link
-              href={inquiryHref(service.id)}
-              data-track='cta_book_call'
-              data-track-location={`services_board_${service.id}`}
-              className='hover:text-primary focus-visible:outline-primary relative z-10 mt-auto inline-flex items-center gap-1.5 self-start rounded-md pt-8 text-sm font-medium underline underline-offset-4 transition-colors duration-150 focus-visible:outline-2'
+            </div>
+            <span
+              aria-hidden
+              className='shadow-surface group-hover:bg-primary group-hover:text-primary-foreground text-primary hidden size-14 items-center justify-center rounded-full transition-colors duration-150 ease-out lg:flex'
             >
-              Start with {service.name}
-              <IconArrowRight aria-hidden className='size-4' />
-            </Link>
+              <IconArrowUpRight className='size-6 transition-[translate] duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5' />
+            </span>
           </li>
         ))}
       </ul>

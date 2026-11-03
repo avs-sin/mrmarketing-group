@@ -3,8 +3,9 @@ import { test, expect } from '@playwright/test'
 test('does_not_download_video_before_play', async ({ page }) => {
   const requests: string[] = []
 
+  // The hero's short silent loops are allowed; the full films must wait for a press of Play
   page.on('request', r => {
-    if (r.url().includes('.mp4')) requests.push(r.url())
+    if (r.url().includes('.mp4') && !r.url().includes('/videos/mrmg/loops/')) requests.push(r.url())
   })
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await expect(page.getByRole('heading', { name: 'Work you can see.' })).toBeVisible()
