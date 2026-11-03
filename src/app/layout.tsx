@@ -119,10 +119,12 @@ const RootLayout = async ({ children }: Readonly<{ children: ReactNode }>) => {
   // Render radius/font/scale onto <html> server-side so they're correct on first paint (no flash)
   const themeAttributes = getThemeInitAttributes(settingsCookie)
 
+  // No global smooth scrolling: a hash link followed during a running smooth scroll was dropped by the browser,
+  // leaving visitors on the previous section. Native jumps land every time and respect reduced motion.
   return (
     <html
       lang='en'
-      className={cn(...fontVariables, 'flex min-h-full w-full scroll-smooth font-sans antialiased')}
+      className={cn(...fontVariables, 'flex min-h-full w-full font-sans antialiased')}
       suppressHydrationWarning
       {...themeAttributes}
     >
