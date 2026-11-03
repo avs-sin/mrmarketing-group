@@ -7,12 +7,13 @@ import { siteConfig } from '@/configs/site'
 import manifest from '@/assets/data/media-manifest.json'
 import { cn } from '@/lib/utils'
 import { getPillar, inquiryHref, type PillarId } from '@/lib/funnel'
+import { emailMariaHref } from '@/lib/contact'
 import Handoff from '@/components/blocks/funnel/handoff'
 import { Eyebrow } from './eyebrow'
 import { MediaCard } from './media-card'
 
 const credentials = [
-  { lead: '10+', label: 'Years across nightlife, hospitality, and entertainment' },
+  { lead: '10+', label: 'Years of Maria’s experience in nightlife, hospitality, and dining' },
   { lead: 'LV', label: 'Las Vegas-based and culturally connected' },
   { lead: '4', label: 'Ways to connect, under one creative team' },
   { lead: '1', label: 'Founder, closely involved with every client' }
@@ -43,8 +44,9 @@ export const TrustStrip = () => (
 export const Founder = () => {
   const explainer = manifest.find(item => item.id === 'founder-explainer')
 
+  // id='about' keeps the old site's /#about links landing on Maria's story
   return (
-    <section className='bg-card py-16 sm:py-24 lg:py-32'>
+    <section id='about' className='bg-card scroll-mt-28 py-16 sm:py-24 lg:py-32'>
       <ContentLayout className='grid items-center gap-12 md:grid-cols-[1.3fr_0.7fr] md:gap-12 lg:gap-24'>
         <div>
           <Eyebrow>The person behind the perspective</Eyebrow>
@@ -134,7 +136,8 @@ export const AudienceAndProcess = () => (
         </div>
         <div className='lg:pt-12'>
           <p className='text-muted-foreground text-lg leading-relaxed text-pretty'>
-            We tailor every strategy to the brand behind it, working as an extension of your team.
+            Our selected work so far centers on Las Vegas restaurants, bars, and events. We tailor every strategy to
+            the brand behind it, working as an extension of your team, across sectors including:
           </p>
           <ul className='mt-6 flex flex-wrap gap-2' aria-label='Industries'>
             {industries.map(industry => (
@@ -162,7 +165,7 @@ export const AudienceAndProcess = () => (
       <Handoff
         className='mt-10 lg:mt-14'
         location='home_process'
-        lead='Step 01 starts with a three-step inquiry.'
+        lead='Step 01 starts with a short email to Maria.'
         primary={{ label: 'Tell us about your brand', href: inquiryHref() }}
         secondary={{ label: 'Explore our offerings', href: '/services' }}
       />
@@ -171,12 +174,15 @@ export const AudienceAndProcess = () => (
 )
 
 type CTABandProps = {
+
+  /** Optional anchor, e.g. 'contact' so the old site's /#contact links still land on a contact action */
+  id?: string
   location: string
   headline: string
   eyebrow?: string
   body?: string
 
-  /** Offering to preselect in the inquiry form */
+  /** Offering to use as the email topic on the contact page */
   service?: PillarId | 'unsure' | null
   ctaLabel?: string
 
@@ -192,6 +198,7 @@ const textOnRed =
 
 /** The "next step" that closes every page: context-aware headline, prefilled inquiry, one onward route. */
 export const CTABand = ({
+  id,
   location,
   headline,
   eyebrow = 'Let’s connect',
@@ -203,7 +210,7 @@ export const CTABand = ({
   const pillar = getPillar(service)
 
   return (
-    <section className='py-16 sm:py-24'>
+    <section id={id} className='scroll-mt-28 py-16 sm:py-24'>
       <ContentLayout>
         <div className='bg-primary text-primary-foreground relative overflow-hidden rounded-3xl px-6 py-10 sm:p-12 lg:p-16'>
           <div
@@ -239,7 +246,7 @@ export const CTABand = ({
                 </Link>
               ) : (
                 <a
-                  href={`mailto:${siteConfig.email}`}
+                  href={emailMariaHref(service)}
                   data-track='cta_email'
                   data-track-location={`${location}_email`}
                   className={outlineOnRed}

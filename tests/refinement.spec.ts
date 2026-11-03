@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
 test('does_not_download_video_before_play', async ({ page }) => {
   const requests: string[] = []
@@ -92,82 +92,181 @@ test('legacy_routes_and_collective_resolve', async ({ request }) => {
   expect((await request.get('/services/not-a-real-service')).status()).toBe(404)
   expect(await (await request.get('/sitemap.xml')).text()).toContain('/services/the-mr-collective')
 })
-test('contact_never_claims_unsent_delivery', async ({ page }) => {
-  await page.goto('/contact-us', { waitUntil: 'domcontentloaded' })
-  const email = page.getByRole('link', { name: 'Email Maria', exact: true })
+const EMAIL = 'Maria@mrmarketing-group.com'
 
-  await expect(email).toHaveAttribute('href', 'mailto:Maria@mrmarketing-group.com?subject=Discuss%20a%20project')
-  await expect(page.getByText('Maria@mrmarketing-group.com', { exact: true }).first()).toBeVisible()
-  await expect(page.locator('a[href="tel:+17249710239"]').first()).toBeVisible()
-  await expect(page.getByText('Opens your email app. Your inquiry is sent when you send the email.')).toBeVisible()
+const parseMailto = (href: string) => {
+  const [address, query] = href.replace(/^mailto:/, '').split('?')
+
+  const params = Object.fromEntries(
+    query.split('&').map(pair => {
+      const [key, value] = pair.split('=')
+
+      return [key, decodeURIComponent(value)]
+    })
+  )
+
+  return { address, subject: params.subject, body: params.body }
+}
+
+test('contact_email_maria_is_prefilled_and_honest', async ({ page }) => {
+  await page.goto('/contact-us?service=creative#inquiry', { waitUntil: 'load' })
+  const panel = page.locator('#inquiry')
+  const email = panel.getByRole('link', { name: 'Email Maria', exact: true })
+
+  await expect(panel.getByText('Mr. Creative · Content Production & Social Media Management')).toBeVisible()
+  const href = (await email.getAttribute('href'))!
+
+  // Encoded per RFC 6068: CRLF line breaks, no raw spaces, and the address untouched
+  expect(href.startsWith(`mailto:${EMAIL}?subject=`)).toBe(true)
+  expect(href).toContain('%0D%0A')
+  expect(href).not.toMatch(/\s/)
+  const mail = parseMailto(href)
+
+  expect(mail.address).toBe(EMAIL)
+  expect(mail.subject).toBe('Project inquiry: Mr. Creative (Content Production & Social Media Management)')
+  expect(mail.body).toContain('I am interested in Mr. Creative (Content Production & Social Media Management).')
+  expect(mail.body).toContain('\r\nMy business or brand:\r\n')
+
+  await expect(panel.getByText('Nothing is sent until you press send in your email app.')).toBeVisible()
+  await expect(panel.getByText(EMAIL, { exact: true })).toBeVisible()
+  await expect(panel.locator('a[href="tel:+17249710239"]')).toBeVisible()
+  await expect(panel.getByRole('link', { name: 'privacy notice' })).toHaveAttribute('href', '/privacy')
+
+  // The old multi-step form, its fields, and delivery promises are gone
+  await expect(page.locator('main form, main input, main textarea')).toHaveCount(0)
+  await expect(page.locator('main')).not.toContainText(/step \d of|inquiry received|sent to maria|in maria.s inbox/i)
   await email.focus()
   await expect(email).toBeFocused()
-  await expect(page.getByRole('button', { name: 'Subscribe', exact: true })).toHaveCount(0)
-  await expect(page.locator('main')).not.toContainText(/inquiry received|sent to maria|Maria will call|you.re booked/i)
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
 })
 
-const completeInquiry = async (page: Page) => {
-  const form = page.locator('#inquiry')
+test('contact_topic_follows_the_link_and_can_change', async ({ page }) => {
+  await page.goto('/contact-us', { waitUntil: 'load' })
+  const panel = page.locator('#inquiry')
+  const email = panel.getByRole('link', { name: 'Email Maria', exact: true })
 
-  await expect(form.getByRole('radio', { name: /^Mr\. Social/ })).toBeChecked()
-  await form.getByRole('button', { name: 'Continue' }).click()
-  await form.getByRole('button', { name: 'Continue' }).click()
-  await expect(form.getByText('Choose a budget range.')).toBeVisible()
-  await form.locator('label', { hasText: 'Prefer to discuss' }).click()
-  await form.locator('label', { hasText: 'Within 1–3 months' }).click()
-  await form.getByRole('button', { name: 'Continue' }).click()
-  await form.getByRole('button', { name: 'Send to Maria' }).click()
-  await expect(form.getByText('Enter your name.')).toBeVisible()
-  await form.getByLabel('Name').fill('Test Visitor')
-  await form.getByLabel('Email').fill('visitor@example.com')
-  await form.getByLabel('Your brand and goals').fill('Launching a new rooftop bar and want an opening event.')
-  await form.getByRole('button', { name: 'Send to Maria' }).click()
-}
-
-test('inquiry_form_qualifies_and_falls_back_honestly', async ({ page }) => {
-  await page.route('**/api/inquiry', r => r.fulfill({ status: 503, json: { status: 'not_configured' } }))
-  await page.goto('/contact-us?service=social#inquiry', { waitUntil: 'load' })
-  await completeInquiry(page)
-  await expect(page.getByText('has not been sent', { exact: false })).toBeVisible()
-  await expect(page.locator('main')).not.toContainText(/sent to maria/i)
-  const fallback = page.getByRole('link', { name: 'Open email with my answers' })
-  const body = decodeURIComponent((await fallback.getAttribute('href'))!.split('body=')[1])
-
-  expect(body).toContain('Offering: Mr. Social')
-  expect(body).toContain('Timeline: Within 1–3 months')
-  expect(body).toContain('Launching a new rooftop bar')
+  expect(parseMailto((await email.getAttribute('href'))!).subject).toBe('Project inquiry')
+  await panel.getByRole('link', { name: 'Mr. Social', exact: true }).click()
+  await expect(page).toHaveURL(/service=social/)
+  await expect
+    .poll(async () => parseMailto((await email.getAttribute('href'))!).subject)
+    .toBe('Project inquiry: Mr. Social (Events & Experiences)')
+  expect(await email.getAttribute('href')).toContain('%26')
+  await panel.getByRole('link', { name: 'Not sure yet', exact: true }).click()
+  await expect
+    .poll(async () => parseMailto((await email.getAttribute('href'))!).subject)
+    .toBe('Project inquiry: help choosing an offering')
 })
 
-test('inquiry_form_confirms_only_real_delivery', async ({ page }) => {
-  await page.route('**/api/inquiry', r => r.fulfill({ status: 200, json: { status: 'sent' } }))
-  await page.goto('/contact-us?service=social#inquiry', { waitUntil: 'load' })
-  await completeInquiry(page)
-  await expect(page.getByRole('heading', { name: 'Sent to Maria' })).toBeVisible()
+test('copy_address_works_and_falls_back_to_selection', async ({ page, context, browserName }) => {
+  test.skip(browserName !== 'chromium', 'clipboard permissions are Chromium-only')
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+  await page.goto('/contact-us#inquiry', { waitUntil: 'load' })
+  await page.getByRole('button', { name: 'Copy email address' }).click()
+  await expect(page.getByText('Email address copied.')).toBeVisible()
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(EMAIL)
+
+  // Blocked clipboard: the address is selected for a manual copy instead
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'clipboard', {
+      value: { writeText: () => Promise.reject(new Error('blocked')) },
+      configurable: true
+    })
+  })
+  await page.reload({ waitUntil: 'load' })
+  await page.getByRole('button', { name: 'Copy email address' }).click()
+  await expect(page.getByText(/The address is selected/)).toBeVisible()
+  expect(await page.evaluate(() => window.getSelection()?.toString())).toBe(EMAIL)
 })
 
-test('inquiry_api_validates_and_reports_unconfigured', async ({ request }) => {
-  expect((await request.post('/api/inquiry', { data: { service: 'social' } })).status()).toBe(400)
+test('obsolete_inquiry_endpoint_is_removed', async ({ request }) => {
+  const res = await request.post('/api/inquiry', { data: { name: 'Test' } })
 
-  const valid = {
-    service: 'social',
-    budget: 'Prefer to discuss',
-    timeline: 'Just exploring',
-    name: 'Test Visitor',
-    email: 'visitor@example.com',
-    message: 'Hello, testing the inquiry endpoint.'
+  expect(res.status()).toBe(404)
+})
+
+test('legacy_hash_links_land_on_matching_sections', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'load' })
+
+  for (const id of ['home', 'about', 'services', 'work', 'contact']) {
+    await expect(page.locator(`[id="${id}"]`), id).toHaveCount(1)
   }
 
-  if (!process.env.RESEND_API_KEY) {
-    const res = await request.post('/api/inquiry', { data: valid })
+  await page.goto('/#contact', { waitUntil: 'load' })
+  const contact = page.locator('#contact')
 
-    expect(res.status()).toBe(503)
-    expect((await res.json()).status).toBe('not_configured')
+  await expect(contact).toBeInViewport()
+  await expect(contact.getByRole('link', { name: 'Email Maria' })).toHaveAttribute('href', /^mailto:Maria@/)
+  await page.goto('/#about', { waitUntil: 'load' })
+  await expect(page.locator('#about').getByRole('heading', { name: 'Maria Romano' })).toBeInViewport()
+})
+
+test('public_pages_have_no_theme_customizer', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'load' })
+  await expect(page.locator('header button').filter({ hasText: /theme|customi/i })).toHaveCount(0)
+  await expect(page.locator('header [aria-label*="theme" i], header [aria-label*="customi" i]')).toHaveCount(0)
+  const before = await page.evaluate(() => document.documentElement.className)
+
+  await page.keyboard.press('d')
+  await page.waitForTimeout(300)
+  expect(await page.evaluate(() => document.documentElement.className)).toBe(before)
+})
+
+test('privacy_notice_is_linked_and_indexed', async ({ page, request }) => {
+  await page.goto('/privacy', { waitUntil: 'load' })
+  await expect(page.getByRole('heading', { level: 1, name: 'Privacy notice' })).toBeVisible()
+  await expect(page.locator('main')).toContainText('does not run analytics or advertising scripts')
+  await expect(page.locator('footer').getByRole('link', { name: 'Privacy' })).toHaveAttribute('href', '/privacy')
+  expect(await (await request.get('/sitemap.xml')).text()).toContain('/privacy</loc>')
+})
+
+test('structured_data_is_valid_and_supported', async ({ request }) => {
+  for (const route of ['/', '/contact-us', '/services/content-creation', '/projects/tuscan-cove', '/privacy']) {
+    const html = await (await request.get(route)).text()
+    const blocks = [...html.matchAll(/<script type="application\/ld\+json">([^<]*)<\/script>/g)].map(m => m[1])
+
+    expect(blocks.length, route).toBeGreaterThan(0)
+    const graph = blocks.flatMap(block => JSON.parse(block)['@graph'])
+    const org = graph.find(node => node['@type'] === 'Organization')
+
+    if (route !== '/projects/tuscan-cove') expect(org, route).toBeTruthy()
+
+    if (org) {
+      expect(org.address.streetAddress).toBeUndefined()
+      expect(org.aggregateRating).toBeUndefined()
+    }
+
+    if (route.startsWith('/services/')) expect(graph.some(node => node['@type'] === 'Service')).toBe(true)
   }
+})
 
-  expect((await (await request.post('/api/inquiry', { data: { ...valid, website: 'spam' } })).json()).status).toBe(
-    'sent'
+test('share_previews_use_raster_images', async ({ request }) => {
+  for (const slug of ['chefs-roma-kitchen', 'made-events', 'saffron-lounge', 'tuscan-cove', 'past-curfew']) {
+    const html = await (await request.get(`/projects/${slug}`)).text()
+    const image = html.match(/<meta property="og:image" content="([^"]+)"/)?.[1]
+
+    expect(image, slug).toMatch(/\.(png|jpe?g|webp)$/)
+    expect((await request.get(new URL(image!).pathname)).status(), slug).toBe(200)
+  }
+})
+
+test('service_pages_explain_fit_and_link_to_on_page_work', async ({ page }) => {
+  await page.goto('/services/content-creation', { waitUntil: 'load' })
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Mr. Creative')
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Content Production & Social Media Management')
+  await expect(page.getByRole('heading', { name: 'Content production', exact: true })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Social media management', exact: true })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'A good fit for' })).toBeVisible()
+  await expect(page.getByRole('link', { name: 'See related work' })).toHaveAttribute('href', '#work')
+  await expect(page.locator('#work')).toHaveCount(1)
+  await expect(page).toHaveTitle('Mr. Creative: Content Production & Social Media Management | Mr. Marketing Group')
+
+  // Hero actions no longer point to the same destination twice
+  const heroLinks = await page.locator('main section').first().locator('a[data-track]').evaluateAll(links =>
+    links.map(link => link.getAttribute('href'))
   )
+
+  expect(new Set(heroLinks).size).toBe(heroLinks.length)
 })
 
 test('mobile_sticky_cta_appears_after_hero', async ({ page }) => {
@@ -217,6 +316,7 @@ test('supporting_pages_load_images_and_fit_viewport', async ({ page }) => {
     '/services',
     '/services/the-mr-collective',
     '/contact-us',
+    '/privacy',
     '/projects',
     '/projects/tuscan-cove'
   ]) {
@@ -321,49 +421,6 @@ test('video_stills_only_appear_as_playable_films', async ({ page }) => {
   await expect(page.getByRole('button', { name: 'Play Community event coverage', exact: true })).toBeVisible()
 })
 
-test('server_field_errors_land_on_a_visible_step', async ({ page }) => {
-  await page.route('**/api/inquiry', r =>
-    r.fulfill({
-      status: 400,
-      json: { status: 'invalid', errors: { company: 'That’s a little long — please shorten it.' } }
-    })
-  )
-  await page.goto('/contact-us?service=social#inquiry', { waitUntil: 'load' })
-  await completeInquiry(page)
-  const form = page.locator('#inquiry')
-
-  // Previously this stranded the visitor on an empty "Step 0 of 3"
-  await expect(form.getByText('Step 3 of 3')).toBeVisible()
-  await expect(form.getByText('That’s a little long — please shorten it.')).toBeVisible()
-  await expect(form.getByLabel('Business or brand')).toHaveAttribute('maxlength', '160')
-})
-
-test('inquiry_api_rejects_cross_site_and_non_json_posts', async ({ request, baseURL }) => {
-  const valid = {
-    service: 'social',
-    budget: 'Prefer to discuss',
-    timeline: 'Just exploring',
-    name: 'Test Visitor',
-    email: 'visitor@example.com',
-    message: 'Hello, testing the inquiry endpoint.'
-  }
-
-  const plain = await request.post('/api/inquiry', {
-    headers: { 'content-type': 'text/plain' },
-    data: JSON.stringify(valid)
-  })
-
-  expect(plain.status()).toBe(415)
-
-  const crossSite = await request.post('/api/inquiry', { headers: { origin: 'https://evil.example' }, data: valid })
-
-  expect(crossSite.status()).toBe(403)
-
-  const sameSite = await request.post('/api/inquiry', { headers: { origin: baseURL! }, data: valid })
-
-  expect([200, 503]).toContain(sameSite.status())
-})
-
 test('links_are_not_announced_as_buttons', async ({ request }) => {
   for (const route of ['/', '/services/content-creation', '/projects/tuscan-cove', '/teams']) {
     const html = await (await request.get(route)).text()
@@ -379,4 +436,22 @@ test('projects_list_in_a_stable_featured_first_order', async ({ request }) => {
 
   expect(positions.every(position => position > -1)).toBe(true)
   expect([...positions].sort((a, b) => a - b)).toEqual(positions)
+})
+
+test('mobile_menu_opens_navigates_and_closes', async ({ page }) => {
+  test.skip(page.viewportSize()!.width >= 1024, 'mobile menu only')
+  await page.goto('/', { waitUntil: 'load' })
+  const trigger = page.getByRole('button', { name: 'Menu' })
+
+  await trigger.click()
+  const sheet = page.getByRole('dialog')
+
+  await expect(sheet.getByRole('link', { name: 'Contact Maria' })).toHaveAttribute('href', '/contact-us#inquiry')
+  await page.keyboard.press('Escape')
+  await expect(sheet).toBeHidden()
+  await trigger.click()
+  await sheet.getByRole('button', { name: 'Services' }).click()
+  await sheet.getByRole('link', { name: 'Mr. Creative' }).click()
+  await expect(page).toHaveURL(/\/services\/content-creation$/)
+  await expect(page.getByRole('dialog')).toBeHidden()
 })

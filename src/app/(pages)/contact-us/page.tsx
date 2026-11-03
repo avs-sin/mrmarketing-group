@@ -11,7 +11,8 @@ import {
   generateMetadata as generateSEOMetadata,
   combineSchemas,
   generateWebsiteSchema,
-  generateWebPageSchema
+  generateWebPageSchema,
+  generateOrganizationSchema
 } from '@/lib/seo'
 
 // Data Imports
@@ -20,18 +21,20 @@ import { contactCards } from '@/assets/data/contact-us'
 
 export const metadata: Metadata = generateSEOMetadata({
   title: 'Contact Us',
-  description: 'Start a project with Mr. Marketing Group. Email Maria@mrmarketing-group.com or call +1 (724) 971-0239.',
+  description:
+    'Start a project with Mr. Marketing Group in Las Vegas. Email Maria at Maria@mrmarketing-group.com or call +1 (724) 971-0239.',
   url: '/contact-us',
-  keywords: ['contact', 'support', 'help', 'get in touch']
+  keywords: ['contact Mr. Marketing Group', 'Las Vegas marketing agency', 'Maria Romano']
 })
 
 const ContactUsPage = () => {
   const jsonLd = combineSchemas(
     generateWebsiteSchema(),
+    generateOrganizationSchema(),
     generateWebPageSchema({
       name: 'Contact Us',
       description:
-        'Start a project with Mr. Marketing Group. Email Maria@mrmarketing-group.com or call +1 (724) 971-0239.',
+        'Start a project with Mr. Marketing Group in Las Vegas. Email Maria at Maria@mrmarketing-group.com or call +1 (724) 971-0239.',
       url: '/contact-us'
     })
   )

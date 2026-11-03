@@ -80,8 +80,8 @@ const Process = ({ data }: { data: TimelineEntry[] }) => {
           <SectionHeader
             className='sticky top-28 items-start pt-2 text-start'
             badge='Process'
-            title='Our Process'
-            description='We start with your audience, identity, and goals, shape a tailored creative direction, and bring the plan to life with consistent execution.'
+            title='How it starts'
+            description='Every project is scoped to your business. Nothing here is a fixed package: deliverables, approvals, timing, and pricing are discussed with you directly.'
           />
         </div>
         <div ref={ref} className='relative'>

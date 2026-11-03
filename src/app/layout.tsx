@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     template: `%s | ${siteConfig.name}`,
-    default: `${siteConfig.name} | Las Vegas Creative Marketing Agency`
+    default: `${siteConfig.name} | Las Vegas Content, Social Media & Events Agency`
   },
   description: siteConfig.description,
   robots: 'index,follow',

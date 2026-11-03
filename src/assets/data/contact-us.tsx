@@ -1,23 +1,41 @@
-// Third-party Imports
-import { IconMapPin, IconMail, IconPhone } from '@tabler/icons-react'
+import type { ReactElement } from 'react'
 
-export const contactCards = [
+// Third-party Imports
+import { IconBrandInstagram, IconMail, IconPhone } from '@tabler/icons-react'
+
+import { siteConfig } from '@/configs/site'
+import { emailMariaHref } from '@/lib/contact'
+
+export type ContactCard = {
+  icon: ReactElement
+  title: string
+  label: string
+  href: string
+  note: string
+  external?: boolean
+}
+
+export const contactCards: ContactCard[] = [
   {
-    icon: <IconMapPin className='size-10 stroke-1' />,
-    title: 'Based in Las Vegas',
-    ctaText: 'Las Vegas, NV',
-    ctaLink: 'Creative marketing, tailored to your brand.'
+    icon: <IconMail className='size-10 stroke-1' />,
+    title: 'Email Maria',
+    label: siteConfig.email,
+    href: emailMariaHref(),
+    note: 'Opens your email app. Nothing is sent until you press send.'
   },
   {
     icon: <IconPhone className='size-10 stroke-1' />,
     title: 'Call Maria',
-    ctaText: 'Phone : +1 (724) 971-0239',
-    ctaLink: 'Instagram : @wearemrmarketing'
+    label: siteConfig.phone,
+    href: siteConfig.phoneHref,
+    note: 'Based in Las Vegas, NV.'
   },
   {
-    icon: <IconMail className='size-10 stroke-1' />,
-    title: 'Email Maria',
-    ctaText: 'Maria@mrmarketing-group.com',
-    ctaLink: 'Tell us about your brand and goals.'
+    icon: <IconBrandInstagram className='size-10 stroke-1' />,
+    title: 'Follow the work',
+    label: '@wearemrmarketing',
+    href: siteConfig.links.instagram,
+    note: 'Instagram',
+    external: true
   }
 ]

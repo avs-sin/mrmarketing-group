@@ -29,6 +29,12 @@ export type ProjectMetadata = {
 
   /** media-manifest id of a film to play on the project page */
   video?: string
+
+  /** media-manifest ids of every film shown on the project page (takes precedence over `video`) */
+  films?: string[]
+
+  /** Raster share image (1200x630) for link previews; SVG covers are not reliably supported */
+  ogImage?: string
 }
 
 // local content directory (comment below line if using remote fetching)

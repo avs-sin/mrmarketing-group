@@ -2,7 +2,7 @@
 import Link from 'next/link'
 
 // Third-party Imports
-import { IconArrowRight, IconPhoneCall } from '@tabler/icons-react'
+import { IconArrowRight, IconMail } from '@tabler/icons-react'
 
 // Component Imports
 import ContentLayout from '@/components/layout/content-layout'
@@ -43,7 +43,7 @@ const ProjectSection = ({ projects }: { projects: ProjectMetadata[] }) => {
               render={<Link href={inquiryHref()} data-track='cta_book_call' data-track-location='projects_hero' />}
               nativeButton={false}
             >
-              Start a Project <IconPhoneCall data-icon='inline-end' />
+              Contact Maria <IconMail data-icon='inline-end' />
             </Button>
             <Button
               size='lg'

@@ -8,7 +8,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 
 // Third-party Imports
-import { IconEye, IconPhoneCall } from '@tabler/icons-react'
+import { IconEye, IconMail } from '@tabler/icons-react'
 
 import { Button } from '@/components/ui/button'
 
@@ -20,6 +20,8 @@ import { Card, CardContent } from '@/components/ui/card'
 import { CTABand } from '@/components/blocks/home/funnel-sections'
 import PillarLinks from '@/components/blocks/funnel/pillar-links'
 import MediaFeature from '@/components/blocks/media-feature'
+import { MediaCard } from '@/components/blocks/home/media-card'
+import manifest from '@/assets/data/media-manifest.json'
 import { getPillar, inquiryHref, projectPillars } from '@/lib/funnel'
 import { servicePillars } from '@/assets/data/service-pillars'
 import { SectionHeader } from '@/components/ui/section-header'
@@ -75,7 +77,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     url: `/projects/${metadata.slug}`,
     keywords: metadata.keywords,
     type: 'article',
-    image: metadata.image
+    image: metadata.ogImage ?? metadata.image
   })
 }
 
@@ -93,6 +95,7 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
 
   const { metadata, content } = project
 
+  const films = (metadata.films ?? []).flatMap(id => manifest.filter(asset => asset.kind === 'video' && asset.id === id))
   const pillarIds = projectPillars(metadata.services)
   const primaryPillar = getPillar(pillarIds[0])
 
@@ -134,7 +137,7 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
             />
             <SectionHeader
               headingLevel='h1'
-              badge={metadata.slug}
+              badge={metadata.category}
               title={metadata.title}
               description={metadata.description}
               badgeClassName='bg-card z-1'
@@ -147,7 +150,6 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
               )}
               <Button
                 size='lg'
-                variant='secondary'
                 render={
                   <Link
                     href={inquiryHref(primaryPillar?.id)}
@@ -157,7 +159,7 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
                 }
                 nativeButton={false}
               >
-                Start a Project <IconPhoneCall data-icon='inline-end' />
+                Email Maria about similar work <IconMail data-icon='inline-end' />
               </Button>
             </div>
           </div>
@@ -167,15 +169,30 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
                 <div className='text-base font-medium'>Industry</div>
                 <div className='text-muted-foreground text-sm'>{metadata.industry}</div>
               </div>
-              <div className='flex flex-col items-center'>
-                <div className='text-base font-medium'>Category</div>
-                <div className='text-muted-foreground text-sm'>{metadata.category}</div>
+              <div className='flex flex-col items-center text-center'>
+                <div className='text-base font-medium'>Related offerings</div>
+                <div className='text-muted-foreground text-sm'>
+                  {servicePillars
+                    .filter(pillar => pillarIds.includes(pillar.id))
+                    .map(pillar => pillar.name)
+                    .join(' · ') || 'Ask Maria'}
+                </div>
               </div>
             </CardContent>
           </Card>
 
           <div className='bg-background rounded-[calc(var(--radius)*1.4+1rem)] p-4 sm:rounded-[calc(var(--radius)*1.4+1.5rem)] sm:p-6 md:p-10'>
-            <MediaFeature image={metadata.image} video={metadata.video} alt={metadata.title ?? ''} />
+            {films.length > 1 ? (
+              <ul aria-label='Films from this project' className='mx-auto grid max-w-2xl gap-6 sm:grid-cols-2'>
+                {films.map(film => (
+                  <li key={film.id} className='mx-auto w-full max-w-[18rem]'>
+                    <MediaCard asset={{ ...film, kind: 'video' }} />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <MediaFeature image={metadata.image} video={films[0]?.id ?? metadata.video} alt={metadata.title ?? ''} />
+            )}
           </div>
 
           {metadata.tools && metadata.tools.length > 0 && (
@@ -201,8 +218,8 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
         </ContentLayout>
       </section>
       <PillarLinks
-        eyebrow='Behind this work'
-        title='The offerings we used.'
+        eyebrow='Related offerings'
+        title='Where work like this fits.'
         description='Each one can be the start of your project.'
         pillars={servicePillars.filter(pillar => pillarIds.includes(pillar.id))}
         location={`project_${slug}_offerings`}
@@ -210,8 +227,8 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
       <RelatedProjectSection
         projects={relatedProjects}
         badge='More work'
-        title='Similar brands we’ve worked with.'
-        description='More Las Vegas restaurants, lounges, and events.'
+        title='More selected work.'
+        description='More Las Vegas restaurants, lounges, and events from our portfolio.'
         service={primaryPillar?.id}
         location={`project_${slug}_related`}
       />
@@ -220,7 +237,7 @@ const ProjectDetailsPage = async ({ params }: { params: Promise<{ slug: string }
         location={`project_${slug}_final`}
         eyebrow='Your brand next'
         headline='Want work like this for your brand?'
-        body='Tell Maria what you’re building. The form starts with the offering behind this project; change it any time.'
+        body='Tell Maria what you’re building. The email starts with the offering behind this project as its topic; change it any time.'
         service={primaryPillar?.id}
         secondary={primaryPillar ? { label: `Explore ${primaryPillar.name}`, href: primaryPillar.href } : undefined}
       />

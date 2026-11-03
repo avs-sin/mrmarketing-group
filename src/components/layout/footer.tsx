@@ -13,6 +13,7 @@ import { Separator } from '@/components/ui/separator'
 import { servicePillars } from '@/assets/data/service-pillars'
 
 import { siteConfig } from '@/configs/site'
+import { emailMariaHref } from '@/lib/contact'
 
 const Footer = () => {
   return (
@@ -89,7 +90,7 @@ const Footer = () => {
                         href='/contact-us#inquiry'
                         className='hover:text-foreground transition-colors duration-150 ease-out'
                       >
-                        Start a Project
+                        Contact Maria
                       </Link>
                     </li>
                   </ul>
@@ -99,7 +100,7 @@ const Footer = () => {
                   <ul className='text-muted-foreground space-y-3'>
                     <li>
                       <a
-                        href={`mailto:${siteConfig.email}`}
+                        href={emailMariaHref()}
                         className='hover:text-foreground break-all transition-colors duration-150 ease-out'
                       >
                         {siteConfig.email}
@@ -139,7 +140,10 @@ const Footer = () => {
                   </div>
                   <Separator />
                   <p className='text-muted-foreground text-sm'>
-                    © {new Date().getFullYear()} Mr. Marketing Group · Las Vegas, NV · All rights reserved
+                    © {new Date().getFullYear()} Mr. Marketing Group · Las Vegas, NV · All rights reserved ·{' '}
+                    <Link href='/privacy' className='hover:text-foreground underline underline-offset-4'>
+                      Privacy
+                    </Link>
                   </p>
                 </div>
               </div>

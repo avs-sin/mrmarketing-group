@@ -34,7 +34,7 @@ const MobileCTA = () => {
 
   if (pathname.startsWith('/contact-us')) return null
 
-  // On a service page, carry that offering into the form
+  // On a service page, carry that offering to the contact page
   const serviceSlug = pathname.match(/^\/services\/([^/]+)/)?.[1]
   const href = inquiryHref(serviceSlug ? pillarForServiceSlug(serviceSlug) : null)
 

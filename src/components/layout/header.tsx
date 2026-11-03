@@ -9,8 +9,6 @@ import Link from 'next/link'
 // Third-party Imports
 import { IconArrowUpRight } from '@tabler/icons-react'
 
-import ThemeCustomizer from './ThemeCustomizer'
-
 // Component Imports
 import { Button } from '@/components/ui/button'
 import { HeaderNavigation, HeaderNavigationSmallScreen, type Navigation } from '@/components/layout/header-navigation'
@@ -56,7 +54,6 @@ const Header = ({ navigationData }: HeaderProps) => {
           <HeaderNavigation navigationData={navigationData} navigationClassName='grow' />
           {/* Actions */}
           <div className='flex items-center justify-center gap-3'>
-            <ThemeCustomizer />
             <Button
               className='text-primary bg-primary-foreground hover:bg-primary-foreground/80 max-md:hidden'
               render={<Link href='/contact-us#inquiry' data-track='cta_book_call' data-track-location='header' />}

@@ -33,7 +33,7 @@ export function generateMetadata({
 
   const pageTitle = title
     ? `${title} | ${siteConfig.name}`
-    : `${siteConfig.name} | Las Vegas Full-Service Marketing Agency`
+    : `${siteConfig.name} | Las Vegas Content, Social Media & Events Agency`
 
   return {
     // A string title flows through the layout's `%s | …` template; when a page omits its own
@@ -80,7 +80,63 @@ export function generateWebsiteSchema() {
     name: siteConfig.brand,
     description: siteConfig.description,
     url: siteConfig.url,
+    publisher: { '@id': `${siteConfig.url}#organization` },
     inLanguage: 'en-US'
+  }
+}
+
+/**
+ * Organization schema with supported facts only: no street address, ratings, or price ranges.
+ */
+export function generateOrganizationSchema() {
+  return {
+    '@type': 'Organization',
+    '@id': `${siteConfig.url}#organization`,
+    name: siteConfig.brand,
+    url: siteConfig.url,
+    logo: `${siteConfig.url}/images/mr-marketing-logo.png`,
+    description: siteConfig.description,
+    email: siteConfig.email,
+    telephone: siteConfig.phone.replace(/[^+\d]/g, ''),
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Las Vegas',
+      addressRegion: 'NV',
+      addressCountry: 'US'
+    },
+    areaServed: { '@type': 'City', name: 'Las Vegas' },
+    founder: {
+      '@type': 'Person',
+      name: siteConfig.creator.name,
+      sameAs: [siteConfig.links.founderInstagram, siteConfig.links.tiktok]
+    },
+    sameAs: [siteConfig.links.instagram]
+  }
+}
+
+/**
+ * Service schema for a service page, provided by the organization above.
+ */
+export function generateServiceSchema({
+  name,
+  serviceType,
+  description,
+  url
+}: {
+  name: string
+  serviceType: string
+  description: string
+  url: string
+}) {
+  return {
+    '@type': 'Service',
+    '@id': `${siteConfig.url}${url}#service`,
+    name,
+    serviceType,
+    description,
+    url: `${siteConfig.url}${url}`,
+    provider: { '@id': `${siteConfig.url}#organization` },
+    areaServed: { '@type': 'City', name: 'Las Vegas' }
   }
 }
 

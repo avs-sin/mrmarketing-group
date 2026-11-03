@@ -88,20 +88,6 @@ type Props = {
   settingsCookie?: Settings
 }
 
-// Ignore the mode hotkey while the user is typing in a field
-const isTypingTarget = (target: EventTarget | null) => {
-  if (!(target instanceof HTMLElement)) {
-    return false
-  }
-
-  return (
-    target.isContentEditable ||
-    target.tagName === 'INPUT' ||
-    target.tagName === 'TEXTAREA' ||
-    target.tagName === 'SELECT'
-  )
-}
-
 // Initial Settings Context
 export const SettingsContext = createContext<SettingsContextProps | null>(null)
 
@@ -235,26 +221,6 @@ export const SettingsProvider = (props: Props) => {
   useEffect(() => {
     setTheme(settings.mode)
   }, [settings.mode, setTheme])
-
-  // Press "d" to toggle light/dark (routed through settings so the cookie stays in sync)
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.defaultPrevented || event.repeat || event.metaKey || event.ctrlKey || event.altKey) {
-        return
-      }
-
-      if (event.key.toLowerCase() !== 'd' || isTypingTarget(event.target)) {
-        return
-      }
-
-      updateSettings({ mode: resolvedTheme === 'dark' ? 'light' : 'dark' })
-    }
-
-    window.addEventListener('keydown', onKeyDown)
-
-    return () => window.removeEventListener('keydown', onKeyDown)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resolvedTheme])
 
   // Handle theme preset change
   useEffect(() => {

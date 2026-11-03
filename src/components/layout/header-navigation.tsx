@@ -403,6 +403,15 @@ const HeaderNavigationSmallScreen = ({
               </Collapsible>
             )
           })}
+          <Link
+            href='/contact-us#inquiry'
+            data-track='cta_book_call'
+            data-track-location='mobile_menu'
+            className='bg-primary text-primary-foreground mt-3 flex min-h-11 items-center justify-center rounded-full px-4 text-sm font-medium'
+            onClick={handleLinkClick}
+          >
+            Contact Maria
+          </Link>
         </div>
       </SheetContent>
     </Sheet>

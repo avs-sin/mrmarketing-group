@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'react'
+import type { ComponentProps, ReactNode } from 'react'
 
 import { Badge } from '@/components/ui/badge'
 
@@ -7,14 +7,14 @@ import { cn } from '@/lib/utils'
 type SectionHeaderProps = {
   headingLevel?: 'h1' | 'h2'
   badge?: string
-  title?: string
+  title?: ReactNode
   description?: string
 
   className?: string
   badgeClassName?: string
   titleClassName?: string
   descriptionClassName?: string
-} & ComponentProps<'section'>
+} & Omit<ComponentProps<'section'>, 'title'>
 
 export function SectionHeader({
   headingLevel: Heading = 'h2',

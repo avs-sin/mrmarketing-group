@@ -38,6 +38,18 @@ export type ServiceMetadata = {
   whatWeDoItems?: ServiceWhatWeDoItem[]
   process?: ServiceProcessStep[]
   keywords?: string[]
+
+  /** Search/share title that pairs the offering name with a plain-language service label */
+  seoTitle?: string
+
+  /** Buyer situations this service suits; keep to what the supplied service copy supports */
+  bestFor?: string[]
+
+  /** Prompts for what to include when emailing Maria about this service */
+  askAbout?: string[]
+
+  /** Plain statement about what is and is not part of this page's scope */
+  scopeNote?: string
 }
 
 // local content directory (comment below line if using remote fetching)

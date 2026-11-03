@@ -5,7 +5,12 @@ import ServicesBoard from '@/components/blocks/home/services-board'
 import { TrustStrip, Founder, Recognition, AudienceAndProcess, CTABand } from '@/components/blocks/home/funnel-sections'
 import { WorkGallery } from '@/components/blocks/home/work-gallery'
 import { HomeFaq } from '@/components/blocks/home/home-faq'
-import { generateMetadata as generateSEOMetadata, combineSchemas, generateWebsiteSchema } from '@/lib/seo'
+import {
+  generateMetadata as generateSEOMetadata,
+  combineSchemas,
+  generateOrganizationSchema,
+  generateWebsiteSchema
+} from '@/lib/seo'
 import { siteConfig } from '@/configs/site'
 import { servicePillars } from '@/assets/data/service-pillars'
 import { faqItems } from '@/assets/data/faq'
@@ -22,11 +27,11 @@ const Home = () => (
     <Recognition />
     <AudienceAndProcess />
     <HomeFaq faqItems={faqItems} />
-    <CTABand location='home_final' headline='Let’s build a brand people connect with.' />
+    <CTABand id='contact' location='home_final' headline='Let’s build a brand people connect with.' />
     <script
       type='application/ld+json'
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(combineSchemas(generateWebsiteSchema())).replace(/</g, '\u003c')
+        __html: JSON.stringify(combineSchemas(generateWebsiteSchema(), generateOrganizationSchema())).replace(/</g, '\\u003c')
       }}
     />
   </div>
