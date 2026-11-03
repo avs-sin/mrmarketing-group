@@ -1,9 +1,8 @@
+import { Suspense } from 'react'
+
 import Link from 'next/link'
 
-import { siteConfig } from '@/configs/site'
-import InquiryForm from './inquiry-form'
-
-const mailto = (subject: string) => `mailto:${siteConfig.email}?subject=${encodeURIComponent(subject)}`
+import EmailMaria, { EmailMariaPanel } from './email-maria'
 
 const ContactForm = () => (
   <div className='min-w-0 space-y-8'>
@@ -11,30 +10,15 @@ const ContactForm = () => (
       <p className='text-primary mb-3 text-sm tracking-widest uppercase'>Let’s connect</p>
       <h2 className='type-display text-4xl text-balance sm:text-5xl'>Tell Maria about your brand.</h2>
       <p className='text-muted-foreground mt-5 leading-relaxed text-pretty'>
-        Three quick steps: what you need, your budget and timing, and how to reach you. It goes straight to Maria.
+        The simplest way to start is an email to Maria. Share what you are working on, and she can reply with the
+        right next step.
       </p>
     </div>
 
-    <InquiryForm />
-
-    <div className='border-border space-y-3 border-t pt-7'>
-      <h3 className='font-medium'>Prefer email or phone?</h3>
-      <a
-        href={mailto('Discuss a project')}
-        className='hover:text-primary inline-flex min-h-11 items-center font-medium underline underline-offset-4 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-4'
-      >
-        Email Maria
-      </a>
-      <p className='text-muted-foreground text-sm'>
-        Opens your email app. Your inquiry is sent when you send the email.
-      </p>
-      <a href={mailto('Discuss a project')} className='block break-all underline underline-offset-4'>
-        {siteConfig.email}
-      </a>
-      <a href={siteConfig.phoneHref} className='inline-block py-2 underline underline-offset-4'>
-        {siteConfig.phone}
-      </a>
-    </div>
+    {/* Static render shows the general topic; the URL's ?service= fills in once the page hydrates */}
+    <Suspense fallback={<EmailMariaPanel />}>
+      <EmailMaria />
+    </Suspense>
 
     {/* Not ready yet: keep them moving through the site instead of losing them */}
     <nav aria-label='Not ready yet?' className='border-border border-t pt-7'>
@@ -43,7 +27,7 @@ const ContactForm = () => (
         <li>
           <Link
             href='/projects'
-            className='hover:text-foreground underline underline-offset-4 transition-colors duration-150'
+            className='hover:text-foreground inline-flex min-h-11 items-center underline underline-offset-4 transition-colors duration-150'
           >
             See our work
           </Link>
@@ -51,7 +35,7 @@ const ContactForm = () => (
         <li>
           <Link
             href='/services'
-            className='hover:text-foreground underline underline-offset-4 transition-colors duration-150'
+            className='hover:text-foreground inline-flex min-h-11 items-center underline underline-offset-4 transition-colors duration-150'
           >
             Compare offerings
           </Link>
@@ -59,7 +43,7 @@ const ContactForm = () => (
         <li>
           <Link
             href='/about-us'
-            className='hover:text-foreground underline underline-offset-4 transition-colors duration-150'
+            className='hover:text-foreground inline-flex min-h-11 items-center underline underline-offset-4 transition-colors duration-150'
           >
             Meet Maria
           </Link>

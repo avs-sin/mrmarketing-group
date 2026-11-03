@@ -2,7 +2,7 @@
 import Link from 'next/link'
 
 // Third-party Imports
-import { IconArrowRight, IconPhoneCall } from '@tabler/icons-react'
+import { IconArrowRight, IconMail } from '@tabler/icons-react'
 
 // Component Imports
 import ContentLayout from '@/components/layout/content-layout'
@@ -15,6 +15,9 @@ import type { ProjectMetadata } from '@/lib/projects'
 import { inquiryHref, type PillarId } from '@/lib/funnel'
 
 type RelatedProjectSectionProps = {
+
+  /** Anchor for in-page links such as a hero's "See the work" */
+  id?: string
   projects: ProjectMetadata[]
   badge?: string
   title?: string
@@ -26,6 +29,7 @@ type RelatedProjectSectionProps = {
 }
 
 const RelatedProjectSection = ({
+  id,
   projects,
   badge = 'More Clients',
   title = 'More Brands We Build.',
@@ -36,7 +40,7 @@ const RelatedProjectSection = ({
   if (!projects.length) return null
 
   return (
-    <section className='bg-card py-8 sm:py-16 lg:py-24'>
+    <section id={id} className='bg-card scroll-mt-28 py-8 sm:py-16 lg:py-24'>
       <ContentLayout className='space-y-8 lg:space-y-16'>
         {/* Header */}
         <div className='space-y-4 text-center'>
@@ -55,7 +59,7 @@ const RelatedProjectSection = ({
               render={<Link href={inquiryHref(service)} data-track='cta_book_call' data-track-location={location} />}
               nativeButton={false}
             >
-              Start a Project <IconPhoneCall data-icon='inline-end' />
+              Contact Maria <IconMail data-icon='inline-end' />
             </Button>
           </div>
         </div>

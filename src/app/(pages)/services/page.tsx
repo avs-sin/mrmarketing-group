@@ -40,7 +40,7 @@ const Services = async () => {
         location='services_final'
         eyebrow='Not sure where to start?'
         headline='Tell us the goal. We’ll recommend the mix.'
-        body='Pick “Not sure yet” in the first step and Maria will suggest the right combination of offerings for your brand.'
+        body='Email Maria with your goal and choose “Not sure yet” as the topic. She can suggest which offerings fit your brand.'
         service='unsure'
         ctaLabel='Help me choose'
         secondary={{ label: 'See our work', href: '/projects' }}

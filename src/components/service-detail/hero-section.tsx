@@ -2,7 +2,7 @@
 import { notFound } from 'next/navigation'
 
 // Third-party Imports
-import { IconArrowRight, IconPhoneCall } from '@tabler/icons-react'
+import { IconArrowDown, IconMail } from '@tabler/icons-react'
 
 // Next Imports
 import Link from 'next/link'
@@ -32,7 +32,7 @@ type HeroSectionProps = {
 const HeroSection = async ({ badge, title, description, image, slug }: HeroSectionProps) => {
   const service = await getServiceBySlug(slug)
 
-  // Preselect this offering in the contact page's inquiry form
+  // Carry this offering to the contact page as the email topic
   const startHref = inquiryHref(pillarForServiceSlug(slug))
 
   if (!service) notFound()
@@ -52,32 +52,41 @@ const HeroSection = async ({ badge, title, description, image, slug }: HeroSecti
             opacity={0.18}
             duration={3}
           />
+          {/* The H1 pairs the offering's brand name with its plain-language service label */}
           <SectionHeader
             headingLevel='h1'
-            badge={badge}
-            title={title}
+            title={
+              <>
+                {title}
+                {badge && (
+                  <span className='text-primary mt-4 block font-sans text-lg font-medium tracking-normal sm:text-xl'>
+                    {badge}
+                  </span>
+                )}
+              </>
+            }
             description={description}
-            badgeClassName='bg-card z-1'
           />
-          <div className='space-x-4'>
+          <div className='flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4'>
             <Button
               size='lg'
+              className='h-auto min-h-10 max-w-full py-2 whitespace-normal'
               render={<Link href={startHref} data-track='cta_book_call' data-track-location={`service_${slug}_hero`} />}
               nativeButton={false}
             >
-              Start a Project <IconPhoneCall data-icon='inline-end' />
+              Email Maria about {title} <IconMail data-icon='inline-end' />
             </Button>
             <Button
               size='lg'
               className='group'
               variant='secondary'
-              render={<Link href={startHref} />}
+              render={<Link href='#work' data-track='cta_next_page' data-track-location={`service_${slug}_hero_work`} />}
               nativeButton={false}
             >
-              Discuss your project{' '}
-              <IconArrowRight
+              See related work
+              <IconArrowDown
                 data-icon='inline-end'
-                className='transition-[translate] duration-150 ease-out group-hover:translate-x-0.5'
+                className='transition-[translate] duration-150 ease-out group-hover:translate-y-0.5'
               />
             </Button>
           </div>

@@ -6,12 +6,13 @@ import type { Metadata } from 'next'
 import HeroSection from '@/components/service-detail/hero-section'
 import WhatWeDo from '@/components/service-detail/what-we-do/what-we-do'
 import Process from '@/components/service-detail/process'
+import ServiceFit from '@/components/service-detail/service-fit'
 import Faq from '@/components/blocks/faq'
 import { CTABand } from '@/components/blocks/home/funnel-sections'
 import PillarLinks from '@/components/blocks/funnel/pillar-links'
 import RelatedProjectSection from '@/components/projects/related-project-section/related-project-section'
 import { servicePillars } from '@/assets/data/service-pillars'
-import { getPillar, pillarForServiceSlug, projectPillars } from '@/lib/funnel'
+import { getPillar, inquiryHref, pillarForServiceSlug, projectPillars } from '@/lib/funnel'
 import { getProjects } from '@/lib/projects'
 
 // Util Imports
@@ -21,7 +22,9 @@ import {
   combineSchemas,
   generateWebsiteSchema,
   generateWebPageSchema,
-  generateBreadcrumbSchema
+  generateBreadcrumbSchema,
+  generateOrganizationSchema,
+  generateServiceSchema
 } from '@/lib/seo'
 
 // Data Imports
@@ -42,12 +45,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { metadata } = service
 
   return generateSEOMetadata({
-    title: metadata.title,
+    title: metadata.seoTitle ?? metadata.title,
     description: metadata.description,
     url: `/services/${metadata.slug}`,
     keywords: metadata.keywords,
-    type: 'article',
-    image: metadata.image
+    type: 'article'
+
+    // Service heroes are portrait film stills; share previews keep the branded 1200x630 site image
   })
 }
 
@@ -72,6 +76,13 @@ const ServiceDetailsPage = async ({ params }: { params: Promise<{ slug: string }
 
   const jsonLd = combineSchemas(
     generateWebsiteSchema(),
+    generateOrganizationSchema(),
+    generateServiceSchema({
+      name: metadata.seoTitle ?? metadata.title ?? '',
+      serviceType: metadata.heroBadge ?? metadata.title ?? '',
+      description: metadata.description ?? '',
+      url: `/services/${metadata.slug}`
+    }),
     generateWebPageSchema({
       name: metadata.title ?? '',
       description: metadata.description ?? '',
@@ -100,12 +111,21 @@ const ServiceDetailsPage = async ({ params }: { params: Promise<{ slug: string }
         description={metadata.whatWeDoDescription}
         items={metadata.whatWeDoItems}
       />
+      <ServiceFit
+        name={metadata.title ?? 'this service'}
+        bestFor={metadata.bestFor}
+        askAbout={metadata.askAbout}
+        scopeNote={metadata.scopeNote}
+        contactHref={inquiryHref(pillarId)}
+        location={`service_${slug}_fit`}
+      />
       <Process data={metadata.process ?? []} />
       <RelatedProjectSection
+        id='work'
         projects={relatedWork}
         badge='Selected work'
         title={pillar ? `${pillar.name} in action.` : 'See the work.'}
-        description='Real people and places from our portfolio.'
+        description='Portfolio entries that used this kind of work.'
         service={pillarId}
         location={`service_${slug}_work`}
       />
@@ -121,7 +141,7 @@ const ServiceDetailsPage = async ({ params }: { params: Promise<{ slug: string }
         location={`service_${slug}_final`}
         eyebrow={metadata.heroBadge ?? 'Let’s connect'}
         headline={pillar ? `Ready to start with ${pillar.name}?` : 'Let’s shape the right scope.'}
-        body='Three quick steps and your inquiry is with Maria: what you need, your budget and timing, and how to reach you.'
+        body='Email Maria with a short note about your business, what you need, and your timing. Or call if you would rather talk it through.'
         service={pillarId}
         secondary={{ label: 'See our work', href: '/projects' }}
       />

@@ -7,7 +7,7 @@ import type { ServicePillar } from '@/assets/data/service-pillars'
 import { inquiryHref } from '@/lib/funnel'
 import { cn } from '@/lib/utils'
 
-/** Cross-links between offerings: learn more, or jump straight into the inquiry with that offering preselected. */
+/** Cross-links between offerings: learn more, or jump straight to the Email Maria panel with that offering as the topic. */
 const PillarLinks = ({
   eyebrow,
   title,

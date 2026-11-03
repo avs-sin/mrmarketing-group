@@ -48,7 +48,7 @@ const ServicesBoard = ({ services }: { services: readonly ServicePillar[] }) => 
             </h3>
             <p className='text-primary mt-3 text-sm font-medium'>{service.descriptor}</p>
             <p className='text-muted-foreground mt-4 max-w-lg leading-relaxed text-pretty'>{service.description}</p>
-            {/* Shortcut straight into the inquiry form, layered above the stretched link */}
+            {/* Shortcut straight to the Email Maria panel, layered above the stretched link */}
             <Link
               href={inquiryHref(service.id)}
               data-track='cta_book_call'

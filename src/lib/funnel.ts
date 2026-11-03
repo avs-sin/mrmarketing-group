@@ -1,10 +1,10 @@
 import { servicePillars, type ServicePillar } from '@/assets/data/service-pillars'
 
-// One source of truth for how pages hand visitors to the inquiry form, so every CTA carries its context.
+// One source of truth for how pages hand visitors to the contact page, so every CTA carries its context.
 
 export type PillarId = ServicePillar['id']
 
-/** Contact page inquiry form, optionally with an offering preselected. */
+/** The Email Maria panel on the contact page, optionally with an offering as the email topic. */
 export const inquiryHref = (pillar?: PillarId | 'unsure' | null) =>
   pillar ? `/contact-us?service=${pillar}#inquiry` : '/contact-us#inquiry'
 

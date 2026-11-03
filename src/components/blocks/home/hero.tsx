@@ -6,7 +6,7 @@ import ContentLayout from '@/components/layout/content-layout'
 import { Eyebrow } from './eyebrow'
 
 const HomeHero = () => (
-  <section id='home' className='relative overflow-hidden pt-28 pb-12 sm:pt-36 sm:pb-16 lg:pt-36 lg:pb-20'>
+  <section id='home' className='relative overflow-hidden pt-28 pb-12 sm:pt-36 sm:pb-16 lg:pt-32 lg:pb-20 [@media(min-width:1024px)_and_(max-height:820px)]:pt-28'>
     {/* Soft red glow behind the headline; decorative only */}
     <div
       aria-hidden
@@ -14,37 +14,42 @@ const HomeHero = () => (
     />
     <ContentLayout className='relative grid items-center gap-10 md:gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-16'>
       <div>
-        <Eyebrow>Las Vegas creative marketing agency</Eyebrow>
-        <h1 className='type-display text-[clamp(3.5rem,15vw,4.5rem)] leading-[0.95] tracking-tight text-balance sm:text-[6rem] xl:text-[7rem]'>
-          Distinctive brands.
-          <br />
-          <span className='text-primary'>Meaningful connections.</span>
+        <Eyebrow>Las Vegas content, social media &amp; events</Eyebrow>
+        <h1 className='type-display text-[clamp(3.25rem,14vw,4.5rem)] leading-[0.95] tracking-tight text-balance sm:text-[5.5rem] xl:text-[6.5rem]'>
+          Bring your hospitality brand <span className='text-primary'>to life.</span>
         </h1>
-        <p className='text-muted-foreground mt-6 max-w-lg text-lg leading-relaxed text-pretty sm:mt-8 sm:text-xl'>
-          Strategy, cinematic content, social media, creators, and experiences — tailored to your brand.
+        <p className='text-muted-foreground mt-5 max-w-xl text-lg leading-relaxed text-pretty sm:mt-7 sm:text-xl'>
+          Cinematic content, social media, creator partnerships, and events for restaurants, venues, and hospitality
+          brands. Led by Maria Romano, with a creative approach shaped around your business.
         </p>
-        <div className='mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-6'>
+        <div className='mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-6'>
           <Button
             size='lg'
             className='h-12 ps-6 pe-5.5 text-base'
             render={<Link href='/contact-us#inquiry' data-track='cta_book_call' data-track-location='home_hero' />}
             nativeButton={false}
           >
-            Start a project <IconArrowUpRight aria-hidden className='size-5' />
+            Tell Maria about your project <IconArrowUpRight aria-hidden className='size-5' />
           </Button>
           <Link
             href='/#work'
+            data-track='cta_next_page'
+            data-track-location='home_hero_secondary'
             className='group hover:text-primary focus-visible:outline-primary max-sm:shadow-surface inline-flex h-12 items-center justify-center gap-2 rounded-full font-medium transition-[color,scale] duration-150 ease-out focus-visible:outline-2 active:scale-[0.96] sm:justify-start'
           >
-            Explore our work
+            See our work
             <IconArrowDown
               aria-hidden
               className='size-4 transition-[translate] duration-150 ease-out group-hover:translate-y-0.5'
             />
           </Link>
         </div>
-        <p className='text-muted-foreground mt-8 text-sm sm:mt-10'>
-          Founder-led. Strategy-driven. Connected to culture.
+        <p className='text-muted-foreground mt-6 max-w-lg text-sm leading-relaxed text-pretty sm:mt-8'>
+          Selected work includes restaurant films featuring Tuscan Cove and community event coverage.{' '}
+          <Link href='/#work' className='hover:text-foreground underline underline-offset-4'>
+            Watch the films
+          </Link>
+          .
         </p>
       </div>
       <figure className='relative mx-auto w-full max-w-md md:max-w-lg lg:mx-0 lg:w-auto lg:max-w-none lg:justify-self-end'>
