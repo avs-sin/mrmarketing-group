@@ -16,11 +16,11 @@ const HomeHero = () => (
       <div>
         <Eyebrow>Las Vegas content, social media &amp; events</Eyebrow>
         <h1 className='type-display text-[clamp(3.25rem,14vw,4.5rem)] leading-[0.95] tracking-tight text-balance sm:text-[5.5rem] xl:text-[6.5rem]'>
-          Bring your hospitality brand <span className='text-primary'>to life.</span>
+          Give guests a reason to <span className='text-primary'>walk in.</span>
         </h1>
         <p className='text-muted-foreground mt-5 max-w-xl text-lg leading-relaxed text-pretty sm:mt-7 sm:text-xl'>
           Cinematic content, social media, creator partnerships, and events for restaurants, venues, and hospitality
-          brands. Led by Maria Romano, with a creative approach shaped around your business.
+          brands. Led by Maria Romano, with more than a decade in nightlife, hospitality, and dining.
         </p>
         <div className='mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:items-center sm:gap-6'>
           <Button
